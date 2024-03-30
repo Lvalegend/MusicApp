@@ -15,12 +15,16 @@ const HomeScreen: React.FC<HomeScreenProps & { navigation: NavigationProp<any> }
     return (
         <>
         <Header>
+
             <SvgXml xml={iconMusic()}></SvgXml>
             <Image source = {require("../../assets/images/avatar_trắng.jpg")}></Image>
+
+            <Text>dfasdasfdsfsdf</Text>
         </Header>
 
         <Content>
-
+            <Image source={require('../../assets/images/avatar_trắng.jpg')} />
+            <Text>Text cua toiiii</Text>
         </Content>
 
         <Footer>
