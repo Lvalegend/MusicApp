@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, View, Text } from 'react-native';
+import { Button, View, Text, Image } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
 import { iconGoldStar } from '../../app-uikits/icon-svg';
@@ -15,11 +15,12 @@ const HomeScreen: React.FC<HomeScreenProps & { navigation: NavigationProp<any> }
     return (
         <>
         <Header>
-            
+            <Text>dfasdasfdsfsdf</Text>
         </Header>
 
         <Content>
-
+            <Image source={require('../../assets/images/avatar_trắng.jpg')} />
+            <Text>Text cua toiiii</Text>
         </Content>
 
         <Footer>
