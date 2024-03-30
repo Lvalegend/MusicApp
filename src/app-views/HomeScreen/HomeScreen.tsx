@@ -15,7 +15,7 @@ const HomeScreen: React.FC<HomeScreenProps & { navigation: NavigationProp<any> }
     return (
         <>
         <Header>
-            
+        <Text> fzdgdgfdgdfgdgs</Text>
         </Header>
 
         <Content>
