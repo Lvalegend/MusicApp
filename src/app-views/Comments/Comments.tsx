@@ -7,11 +7,11 @@ import Header from '../../app-layout/Header';
 import Content from '../../app-layout/Content';
 import Footer from '../../app-layout/Footer';
 
-interface LoginProps {
+interface CommentsProps {
 
 }
 
-const Login: React.FC<LoginProps & { navigation: NavigationProp<any> }> = ({ navigation }) => {
+const Comments: React.FC<CommentsProps & { navigation: NavigationProp<any> }> = ({ navigation }) => {
     return (
         <>
         <Header>
@@ -29,4 +29,4 @@ const Login: React.FC<LoginProps & { navigation: NavigationProp<any> }> = ({ nav
     );
 };
 
-export default Login;
+export default Comments;
