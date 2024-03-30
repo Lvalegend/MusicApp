@@ -3,9 +3,7 @@ import { Button, View, Text, Image } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
 import { iconGoldStar, iconMusic } from '../../app-uikits/icon-svg';
-import Header from '../../app-layout/Header';
-import Content from '../../app-layout/Content';
-import Footer from '../../app-layout/Footer';
+import {Header,Content,Footer} from '../../app-layout/Layout';
 
 interface HomeScreenProps {
 
