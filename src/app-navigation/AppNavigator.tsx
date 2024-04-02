@@ -2,7 +2,8 @@ import * as React from 'react';
 import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Comments, HomeScreen, Login, SplashScreen } from './types';
+import { Comments, HomeScreen, Login, Register, SplashScreen } from './types';
+
 
 
 
@@ -15,6 +16,7 @@ function AppNavigator() {
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
         <Stack.Screen name="SplashScreen" component={SplashScreen} />
         <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="Comments" component={Comments} />
       </Stack.Navigator>
     </NavigationContainer>

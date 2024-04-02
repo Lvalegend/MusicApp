@@ -3,9 +3,9 @@ import { Button, View, Text } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
 import { iconGoldStar } from '../../app-uikits/icon-svg';
-import Header from '../../app-layout/Header';
-import Content from '../../app-layout/Content';
-import Footer from '../../app-layout/Footer';
+import { Container, Content, Footer, Header } from '../../app-layout/Layout';
+
+
 
 interface LoginProps {
 
@@ -13,18 +13,23 @@ interface LoginProps {
 
 const Login: React.FC<LoginProps & { navigation: NavigationProp<any> }> = ({ navigation }) => {
     return (
-        <>
-        <Header>
-            
-        </Header>
+        <> <Container>
 
-        <Content>
 
-        </Content>
+            <Header>
 
-        <Footer>
 
-        </Footer>
+            </Header>
+
+            <Content>
+
+            </Content>
+
+            <Footer>
+
+            </Footer>
+
+        </Container>
         </>
     );
 };
