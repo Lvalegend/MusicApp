@@ -13,7 +13,7 @@ interface LoginProps {
 
 const Login: React.FC<LoginProps & { navigation: NavigationProp<any> }> = ({ navigation }) => {
     return (
-        <> <Container>
+        <> 
 
 
             <Header>
@@ -29,7 +29,6 @@ const Login: React.FC<LoginProps & { navigation: NavigationProp<any> }> = ({ nav
 
             </Footer>
 
-        </Container>
         </>
     );
 };

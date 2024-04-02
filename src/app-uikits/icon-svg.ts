@@ -6,3 +6,5 @@ export { default as iconDownload } from '../assets/svg/IconBottomBar/iconDownloa
 export { default as iconFavourite } from '../assets/svg/IconBottomBar/iconFavourite';
 export { default as iconUser } from '../assets/svg/IconBottomBar/iconUser';
 export { default as iconPopular } from '../assets/svg/IconBottomBar/iconPopular';
+export { default as iconSreach } from '../assets/svg/iconSreach';
+export { default as iconMic } from '../assets/svg/iconMic';
