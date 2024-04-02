@@ -7,30 +7,28 @@ import { Header, Content, Footer, Container } from '../../app-layout/Layout';
 import Login from '../LoginAndRegister/Login';
 import BottomBar from '../GeneralComponents/BottomBar/BottomBar';
 import { useState } from 'react';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+
 
 
 interface HomeScreenProps {
 
 }
 
-type ItemData = {
-    id: string;
-    title: string;
-    img: string;
-};
-
-const items: ItemData[] = Array.from({ length: 10 }).map((_, index) => ({
-    id: String(index),
-    title: `Item ${index + 1}`,
-    img: '../assets/images/avatar_trắng.jpg',
-}));
-
 const HomeScreen: React.FC<HomeScreenProps & { navigation: NavigationProp<any> }> = ({ navigation }) => {
 
     const [text, setText] = useState('');
-    const handleLogin = ()=>{
-        navigation.navigate('Login')
+
+    const handlePopular = ()=>{
+        navigation.navigate('Popular')
+    }
+    const handleFavourite = ()=>{
+        navigation.navigate('Favourite')
+    }
+    const handleDownload = ()=>{
+        navigation.navigate('Download')
+    }
+    const handleUser = ()=>{
+        navigation.navigate('User')
     }
     const handleChangeText = (newText: string) => {
         setText(newText);
@@ -87,43 +85,18 @@ const HomeScreen: React.FC<HomeScreenProps & { navigation: NavigationProp<any> }
                             <Text style={styles.title}>GYM</Text>
                         </ImageBackground>
                     </ScrollView>
-                    <Text style = {styles.title}>
-                        khsdfsfsdfsfsdfsdf
-                    </Text>
+                    <View>
+                        <Text style={styles.word}>
+                            Nhac dang nghe 
+                        </Text>
+                        <Text style={styles.word}>
+                            See all 
+                        </Text>
+                    </View>
 
-                    {/* <SafeAreaView style={styles.container}>
-                        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                            <ScrollView contentContainerStyle={styles.playList}>
-                                {items.map(item => (
-                                    <View key={item.id} style={styles.itemPlayList}>
-                                        <ImageBackground
-                                            style={styles.logo}
-                                            source={require('../../assets/images/avatar_trắng.jpg')}
-                                        >
-                                            <Text style={styles.title}>{item.title}</Text>
-                                        </ImageBackground>
-                                    </View>
-                                ))}
-                            </ScrollView>
-                        </ScrollView>
-                        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                            <ScrollView contentContainerStyle={styles.list}>
-                                {items.map(item => (
-                                    <View key={item.id} style={styles.item}>
-                                        <Text style={styles.title}>{item.title}</Text>
-                                    </View>
-                                ))}
-                            </ScrollView>
-                        </ScrollView>
-                    </SafeAreaView> */}
                 </Content>
-
-
-
-
                 <Footer>
-                    <BottomBar onPressPopular={handleLogin}>
-                        
+                    <BottomBar onPressPopular={handlePopular} onPressDownload={handleDownload} onPressFavourite={handleFavourite} onPressUser={handleUser}>
                     </BottomBar>
                 </Footer>
 
@@ -139,7 +112,6 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         borderRadius: 20,
         backgroundColor: '#e5e5e5'
-
     },
     logo: {
         height: 170,
@@ -152,10 +124,6 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingVertical: 10,
         paddingHorizontal: 10,
-    },
-    container: {
-        flex: 1,
-        marginTop: StatusBar.currentHeight,
     },
     search: {
         flex: 1,
@@ -195,7 +163,15 @@ const styles = StyleSheet.create({
         fontSize: 16,
         top:110,
         margin:20,
-
+        color: 'white'
     },
+    word: {
+        fontSize: 18,
+        color: 'white',
+        alignContent: 'center',
+    },
+    wordContainer: {
+
+    }
 });
 export default HomeScreen;
