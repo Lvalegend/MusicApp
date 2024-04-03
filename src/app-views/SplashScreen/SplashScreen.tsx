@@ -28,7 +28,7 @@ const SplashScreen: React.FC<SplashScreenProps & { navigation: NavigationProp<an
         </Header>
 
         <Content>
-
+            <Text>SplashScreen</Text>
         </Content>
 
         <Footer>
