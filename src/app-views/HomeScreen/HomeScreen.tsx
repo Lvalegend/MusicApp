@@ -1,12 +1,13 @@
 import * as React from 'react';
-import { Button, View, Text, Image, SafeAreaView, ScrollView, StyleSheet, StatusBar, TextInput, ImageBackground } from 'react-native';
+import { Button, View, Text, Image, SafeAreaView, ScrollView, StyleSheet, StatusBar, TextInput, ImageBackground, Pressable } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
-import { iconGoldStar, iconMusic } from '../../app-uikits/icon-svg';
+import { iconSreach } from '../../app-uikits/icon-svg';
 import { Header, Content, Footer, Container } from '../../app-layout/Layout';
 import Login from '../LoginAndRegister/Login';
 import BottomBar from '../GeneralComponents/BottomBar/BottomBar';
 import { useState } from 'react';
+import { ColorProperties } from 'react-native-reanimated/lib/typescript/reanimated2/Colors';
 
 
 
@@ -39,8 +40,9 @@ const HomeScreen: React.FC<HomeScreenProps & { navigation: NavigationProp<any> }
         <>
             <Container>
                 <Header>
-                    <Text>HOME</Text>
+                    <Text style = {{color: 'white', fontSize: 32,marginLeft:20, marginTop: 20 }}>Home</Text>
                     <View style={styles.searchContainer}>
+                            <SvgXml xml={iconSreach()} style={{margin:20, marginRight:0}} />
                             <TextInput
                                 style={styles.input}
                                 value={text}
@@ -56,13 +58,13 @@ const HomeScreen: React.FC<HomeScreenProps & { navigation: NavigationProp<any> }
                     showsHorizontalScrollIndicator={false}>
                         <ImageBackground
                             style={styles.logo}
-                            source={require('../../assets/images/avatar_trắng.jpg')}
+                            source={require('../../assets/images/song/album1.jpg')}
                         >
                             <Text style={styles.title}>GYM</Text>
                         </ImageBackground>
                         <ImageBackground
                             style={styles.logo}
-                            source={require('../../assets/images/avatar_trắng.jpg')}
+                            source={require('../../assets/images/anhMatTroi.jpg')}
                         >
                             <Text style={styles.title}>GYM</Text>
                         </ImageBackground>
@@ -85,14 +87,89 @@ const HomeScreen: React.FC<HomeScreenProps & { navigation: NavigationProp<any> }
                             <Text style={styles.title}>GYM</Text>
                         </ImageBackground>
                     </ScrollView>
-                    <View>
-                        <Text style={styles.word}>
-                            Nhac dang nghe 
+                    <View style = {{flexDirection: 'row'}}>
+                        <Text style={{fontSize: 18, color: 'white', marginLeft: 20, marginTop:20,}}>
+                            Recently Play
                         </Text>
-                        <Text style={styles.word}>
+                        <Text style={{fontSize: 18, color: 'white', marginLeft: 190, marginTop:20,}}>
                             See all 
                         </Text>
                     </View>
+                    <ScrollView
+                    showsHorizontalScrollIndicator = {false}>
+                        <Pressable style = {styles.item}>
+                            <Image source={require('../../assets/images/song/Leluuly.jpg')} style= {styles.song}></Image>
+                            <View style = {{flexDirection: 'column', marginHorizontal: 18, justifyContent: 'center'}}>
+                            <Text style = {{color: 'white'}}>Mehaboba</Text>
+                            <Text style = {{color: 'white'}}>Nguyen Kim Tuyen</Text>
+                            <Text style = {{color: 'white', marginTop: 8}}>3:50</Text>
+                            </View>
+                        </Pressable>
+                        <Pressable style = {styles.item}>
+                            <Image source={require('../../assets/images/song/Leluuly.jpg')} style= {styles.song}></Image>
+                            <View style = {{flexDirection: 'column', marginHorizontal: 18, justifyContent: 'center'}}>
+                            <Text style = {{color: 'white'}}>Mehaboba</Text>
+                            <Text style = {{color: 'white'}}>Nguyen Kim Tuyen</Text>
+                            <Text style = {{color: 'white', marginTop: 8}}>3:50</Text>
+                            </View>
+                        </Pressable>
+                        <Pressable style = {styles.item}>
+                            <Image source={require('../../assets/images/song/Leluuly.jpg')} style= {styles.song}></Image>
+                            <View style = {{flexDirection: 'column', marginHorizontal: 18, justifyContent: 'center'}}>
+                            <Text style = {{color: 'white'}}>Mehaboba</Text>
+                            <Text style = {{color: 'white'}}>Nguyen Kim Tuyen</Text>
+                            <Text style = {{color: 'white', marginTop: 8}}>3:50</Text>
+                            </View>
+                        </Pressable>
+                        <Pressable style = {styles.item}>
+                            <Image source={require('../../assets/images/song/Leluuly.jpg')} style= {styles.song}></Image>
+                            <View style = {{flexDirection: 'column', marginHorizontal: 18, justifyContent: 'center'}}>
+                            <Text style = {{color: 'white'}}>Mehaboba</Text>
+                            <Text style = {{color: 'white'}}>Nguyen Kim Tuyen</Text>
+                            <Text style = {{color: 'white', marginTop: 8}}>3:50</Text>
+                            </View>
+                        </Pressable>
+                        <Pressable style = {styles.item}>
+                            <Image source={require('../../assets/images/song/Leluuly.jpg')} style= {styles.song}></Image>
+                            <View style = {{flexDirection: 'column', marginHorizontal: 18, justifyContent: 'center'}}>
+                            <Text style = {{color: 'white'}}>Mehaboba</Text>
+                            <Text style = {{color: 'white'}}>Nguyen Kim Tuyen</Text>
+                            <Text style = {{color: 'white', marginTop: 8}}>3:50</Text>
+                            </View>
+                        </Pressable>
+                        <Pressable style = {styles.item}>
+                            <Image source={require('../../assets/images/song/Leluuly.jpg')} style= {styles.song}></Image>
+                            <View style = {{flexDirection: 'column', marginHorizontal: 18, justifyContent: 'center'}}>
+                            <Text style = {{color: 'white'}}>Mehaboba</Text>
+                            <Text style = {{color: 'white'}}>Nguyen Kim Tuyen</Text>
+                            <Text style = {{color: 'white', marginTop: 8}}>3:50</Text>
+                            </View>
+                        </Pressable>
+                        <Pressable style = {styles.item}>
+                            <Image source={require('../../assets/images/song/Leluuly.jpg')} style= {styles.song}></Image>
+                            <View style = {{flexDirection: 'column', marginHorizontal: 18, justifyContent: 'center'}}>
+                            <Text style = {{color: 'white'}}>Mehaboba</Text>
+                            <Text style = {{color: 'white'}}>Nguyen Kim Tuyen</Text>
+                            <Text style = {{color: 'white', marginTop: 8}}>3:50</Text>
+                            </View>
+                        </Pressable>
+                        <Pressable style = {styles.item}>
+                            <Image source={require('../../assets/images/song/Leluuly.jpg')} style= {styles.song}></Image>
+                            <View style = {{flexDirection: 'column', marginHorizontal: 18, justifyContent: 'center'}}>
+                            <Text style = {{color: 'white'}}>Mehaboba</Text>
+                            <Text style = {{color: 'white'}}>Nguyen Kim Tuyen</Text>
+                            <Text style = {{color: 'white', marginTop: 8}}>3:50</Text>
+                            </View>
+                        </Pressable>
+                        <Pressable style = {styles.item}>
+                            <Image source={require('../../assets/images/song/Leluuly.jpg')} style= {styles.song}></Image>
+                            <View style = {{flexDirection: 'column', marginHorizontal: 18, justifyContent: 'center'}}>
+                            <Text style = {{color: 'white'}}>Mehaboba</Text>
+                            <Text style = {{color: 'white'}}>Nguyen Kim Tuyen</Text>
+                            <Text style = {{color: 'white', marginTop: 8}}>3:50</Text>
+                            </View>
+                        </Pressable>
+                    </ScrollView>
 
                 </Content>
                 <Footer>
@@ -111,14 +188,15 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignContent: 'center',
         borderRadius: 20,
-        backgroundColor: '#e5e5e5'
+        backgroundColor: 'white',
+        margin: 20
     },
     logo: {
         height: 170,
         width: 170,
         alignContent: 'center',
-        margin: 20,
-        borderRadius:20,
+        marginLeft:20,
+        borderRadius:10,
     },
     input: {
         flex: 1,
@@ -140,14 +218,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     item: {
-        backgroundColor: '#f9c2ff',
+        backgroundColor: '#24242E',
         height: 100,
         width: 380,
-        justifyContent: 'center',
-        alignItems: 'center',
+        alignContent: 'center',
         marginVertical: 8,
         marginHorizontal: 16,
-        padding: 20,
+        padding: 16,
+        borderRadius: 20,
+        flexDirection : 'row'
     },
     itemPlayList: {
         backgroundColor: '#f9c2ff',
@@ -168,10 +247,12 @@ const styles = StyleSheet.create({
     word: {
         fontSize: 18,
         color: 'white',
-        alignContent: 'center',
+        alignContent: 'stretch',
     },
-    wordContainer: {
-
-    }
+    song: {
+        height: 70,
+        width: 70,
+        borderRadius:10,
+    },
 });
 export default HomeScreen;
