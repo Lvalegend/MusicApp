@@ -3,14 +3,17 @@ import { Button, View, Text, StyleSheet, Image, TextInput, TouchableOpacity, Dim
 import { NavigationProp } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
 import { iconComments, iconGoldStar } from '../../app-uikits/icon-svg';
-import Header from '../../app-layout/Header';
-import Content from '../../app-layout/Content';
-import Footer from '../../app-layout/Footer';
+
+
+
+import { Container, Content, Footer, Header } from '../../app-layout/Layout';
+import HomeScreen from '../HomeScreen/HomeScreen';
+import BottomBar from '../GeneralComponents/BottomBar/BottomBar';
 
 
 interface CommentsProps {
   
-}
+};
 
 const Comments: React.FC<CommentsProps & { navigation: NavigationProp<any> }> = ({ navigation }) => {
     const [comment, setComment] = useState<string>('');
@@ -24,10 +27,11 @@ const Comments: React.FC<CommentsProps & { navigation: NavigationProp<any> }> = 
           };
           setComments([...comments, newComment]);
           setComment('');
-        }
-      };
+        };
+      }
     return (
         <>
+        <Container>
     <View style={styles.container}>
        <Header style = {styles.header}> 
             <Text style={styles.headerText}>Bình luận</Text>
@@ -60,6 +64,15 @@ const Comments: React.FC<CommentsProps & { navigation: NavigationProp<any> }> = 
             </View>
         </Footer>
     </View>
+
+      
+
+            <Footer>
+               <BottomBar></BottomBar>
+            </Footer>
+
+        </Container>
+
         </>
     );
 };

@@ -3,10 +3,8 @@ import { Button, View, Text, StyleSheet, Image, TextInput, TouchableOpacity, Act
 import { NavigationProp } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
 import { iconGoldStar, iconPrevSong, iconNextSong, iconPause, iconPlay, iconLove, iconSong, iconComments2, iconShuffle } from '../app-uikits/icon-svg';
-import Header from '../app-layout/Header';
-import Content from '../app-layout/Content';
-import Footer from '../app-layout/Footer';
-import Slider from '@react-native-community/slider';
+import {Footer, Content, Header} from '../../app-layout/Layout';
+
 
 
 interface SongProps {

@@ -2,25 +2,45 @@ import * as React from 'react';
 import { Button, View, Text } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native';
+import { SvgXml } from 'react-native-svg';
+import { iconGoldStar } from '../../app-uikits/icon-svg';
+import BottomBar from '../GeneralComponents/BottomBar/BottomBar';
+import { Container, Content, Footer, Header } from '../../app-layout/Layout';
+import { useEffect } from 'react';
 
 interface SplashScreenProps {
-  
+
 }
 
 const SplashScreen: React.FC<SplashScreenProps & { navigation: NavigationProp<any> }> = ({ navigation }) => {
-  const handleLogin = () => {
-    navigation.navigate('Login')
-  }
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      navigation.navigate('HomeScreen');
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
   return (
     <>
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>SplashScreen</Text>
-      <Button
-        title="Go to HomeScreen"
-      
-      />
-    </View>
-    <TouchableOpacity onPress={handleLogin}></TouchableOpacity>
+      <Container>
+        <Header>
+
+
+        </Header>
+
+        <Content>
+            <Text>SplashScreen</Text>
+        </Content>
+
+        <Footer>
+
+          <BottomBar></BottomBar>
+          
+        </Footer>
+
+      </Container>
+
+
+
     </>
   );
 };
