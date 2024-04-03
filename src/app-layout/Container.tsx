@@ -14,7 +14,6 @@ const Container = (props: any) => {
 
 const styles = StyleSheet.create({
     container: {
-         backgroundColor:'black',
          width:'100%',
          height:'100%',
        

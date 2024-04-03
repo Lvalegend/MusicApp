@@ -6,6 +6,7 @@ import { iconGoldStar } from '../../app-uikits/icon-svg';
 
 import { Container, Content, Footer, Header } from '../../app-layout/Layout';
 import HomeScreen from '../HomeScreen/HomeScreen';
+import BottomBar from '../GeneralComponents/BottomBar/BottomBar';
 
 interface CommentsProps {
 
@@ -15,22 +16,21 @@ const Comments: React.FC<CommentsProps & { navigation: NavigationProp<any> }> = 
     return (
         <> <Container>
 
+            <Header>
 
-        <Header>
 
+            </Header>
 
-        </Header>
+            <Content>
 
-        <Content>
+            </Content>
 
-        </Content>
+            <Footer>
+               <BottomBar></BottomBar>
+            </Footer>
 
-        <Footer>
-             
-        </Footer>
-
-    </Container>
-    </>
+        </Container>
+        </>
     );
 };
 

@@ -33,7 +33,7 @@ const SplashScreen: React.FC<SplashScreenProps & { navigation: NavigationProp<an
 
         <Footer>
 
-          
+          <BottomBar></BottomBar>
           
         </Footer>
 
