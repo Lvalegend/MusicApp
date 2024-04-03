@@ -64,7 +64,7 @@ const HomeScreen: React.FC<HomeScreenProps & { navigation: NavigationProp<any> }
                         </ImageBackground>
                         <ImageBackground
                             style={styles.logo}
-                            source={require('../../assets/images/anhMatTroi.jpg')}
+                            source={require('../../assets/images/song/anhMatTroi.jpg')}
                         >
                             <Text style={styles.title}>GYM</Text>
                         </ImageBackground>
