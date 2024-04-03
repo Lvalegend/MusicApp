@@ -13,11 +13,15 @@ const HomeScreen: React.FC<HomeScreenProps & { navigation: NavigationProp<any> }
     return (
         <>
         <Header>
+<<<<<<< HEAD
+            <Text>1231231</Text>
+=======
 
             <SvgXml xml={iconMusic()}></SvgXml>
             <Image source = {require("../../assets/images/avatar_trắng.jpg")}></Image>
 
             <Text>dfasdasfdsfsdf</Text>
+>>>>>>> 5b7af330518c5bd9266f0d93695fb2da990047ec
         </Header>
 
         <Content>
