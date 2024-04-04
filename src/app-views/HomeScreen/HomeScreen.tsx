@@ -1,11 +1,13 @@
 import * as React from 'react';
-import { Button, View, Text, Image, SafeAreaView, ScrollView, StyleSheet, StatusBar, TextInput, ImageBackground} from 'react-native';
+import { Button, View, Text, Image, SafeAreaView, ScrollView, StyleSheet, StatusBar, TextInput, ImageBackground } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
 import { iconGoldStar, iconMusic } from '../../app-uikits/icon-svg';
-import {Header,Content,Footer} from '../../app-layout/Layout';
+import { Header, Content, Footer, Container } from '../../app-layout/Layout';
 import { Svg } from 'react-native-svg';
 import { useState } from 'react';
+import BottomBar from '../GeneralComponents/BottomBar/BottomBar';
+import Download from '../Downloads/Downloads';
 
 interface HomeScreenProps {
 
@@ -15,68 +17,74 @@ type ItemData = {
     id: string;
     title: string;
     img: string;
-  };
-  
-  const items: ItemData[] = Array.from({ length: 10 }).map((_, index) => ({
+};
+
+const items: ItemData[] = Array.from({ length: 10 }).map((_, index) => ({
     id: String(index),
     title: `Item ${index + 1}`,
     img: '../assets/images/avatar_trắng.jpg',
-  }));
+}));
 
 const HomeScreen: React.FC<HomeScreenProps & { navigation: NavigationProp<any> }> = ({ navigation }) => {
     const [text, setText] = useState('');
+    const handleDownload = () =>{
+        navigation.navigate('Downloads')
+    }
 
     const handleChangeText = (newText: string) => {
-      setText(newText);
+        setText(newText);
     };
     return (
-        <>
-        <Header>
+        <><Container>
 
-            <SvgXml xml={iconMusic()}></SvgXml>
-            <Image source = {require("../../assets/images/avatar_trắng.jpg")}></Image>
+            <Header>
 
-            <Text>dfasdasfdsfsdf</Text>
-        </Header>
+                <SvgXml xml={iconMusic()}></SvgXml>
+                <Image source={require("../../assets/images/avatar_trắng.jpg")}></Image>
 
-        <Content>
-            <View style = {styles.searchContainer}>
-                <TextInput
-                    style={styles.input}
-                    value={text}
-                    onChangeText={handleChangeText}
-                    placeholder="Search"
-                />
-            </View>
-            <SafeAreaView style={styles.container}>
-                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    <ScrollView contentContainerStyle={styles.playList}>
-                        {items.map(item => (
-                            <View key={item.id} style={styles.itemPlayList}>
-                                <Text style={styles.title}>{item.title}</Text>
-                                <ImageBackground
-                                    style = {styles.logo}
-                                    source={require('../../assets/images/avatar_trắng.jpg')}
-                                ><Text style={styles.title}>{item.title}</Text></ImageBackground>
-                            </View>
-                        ))}
+                <Text>dfasdasfdsfsdf</Text>
+            </Header>
+
+            <Content>
+                <View style={styles.searchContainer}>
+                    <TextInput
+                        style={styles.input}
+                        value={text}
+                        onChangeText={handleChangeText}
+                        placeholder="Search"
+                    />
+                </View>
+                <SafeAreaView style={styles.container}>
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                        <ScrollView contentContainerStyle={styles.playList}>
+                            {items.map(item => (
+                                <View key={item.id} style={styles.itemPlayList}>
+                                    <Text style={styles.title}>{item.title}</Text>
+                                    <ImageBackground
+                                        style={styles.logo}
+                                        source={require('../../assets/images/avatar_trắng.jpg')}
+                                    ><Text style={styles.title}>{item.title}</Text></ImageBackground>
+                                </View>
+                            ))}
+                        </ScrollView>
                     </ScrollView>
-                </ScrollView>
-                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    <ScrollView contentContainerStyle={styles.list}>
-                        {items.map(item => (
-                            <View key={item.id} style={styles.item}>
-                                <Text style={styles.title}>{item.title}</Text>
-                            </View>
-                        ))}
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                        <ScrollView contentContainerStyle={styles.list}>
+                            {items.map(item => (
+                                <View key={item.id} style={styles.item}>
+                                    <Text style={styles.title}>{item.title}</Text>
+                                </View>
+                            ))}
+                        </ScrollView>
                     </ScrollView>
-                </ScrollView>
-            </SafeAreaView>
-        </Content>
+                </SafeAreaView>
+            </Content>
 
-        <Footer>
+            <Footer>
+                <BottomBar onPressDownload={handleDownload}></BottomBar>
+            </Footer>
+        </Container>
 
-        </Footer>
         </>
     );
 };
@@ -91,17 +99,17 @@ const styles = StyleSheet.create({
     },
     logo: {
         height: 170,
-        width:170,
+        width: 170,
         alignContent: 'center',
-      },
+    },
     input: {
-        flex:1,
+        flex: 1,
         paddingVertical: 10,
         paddingHorizontal: 10,
     },
     container: {
-      flex: 1,
-      marginTop: StatusBar.currentHeight,
+        flex: 1,
+        marginTop: StatusBar.currentHeight,
     },
     search: {
         flex: 1,
@@ -110,22 +118,22 @@ const styles = StyleSheet.create({
         backgroundColor: '#D9D9D9'
     },
     list: {
-      flexDirection: 'column',
-      alignItems: 'center',
+        flexDirection: 'column',
+        alignItems: 'center',
     },
     playList: {
         flexDirection: 'row',
         alignItems: 'center',
-      },
+    },
     item: {
-      backgroundColor: '#f9c2ff',
-      height: 100,
-      width: 380,
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginVertical: 8,
-      marginHorizontal: 16,
-      padding: 20,
+        backgroundColor: '#f9c2ff',
+        height: 100,
+        width: 380,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginVertical: 8,
+        marginHorizontal: 16,
+        padding: 20,
     },
     itemPlayList: {
         backgroundColor: '#f9c2ff',
@@ -136,9 +144,9 @@ const styles = StyleSheet.create({
         marginVertical: 8,
         marginHorizontal: 16,
         padding: 20,
-      },
+    },
     title: {
-      fontSize: 32,
+        fontSize: 32,
     },
 });
 export default HomeScreen;

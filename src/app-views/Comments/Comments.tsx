@@ -3,9 +3,9 @@ import { Button, View, Text } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
 import { iconGoldStar } from '../../app-uikits/icon-svg';
-import Header from '../../app-layout/Header';
-import Content from '../../app-layout/Content';
-import Footer from '../../app-layout/Footer';
+
+import { Container, Content, Footer, Header } from '../../app-layout/Layout';
+import HomeScreen from '../HomeScreen/HomeScreen';
 
 interface CommentsProps {
 
@@ -13,9 +13,12 @@ interface CommentsProps {
 
 const Comments: React.FC<CommentsProps & { navigation: NavigationProp<any> }> = ({ navigation }) => {
     return (
-        <>
+        <> <Container>
+
+
         <Header>
-            
+
+
         </Header>
 
         <Content>
@@ -23,9 +26,11 @@ const Comments: React.FC<CommentsProps & { navigation: NavigationProp<any> }> = 
         </Content>
 
         <Footer>
-
+            
         </Footer>
-        </>
+
+    </Container>
+    </>
     );
 };
 
