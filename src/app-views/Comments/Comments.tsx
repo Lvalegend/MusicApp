@@ -14,7 +14,7 @@ interface CommentsProps {
 
 const Comments: React.FC<CommentsProps & { navigation: NavigationProp<any> }> = ({ navigation }) => {
     return (
-        <> <Container>
+        <> <Container backgroundColor={''}>
 
             <Header>
 

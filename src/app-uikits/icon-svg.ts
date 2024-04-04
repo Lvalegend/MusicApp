@@ -10,3 +10,5 @@ export { default as iconSreach } from '../assets/svg/iconSreach';
 export { default as iconMic } from '../assets/svg/iconMic';
 export { default as iconPlay } from '../assets/svg/iconPlay';
 export { default as Underline } from '../assets/svg/Underline';
+export { default as iconBack } from '../assets/svg/iconBack';
+export { default as icon3Cham } from '../assets/svg/icon3Cham';

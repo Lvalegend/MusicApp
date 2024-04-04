@@ -27,17 +27,23 @@ const Favourite: React.FC<FavouriteProps & { navigation: NavigationProp<any> }> 
     }
     return (
         <> 
-            <Container backgroundColor= {"red"} >
-
+            <Container backgroundColor={''}>
                 <Header>
-
-
-                </Header>
-
-                <Content>
                     <Text  style = {{color: 'white', fontSize: 32}}>Favourite</Text>
-                </Content>
+                </Header>
+                <Content>
+                    <View>
+                        <View>
+                            
+                        </View>
+                        <View>
 
+                        </View>
+                    </View>
+                    <View>
+
+                    </View>
+                </Content>
                 <Footer>
                 <BottomBar onPressHome={handleHome} onPressDownload={handleDownload} onPressPopular={handlePopular} onPressUser={handleUser}>
                     </BottomBar>

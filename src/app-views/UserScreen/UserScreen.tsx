@@ -36,7 +36,7 @@ const User: React.FC<UserProps & { navigation: NavigationProp<any> }> = ({ navig
             <Container backgroundColor={'black'}>
 
                 <Header>
-
+        
 
                 </Header>
 

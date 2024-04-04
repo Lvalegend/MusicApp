@@ -12,7 +12,7 @@ interface RegisterProps {
 
 const Register: React.FC<RegisterProps & { navigation: NavigationProp<any> }> = ({ navigation }) => {
     return (
-        <> <Container>
+        <> <Container backgroundColor={''}>
 
 
             <Header>

@@ -7,6 +7,7 @@ import Favourite from '../app-views/FavouriteScreen/FavouriteScreen';
 import Popular from '../app-views/PopularScreen/PopularScreen';
 import Download from '../app-views/DownloadScreen/DownloadScreen';
 import User from '../app-views/UserScreen/UserScreen';
+import PlayList from '../app-views/HomeScreen/PlayList';
 
 export {
     HomeScreen, 
@@ -17,5 +18,6 @@ export {
     Favourite,
     Popular,
     Download,
-    User
+    User,
+    PlayList,
 }
