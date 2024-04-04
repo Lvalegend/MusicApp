@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginHorizontal: 20,
         marginTop: 15,
+        marginBottom:20
 
     },
     text: {

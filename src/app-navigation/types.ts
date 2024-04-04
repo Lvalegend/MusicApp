@@ -5,9 +5,11 @@ import Comments from '../app-views/Comments/Comments';
 import Register from '../app-views/LoginAndRegister/Register';
 import Favourite from '../app-views/FavouriteScreen/FavouriteScreen';
 import Popular from '../app-views/PopularScreen/PopularScreen';
-import Download from '../app-views/DownloadScreen/DownloadScreen';
 import User from '../app-views/UserScreen/UserScreen';
 import PlayList from '../app-views/HomeScreen/PlayList';
+import Downloads from '../app-views/Downloads/Downloads';
+
+
 
 export {
     HomeScreen, 
@@ -17,7 +19,8 @@ export {
     Register,
     Favourite,
     Popular,
-    Download,
     User,
     PlayList,
+    Downloads
+
 }

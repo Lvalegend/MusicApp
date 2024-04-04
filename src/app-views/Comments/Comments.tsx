@@ -3,7 +3,6 @@ import { Button, View, Text } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
 import { iconGoldStar } from '../../app-uikits/icon-svg';
-
 import { Container, Content, Footer, Header } from '../../app-layout/Layout';
 import HomeScreen from '../HomeScreen/HomeScreen';
 import BottomBar from '../GeneralComponents/BottomBar/BottomBar';
