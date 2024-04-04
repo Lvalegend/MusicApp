@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Button, View, Text, StyleSheet, Image, TextInput, TouchableOpacity, ActivityIndicator, GestureResponderEvent } from 'react-native';
+import { Button, View, Text, StyleSheet, Image, TextInput, TouchableOpacity, ActivityIndicator, GestureResponderEvent} from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
-import { iconGoldStar, iconPrevSong, iconNextSong, iconPause, iconPlay, iconLove, iconSong, iconComments2, iconShuffle } from '../app-uikits/icon-svg';
+import { iconPrevSong, iconNextSong, iconPause, iconPlay, iconLove, iconSong, iconComments2, iconShuffle} from '../../app-uikits/icon-svg'
 import {Footer, Content, Header} from '../../app-layout/Layout';
-
+import Slider from '@react-native-community/slider';
+import iconCommentsWhite from '../../assets/svg/IconComments/iconCommentsWhite';
 
 
 interface SongProps {
@@ -19,11 +20,11 @@ const Song: React.FC<SongProps & { navigation: NavigationProp<any> }> = ({ navig
     useEffect(() => {
         setTimeout(() => {
             setIsLoading(false);
-            setTotalDuration(300); // Assume total duration is 5 minutes (300 seconds)
-        }, 2000); // Simulate loading time
+            setTotalDuration(300); 
+        }, 2000); 
     }, []);
 
-    // Simulate audio playback progress
+
     useEffect(() => {
         if (!isLoading && playState) {
             const interval = setInterval(() => {
@@ -92,7 +93,7 @@ const Song: React.FC<SongProps & { navigation: NavigationProp<any> }> = ({ navig
 
                             <View style={styles.iconCmt}>
                                 <TouchableOpacity onPress={handleCommentPress} >
-                                    <SvgXml width={30} height={30} xml={iconComments2()}></SvgXml>
+                                    <SvgXml width={30} height={30} xml={iconCommentsWhite()}></SvgXml>
                                 </TouchableOpacity>
 
                             </View>
@@ -102,15 +103,15 @@ const Song: React.FC<SongProps & { navigation: NavigationProp<any> }> = ({ navig
                             <View style={styles.iconNextSong}>
                                 <SvgXml width={30} height={30} xml={iconNextSong()}></SvgXml>
                             </View>
-                            <View>
-                                <SvgXml width={30} height={30} xml={iconShuffle()}></SvgXml>
+                            <View style= {styles.iconShuffle}>
+                                <SvgXml width={40} height={40} xml={iconShuffle()}></SvgXml>
                             </View>
                             <View style={styles.iconPlayPause}>
                                 <TouchableOpacity onPress={togglePlayPause}>
                                     {playState ? (
-                                        <SvgXml width={60} height={60} xml={iconPause()}></SvgXml>
+                                        <SvgXml width={65} height={65} xml={iconPause()}></SvgXml>
                                     ) : (
-                                        <SvgXml width={60} height={60} xml={iconPlay()}></SvgXml>
+                                        <SvgXml width={65} height={65} xml={iconPlay()}></SvgXml>
                                     )}
                                 </TouchableOpacity>
                             </View>
@@ -151,6 +152,7 @@ const styles = StyleSheet.create({
         color: 'white',
         marginTop: 20,
         marginBottom: 30,
+        textAlign: 'center',
     },
     footer: {
         borderTopWidth: 1,
@@ -211,7 +213,7 @@ const styles = StyleSheet.create({
     iconCmt: {
         right: 150,
         flex: 1,
-        bottom: -45,
+        bottom: -75,
     },
     overlay: {
         position: 'absolute',
@@ -232,7 +234,12 @@ const styles = StyleSheet.create({
         bottom: 20,
     },
     iconPlayPause: {
-        bottom: 60,
+        bottom: 100,
+    },
+    iconShuffle:{
+        bottom:15,
+        left: 150,
+        
     }
 });
 export default Song;

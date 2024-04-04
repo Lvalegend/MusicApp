@@ -19,7 +19,6 @@ function AppNavigator() {
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="Comments" component={Comments} />
-
         <Stack.Screen name="Song" component={Song} />
         <Stack.Screen name="Popular" component={Popular} />
         <Stack.Screen name="Favourite" component={Favourite} />

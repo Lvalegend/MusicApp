@@ -39,14 +39,9 @@ const HomeScreen: React.FC<HomeScreenProps & { navigation: NavigationProp<any> }
     };
 
     return (
-
         <>
-<<<<<<< HEAD
-        <Header>
-<<<<<<< HEAD
-            <Text>1231231</Text>
-=======
-=======
+       
+
             <Container>
                 <Header>
                     <Text style={{ color: 'white', fontSize: 32, marginLeft: 20, marginTop: 20 }}>Home</Text>
@@ -60,7 +55,6 @@ const HomeScreen: React.FC<HomeScreenProps & { navigation: NavigationProp<any> }
                         />
                     </View>
                 </Header>
->>>>>>> 4f9fb39f44ac6933edab75564f52ce2ffed4dfbc
 
                 <Content>
                     <ScrollView
@@ -181,16 +175,13 @@ const HomeScreen: React.FC<HomeScreenProps & { navigation: NavigationProp<any> }
                         </Pressable>
                     </ScrollView>
 
-<<<<<<< HEAD
-            <Text>dfasdasfdsfsdf</Text>
->>>>>>> 5b7af330518c5bd9266f0d93695fb2da990047ec
-        </Header>
-=======
+ 
+
                 </Content>
                 <Footer>
                     <BottomBar onPressPopular={handlePopular} onPressDownload={handleDownload} onPressFavourite={handleFavourite} onPressUser={handleUser}>
                     </BottomBar>
->>>>>>> 4f9fb39f44ac6933edab75564f52ce2ffed4dfbc
+
 
                 </Footer>
 
