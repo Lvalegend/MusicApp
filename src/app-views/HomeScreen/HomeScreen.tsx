@@ -4,12 +4,8 @@ import { NavigationProp } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
 import { iconSreach } from '../../app-uikits/icon-svg';
 import { Header, Content, Footer, Container } from '../../app-layout/Layout';
-import Login from '../LoginAndRegister/Login';
 import BottomBar from '../GeneralComponents/BottomBar/BottomBar';
 import { useState } from 'react';
-import { ColorProperties } from 'react-native-reanimated/lib/typescript/reanimated2/Colors';
-
-
 
 interface HomeScreenProps {
 
@@ -31,9 +27,15 @@ const HomeScreen: React.FC<HomeScreenProps & { navigation: NavigationProp<any> }
     const handleUser = ()=>{
         navigation.navigate('User')
     }
+    
     const handleChangeText = (newText: string) => {
         setText(newText);
     };
+
+    const handleNavigateToPlaylist = () => {
+        navigation.navigate('PlayList');
+      };
+      
 
     return (
 
@@ -42,7 +44,7 @@ const HomeScreen: React.FC<HomeScreenProps & { navigation: NavigationProp<any> }
                 <Header>
                     <Text style = {{color: 'white', fontSize: 32,marginLeft:20, marginTop: 20 }}>Home</Text>
                     <View style={styles.searchContainer}>
-                            <SvgXml xml={iconSreach()} style={{margin:20, marginRight:0}} />
+                            <SvgXml xml={iconSreach()} style={{margin:20, marginRight:0, }} />
                             <TextInput
                                 style={styles.input}
                                 value={text}
@@ -56,6 +58,21 @@ const HomeScreen: React.FC<HomeScreenProps & { navigation: NavigationProp<any> }
                     <ScrollView 
                     horizontal
                     showsHorizontalScrollIndicator={false}>
+                        <Pressable onPress={handleNavigateToPlaylist}>
+                            <ImageBackground
+                                style={styles.logo}
+                                source={require('../../assets/images/song/albumChill.jpg')}
+                            >
+                                <Text style={styles.title}>Chills</Text>
+                            </ImageBackground>
+                        </Pressable>
+
+                        <ImageBackground
+                            style={styles.logo}
+                            source={require('../../assets/images/song/album1.jpg')}
+                        >
+                            <Text style={styles.title}>Chills</Text>
+                        </ImageBackground>
                         <ImageBackground
                             style={styles.logo}
                             source={require('../../assets/images/song/album1.jpg')}
@@ -64,25 +81,13 @@ const HomeScreen: React.FC<HomeScreenProps & { navigation: NavigationProp<any> }
                         </ImageBackground>
                         <ImageBackground
                             style={styles.logo}
-                            source={require('../../assets/images/song/anhMatTroi.jpg')}
+                            source={require('../../assets/images/song/album1.jpg')}
                         >
                             <Text style={styles.title}>GYM</Text>
                         </ImageBackground>
                         <ImageBackground
                             style={styles.logo}
-                            source={require('../../assets/images/avatar_trắng.jpg')}
-                        >
-                            <Text style={styles.title}>GYM</Text>
-                        </ImageBackground>
-                        <ImageBackground
-                            style={styles.logo}
-                            source={require('../../assets/images/avatar_trắng.jpg')}
-                        >
-                            <Text style={styles.title}>GYM</Text>
-                        </ImageBackground>
-                        <ImageBackground
-                            style={styles.logo}
-                            source={require('../../assets/images/avatar_trắng.jpg')}
+                            source={require('../../assets/images/song/album1.jpg')}
                         >
                             <Text style={styles.title}>GYM</Text>
                         </ImageBackground>
@@ -100,39 +105,39 @@ const HomeScreen: React.FC<HomeScreenProps & { navigation: NavigationProp<any> }
                         <Pressable style = {styles.item}>
                             <Image source={require('../../assets/images/song/Leluuly.jpg')} style= {styles.song}></Image>
                             <View style = {{flexDirection: 'column', marginHorizontal: 18, justifyContent: 'center'}}>
-                            <Text style = {{color: 'white'}}>Mehaboba</Text>
+                            <Text style = {{color: 'white'}}>Le Luu Ly</Text>
                             <Text style = {{color: 'white'}}>Nguyen Kim Tuyen</Text>
                             <Text style = {{color: 'white', marginTop: 8}}>3:50</Text>
                             </View>
                         </Pressable>
                         <Pressable style = {styles.item}>
-                            <Image source={require('../../assets/images/song/Leluuly.jpg')} style= {styles.song}></Image>
+                            <Image source={require('../../assets/images/song/anhMatTroi.jpg')} style= {styles.song}></Image>
                             <View style = {{flexDirection: 'column', marginHorizontal: 18, justifyContent: 'center'}}>
-                            <Text style = {{color: 'white'}}>Mehaboba</Text>
+                            <Text style = {{color: 'white'}}>Anh Mat Troi</Text>
                             <Text style = {{color: 'white'}}>Nguyen Kim Tuyen</Text>
                             <Text style = {{color: 'white', marginTop: 8}}>3:50</Text>
                             </View>
                         </Pressable>
                         <Pressable style = {styles.item}>
-                            <Image source={require('../../assets/images/song/Leluuly.jpg')} style= {styles.song}></Image>
+                            <Image source={require('../../assets/images/song/KhiAnhGanEm.jpg')} style= {styles.song}></Image>
                             <View style = {{flexDirection: 'column', marginHorizontal: 18, justifyContent: 'center'}}>
-                            <Text style = {{color: 'white'}}>Mehaboba</Text>
+                            <Text style = {{color: 'white'}}>Khi Anh Gan Em</Text>
                             <Text style = {{color: 'white'}}>Nguyen Kim Tuyen</Text>
                             <Text style = {{color: 'white', marginTop: 8}}>3:50</Text>
                             </View>
                         </Pressable>
                         <Pressable style = {styles.item}>
-                            <Image source={require('../../assets/images/song/Leluuly.jpg')} style= {styles.song}></Image>
+                            <Image source={require('../../assets/images/song/Hoacuoijpg.jpg')} style= {styles.song}></Image>
                             <View style = {{flexDirection: 'column', marginHorizontal: 18, justifyContent: 'center'}}>
-                            <Text style = {{color: 'white'}}>Mehaboba</Text>
+                            <Text style = {{color: 'white'}}>Hoa Cuoi</Text>
                             <Text style = {{color: 'white'}}>Nguyen Kim Tuyen</Text>
                             <Text style = {{color: 'white', marginTop: 8}}>3:50</Text>
                             </View>
                         </Pressable>
                         <Pressable style = {styles.item}>
-                            <Image source={require('../../assets/images/song/Leluuly.jpg')} style= {styles.song}></Image>
+                            <Image source={require('../../assets/images/song/OIP.jpg')} style= {styles.song}></Image>
                             <View style = {{flexDirection: 'column', marginHorizontal: 18, justifyContent: 'center'}}>
-                            <Text style = {{color: 'white'}}>Mehaboba</Text>
+                            <Text style = {{color: 'white'}}>Tinh Yeu Sai</Text>
                             <Text style = {{color: 'white'}}>Nguyen Kim Tuyen</Text>
                             <Text style = {{color: 'white', marginTop: 8}}>3:50</Text>
                             </View>
@@ -196,7 +201,8 @@ const styles = StyleSheet.create({
         width: 170,
         alignContent: 'center',
         marginLeft:20,
-        borderRadius:10,
+        borderRadius: 20,
+        overflow: 'hidden'
     },
     input: {
         flex: 1,

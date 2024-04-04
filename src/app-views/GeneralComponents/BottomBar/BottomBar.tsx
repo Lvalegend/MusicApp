@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         marginHorizontal: 20,
-        marginTop: 10,
+        marginTop: 15,
 
     },
     text: {
