@@ -11,8 +11,6 @@ import PlayList from '../app-views/HomeScreen/PlayList';
 import Downloads from '../app-views/Downloads/Downloads';
 
 
-
-
 export {
     HomeScreen, 
     SplashScreen,

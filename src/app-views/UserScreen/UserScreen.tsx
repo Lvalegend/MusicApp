@@ -41,12 +41,14 @@ const User: React.FC<UserProps & { navigation: NavigationProp<any> }> = ({ navig
                 </Header>
 
                 <Content>
+
+                    
                     <ImageBackground source={require('../../assets/images/ImageUserScreen/ảnh_nền_âm_nhạc.jpg')} style={{ width: '100%', height: 780, justifyContent: 'center', alignItems: 'center' }} resizeMode='cover'>
-                       
+
                         <SvgXml xml={iconMusic()}></SvgXml>
 
                         <Text style={[styles.textColor, { fontSize: 25, marginTop: 30 }]}>Listen to music freely with many different music genres</Text>
-                        
+
                         <Text style={[styles.textColor, { fontSize: 18, marginVertical: 10 }]}>Quickly register an account and experience together</Text>
 
                         <TouchableOpacity style={{ marginVertical: 20, width: '100%' }} onPress={handleLogin}>
@@ -61,6 +63,9 @@ const User: React.FC<UserProps & { navigation: NavigationProp<any> }> = ({ navig
                         </View>
 
                     </ImageBackground>
+
+
+
                 </Content>
 
                 <Footer>

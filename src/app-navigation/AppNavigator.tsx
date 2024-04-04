@@ -4,9 +4,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { Comments, HomeScreen, Login, Popular, Register, SplashScreen, User, Downloads, Favourite, PlayList, Song } from './types';
-
-
-
 const Stack = createNativeStackNavigator();
 
 function AppNavigator() {
