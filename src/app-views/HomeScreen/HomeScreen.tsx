@@ -2,19 +2,17 @@ import * as React from 'react';
 import { Button, View, Text, Image, SafeAreaView, ScrollView, StyleSheet, StatusBar, TextInput, ImageBackground, Pressable } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
-import { iconMusic, iconSreach } from '../../app-uikits/icon-svg';
+import { iconSreach } from '../../app-uikits/icon-svg';
 import { Header, Content, Footer, Container } from '../../app-layout/Layout';
-import { Svg } from 'react-native-svg';
-import { useState } from 'react';
 import BottomBar from '../GeneralComponents/BottomBar/BottomBar';
-import Download from '../Downloads/Downloads';
-
+import { useState } from 'react';
 
 interface HomeScreenProps {
 
 }
 
 const HomeScreen: React.FC<HomeScreenProps & { navigation: NavigationProp<any> }> = ({ navigation }) => {
+
     const [text, setText] = useState('');
 
     const handlePopular = ()=>{
@@ -24,7 +22,7 @@ const HomeScreen: React.FC<HomeScreenProps & { navigation: NavigationProp<any> }
         navigation.navigate('Favourite')
     }
     const handleDownload = ()=>{
-        navigation.navigate('Download')
+        navigation.navigate('Downloads')
     }
     const handleUser = ()=>{
         navigation.navigate('User')
@@ -40,7 +38,6 @@ const HomeScreen: React.FC<HomeScreenProps & { navigation: NavigationProp<any> }
       
 
     return (
-       
 
         <>
             <Container backgroundColor={'black'}>
@@ -187,7 +184,6 @@ const HomeScreen: React.FC<HomeScreenProps & { navigation: NavigationProp<any> }
 
             </Container>
 
-            
 
         </>
     );
@@ -199,20 +195,14 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         backgroundColor: 'white',
         margin: 20
-
-
-
-
     },
     logo: {
         height: 170,
         width: 170,
         alignContent: 'center',
-
         marginLeft:20,
         borderRadius: 20,
         overflow: 'hidden'
-
     },
     input: {
         flex: 1,
@@ -255,7 +245,6 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     title: {
-
         fontSize: 16,
         top:110,
         margin:20,
@@ -270,10 +259,6 @@ const styles = StyleSheet.create({
         height: 70,
         width: 70,
         borderRadius:10,
-
-        fontSize: 32,
-
     },
 });
 export default HomeScreen;
-

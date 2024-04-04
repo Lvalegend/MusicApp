@@ -20,7 +20,7 @@ const PlayList: React.FC<PlayListProps> = ({}) => {
     };
     return(
         <>
-            <Container>
+            <Container backgroundColor={''}>
                 <LinearGradient colors={['#b41b1b', '#101d1d']} style = {{flex: 1}}>
                     <Header>
                         <View style = {styles.containerHeader}

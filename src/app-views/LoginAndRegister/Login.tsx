@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Button, View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
-import { iconGoldStar, iconMusic } from '../../app-uikits/icon-svg';
+import { iconMusic } from '../../app-uikits/icon-svg';
 import { Container, Content, Footer, Header } from '../../app-layout/Layout';
 import CheckBox from '@react-native-community/checkbox';
 import { useState } from 'react';
