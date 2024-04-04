@@ -13,21 +13,21 @@ interface DownloadProps {
 }
 
 const Download: React.FC<DownloadProps & { navigation: NavigationProp<any> }> = ({ navigation }) => {
-    const handleHome = ()=>{
+    const handleHome = () => {
         navigation.navigate('HomeScreen')
     }
-    const handleFavourite = ()=>{
+    const handleFavourite = () => {
         navigation.navigate('Favourite')
     }
-    const handlePopular = ()=>{
+    const handlePopular = () => {
         navigation.navigate('Popular')
     }
-    const handleUser = ()=>{
+    const handleUser = () => {
         navigation.navigate('User')
     }
     return (
-        <> 
-            <Container>
+        <>
+            <Container backgroundColor={''}>
 
                 <Header>
 
@@ -35,10 +35,14 @@ const Download: React.FC<DownloadProps & { navigation: NavigationProp<any> }> = 
                 </Header>
 
                 <Content>
-                    <Text  style = {{color: 'white', fontSize: 32}}>Download</Text>
+                    <Text style={{ color: 'white', fontSize: 32 }}>Download</Text>
                 </Content>
                 <Footer>
-                <BottomBar onPressHome={handleHome} onPressPopular={handlePopular} onPressFavourite={handleFavourite} onPressUser={handleUser}>
+                    <BottomBar
+                        onPressHome={handleHome} 
+                        onPressPopular={handlePopular} 
+                        onPressFavourite={handleFavourite} 
+                        onPressUser={handleUser}>
                     </BottomBar>
                 </Footer>
             </Container>

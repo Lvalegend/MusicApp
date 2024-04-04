@@ -9,3 +9,4 @@ export { default as iconPopular } from '../assets/svg/IconBottomBar/iconPopular'
 export { default as iconSreach } from '../assets/svg/iconSreach';
 export { default as iconMic } from '../assets/svg/iconMic';
 export { default as iconPlay } from '../assets/svg/iconPlay';
+export { default as Underline } from '../assets/svg/Underline';

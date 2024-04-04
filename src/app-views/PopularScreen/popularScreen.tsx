@@ -27,7 +27,7 @@ const Popular: React.FC<PopularProps & { navigation: NavigationProp<any> }> = ({
 
     return (
         <> 
-        <Container>
+        <Container backgroundColor={''}>
 
 
             <Header>

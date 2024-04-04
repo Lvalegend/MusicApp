@@ -27,7 +27,7 @@ const Favourite: React.FC<FavouriteProps & { navigation: NavigationProp<any> }> 
     }
     return (
         <> 
-            <Container>
+            <Container backgroundColor= {"red"} >
 
                 <Header>
 

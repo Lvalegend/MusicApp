@@ -41,7 +41,7 @@ const HomeScreen: React.FC<HomeScreenProps & { navigation: NavigationProp<any> }
     return (
 
         <>
-            <Container>
+            <Container backgroundColor={'black'}>
                 <Header>
                     <Text style={{ color: 'white', fontSize: 32, marginLeft: 20, marginTop: 20 }}>Home</Text>
                     <View style={styles.searchContainer}>
