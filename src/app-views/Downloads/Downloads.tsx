@@ -29,15 +29,15 @@ const Downloads: React.FC<DownloadProps & { navigation: NavigationProp<any> }> =
             <Container>
 
                 <Header>
-
+                    <Text style={{ color: 'white', fontSize: 26, flex: 1, justifyContent: 'center', paddingHorizontal: 140, marginTop: 20 }}>Downloads</Text>
                 </Header>
-                <Text style={{ color: 'white', fontSize: 26, flex: 1, justifyContent: 'center', paddingHorizontal: 140, marginTop:20 }}>Downloads</Text>
+
                 <Content>
-                    <View style={{ flex: 1,justifyContent: 'center', alignItems: 'center'}}>
-                        <ImageBackground source={require("../../assets/images/taixuong.png")} style={{ width: 150, height: 150}}/>                 
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <ImageBackground source={require("../../assets/images/taixuong.png")} style={{ width: 150, height: 150 }} />
                         <Text style={{ color: 'white', fontSize: 22, flex: 1, justifyContent: 'center', alignContent: "center" }}>Chưa có bản nhạc nào tải xuống</Text>
                     </View>
-                    
+
                 </Content>
 
                 <Footer>
