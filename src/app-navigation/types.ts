@@ -20,6 +20,6 @@ export {
     Favourite,
     Popular,
     Download,
-    User
+    User,
 
 }

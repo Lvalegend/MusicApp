@@ -1,5 +1,5 @@
 export { default as iconComments } from '../assets/svg/IconComments/iconCommentsBlack';
-export { default as iconComments2 } from '../assets/svg/IconComments/iconCommentsWhite';
+export { default as iconCommentsWhite } from '../assets/svg/IconComments/iconCommentsWhite';
 export { default as iconPlay } from '../assets/svg/IconSong/iconPlay';
 export { default as iconPause } from '../assets/svg/IconSong/iconPause';
 export { default as iconLove } from '../assets/svg/IconSong/iconLove';

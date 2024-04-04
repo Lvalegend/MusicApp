@@ -32,6 +32,7 @@ const Comments: React.FC<CommentsProps & { navigation: NavigationProp<any> }> = 
                 <View style={styles.container}>
                     <Header style={styles.header}>
                         <Text style={styles.headerText}>Bình luận</Text>
+                      
                     </Header>
                     <Content>
 

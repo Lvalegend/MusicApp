@@ -6,8 +6,6 @@ import { Comments, HomeScreen, Login, Popular, Register, SplashScreen, User, Dow
 import { useState } from 'react';
 
 
-
-
 const Stack = createNativeStackNavigator();
 
 function AppNavigator() {
