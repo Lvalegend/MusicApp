@@ -54,6 +54,8 @@ const HomeScreen: React.FC<HomeScreenProps & { navigation: NavigationProp<any> }
                     </View>
                 </Header>
 
+
+
                 <Content>
                     <ScrollView 
                     horizontal
@@ -175,8 +177,9 @@ const HomeScreen: React.FC<HomeScreenProps & { navigation: NavigationProp<any> }
                             </View>
                         </Pressable>
                     </ScrollView>
-
                 </Content>
+
+
                 <Footer>
                     <BottomBar onPressPopular={handlePopular} onPressDownload={handleDownload} onPressFavourite={handleFavourite} onPressUser={handleUser}>
                     </BottomBar>
@@ -206,7 +209,7 @@ const styles = StyleSheet.create({
     },
     input: {
         flex: 1,
-        paddingVertical: 10,
+        paddingVertical: 1,
         paddingHorizontal: 10,
     },
     search: {
@@ -233,16 +236,6 @@ const styles = StyleSheet.create({
         padding: 16,
         borderRadius: 20,
         flexDirection : 'row'
-    },
-    itemPlayList: {
-        backgroundColor: '#f9c2ff',
-        height: 170,
-        width: 170,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginVertical: 8,
-        marginHorizontal: 16,
-        padding: 20,
     },
     title: {
         fontSize: 16,

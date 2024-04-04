@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { Button, View, Text } from 'react-native';
+import { Button, View, Text, Pressable } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
-import { SvgXml } from 'react-native-svg';
+import { Image, SvgXml } from 'react-native-svg';
 import { iconGoldStar } from '../../app-uikits/icon-svg';
 import { Container, Content, Footer, Header } from '../../app-layout/Layout';
 import BottomBar from '../GeneralComponents/BottomBar/BottomBar';
@@ -34,10 +34,12 @@ const Favourite: React.FC<FavouriteProps & { navigation: NavigationProp<any> }> 
                 <Content>
                     <View>
                         <View>
-                            
+                            <Pressable>
+                                
+                            </Pressable>
                         </View>
                         <View>
-
+                            
                         </View>
                     </View>
                     <View>
