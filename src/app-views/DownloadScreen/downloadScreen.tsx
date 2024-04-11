@@ -6,45 +6,43 @@ import { Container, Content, Footer, Header } from '../../app-layout/Layout';
 import BottomBar from '../GeneralComponents/BottomBar/BottomBar';
 
 
-interface PopularProps {
+
+interface DownloadProps {
 
 }
 
-const Popular: React.FC<PopularProps & { navigation: NavigationProp<any> }> = ({ navigation }) => {
+const Download: React.FC<DownloadProps & { navigation: NavigationProp<any> }> = ({ navigation }) => {
     const handleHome = ()=>{
         navigation.navigate('HomeScreen')
     }
     const handleFavourite = ()=>{
         navigation.navigate('Favourite')
     }
-    const handleDownload = ()=>{
-        navigation.navigate('Download')
+    const handlePopular = ()=>{
+        navigation.navigate('Popular')
     }
     const handleUser = ()=>{
         navigation.navigate('User')
     }
-
     return (
         <> 
-        <Container backgroundColor={''}>
+            <Container>
+
+                <Header>
 
 
-            <Header>
+                </Header>
 
-
-            </Header>
-
-            <Content>
-                <Text style = {{color: 'white', fontSize: 32}}>PopularScreen</Text>
-            </Content>
-            <Footer>
-                    <BottomBar onPressHome={handleHome} onPressDownload={handleDownload} onPressFavourite={handleFavourite} onPressUser={handleUser}>
+                <Content>
+                    <Text  style = {{color: 'white', fontSize: 32}}>Download</Text>
+                </Content>
+                <Footer>
+                <BottomBar onPressHome={handleHome} onPressPopular={handlePopular} onPressFavourite={handleFavourite} onPressUser={handleUser}>
                     </BottomBar>
                 </Footer>
-        </Container>
-
+            </Container>
         </>
     );
 };
 
-export default Popular;
+export default Download;

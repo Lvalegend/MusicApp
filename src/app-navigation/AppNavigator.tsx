@@ -2,8 +2,8 @@ import * as React from 'react';
 import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Comments, HomeScreen, Login, Popular, Register, SplashScreen, User, Downloads, Favourite, PlayList, Song, SearchScreen, RankingScreen } from './types';
 
-import { Comments, HomeScreen, Login, Popular, Register, SplashScreen, User, Downloads, Favourite, PlayList, Song } from './types';
 
 
 
@@ -12,7 +12,7 @@ const Stack = createNativeStackNavigator();
 function AppNavigator() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="SplashScreen" screenOptions={{headerShown:false}}>
+      <Stack.Navigator initialRouteName="SearchScreen" screenOptions={{headerShown:false}}>
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
         <Stack.Screen name="SplashScreen" component={SplashScreen} />
         <Stack.Screen name="Login" component={Login} />
@@ -24,6 +24,8 @@ function AppNavigator() {
         <Stack.Screen name="User" component={User} />
         <Stack.Screen name="PlayList" component={PlayList} />
         <Stack.Screen name="Downloads" component={Downloads}/>
+        <Stack.Screen name="SearchScreen" component={SearchScreen}/>
+        <Stack.Screen name="RankingScreen" component={RankingScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

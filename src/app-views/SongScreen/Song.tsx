@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Button, View, Text, StyleSheet, Image, TextInput, TouchableOpacity, ActivityIndicator, GestureResponderEvent} from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
-import { iconPrevSong, iconNextSong, iconPause, iconPlay, iconLove, iconSong, iconShuffle, iconCommentsWhite} from '../../app-uikits/icon-svg'
+import { iconPrevSong, iconNextSong, iconPause, iconPlay, iconLove, iconSong, iconShuffle, iconComments} from '../../app-uikits/icon-svg'
 import {Footer, Content, Header} from '../../app-layout/Layout';
 import Slider from '@react-native-community/slider';
+
 
 
 
@@ -93,7 +94,7 @@ const Song: React.FC<SongProps & { navigation: NavigationProp<any> }> = ({ navig
 
                             <View style={styles.iconCmt}>
                                 <TouchableOpacity onPress={handleCommentPress} >
-                                    <SvgXml width={30} height={30} xml={iconCommentsWhite('white',50,60)}></SvgXml>
+                                    <SvgXml width={30} height={30} xml={iconComments('#FFFFFF')}></SvgXml>
                                 </TouchableOpacity>
 
                             </View>
@@ -126,10 +127,7 @@ const Song: React.FC<SongProps & { navigation: NavigationProp<any> }> = ({ navig
             </View>
 
         </>
-
-
     )
-
 
 };
 
@@ -170,10 +168,12 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         color: "white",
         marginTop: 80,
+        left:25,
     },
     artist: {
         fontSize: 15,
         color: "white",
+        left:25,
     },
     imageSong: {
         alignItems: 'center',

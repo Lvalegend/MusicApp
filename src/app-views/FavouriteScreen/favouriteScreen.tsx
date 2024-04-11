@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Button, View, Text } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
-
 import { Container, Content, Footer, Header } from '../../app-layout/Layout';
 import BottomBar from '../GeneralComponents/BottomBar/BottomBar';
 
@@ -28,22 +27,16 @@ const Favourite: React.FC<FavouriteProps & { navigation: NavigationProp<any> }> 
     return (
         <> 
             <Container backgroundColor={''}>
+
                 <Header>
-                    <Text  style = {{color: 'white', fontSize: 32}}>Favourite</Text>
+
+
                 </Header>
+
                 <Content>
-                    <View>
-                        <View>
-                            
-                        </View>
-                        <View>
-
-                        </View>
-                    </View>
-                    <View>
-
-                    </View>
+                    <Text  style = {{color: 'white', fontSize: 32}}>Favourite</Text>
                 </Content>
+
                 <Footer>
                 <BottomBar onPressHome={handleHome} onPressDownload={handleDownload} onPressPopular={handlePopular} onPressUser={handleUser}>
                     </BottomBar>

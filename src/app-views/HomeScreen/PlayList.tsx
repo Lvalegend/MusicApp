@@ -8,12 +8,12 @@ import BottomBar from '../GeneralComponents/BottomBar/BottomBar';
 import { useState } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 
-interface PlayListProps {
+interface PlaylistProps {
 
 }
 
 
-const PlayList: React.FC<PlayListProps> = ({}) => {
+const PlayList: React.FC<PlaylistProps> = ({}) => {
     const navigation = useNavigation();
     const handleNavigateBack = () => {
         navigation.goBack();
