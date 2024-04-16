@@ -1,13 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+
 
 const Header = (props: any) => {
   return (
-    
-      <View style={styles.header}>
-        {props.children}
-      </View>
+
+
+    <View style={styles.header}>
+      {props.children}
+    </View>
   );
 };
 

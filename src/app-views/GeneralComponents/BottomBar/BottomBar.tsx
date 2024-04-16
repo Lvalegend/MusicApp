@@ -7,11 +7,11 @@ interface BottomBarProps {
     onPressHome?: (screen: string) => void; 
     onPressPopular?: (screen: string) => void; 
     onPressFavourite?: (screen: string) => void; 
-    onPressDownload?: (screen: string) => void; 
+    onPressDownloads?: (screen: string) => void; 
     onPressUser?: (screen: string) => void; 
 }
 
-const BottomBar: React.FC<BottomBarProps> = ({ onPressHome, onPressPopular, onPressFavourite, onPressDownload, onPressUser }) => {
+const BottomBar: React.FC<BottomBarProps> = ({ onPressHome, onPressPopular, onPressFavourite, onPressDownloads, onPressUser }) => {
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.touch} onPress={() => onPressHome && onPressHome('Home')}>
@@ -29,7 +29,7 @@ const BottomBar: React.FC<BottomBarProps> = ({ onPressHome, onPressPopular, onPr
                 <Text style={styles.text}>Favourite</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.touch} onPress={() => onPressDownload && onPressDownload('Download')}>
+            <TouchableOpacity style={styles.touch} onPress={() => onPressDownloads && onPressDownloads('Downloads')}>
                 <SvgXml xml={iconDownload()} />
                 <Text style={styles.text}>Download</Text>
             </TouchableOpacity>
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         marginHorizontal: 20,
-        marginTop: 10,
+        marginTop: 15,
         marginBottom:20
 
     },
