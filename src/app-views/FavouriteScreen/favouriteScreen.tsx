@@ -45,8 +45,8 @@ const Favourite: React.FC<FavouriteProps & { navigation: NavigationProp<any> }> 
                     </View>
                 </Content>
                 <Footer>
-                <BottomBar onPressHome={handleHome} onPressDownload={handleDownload} onPressPopular={handlePopular} onPressUser={handleUser}>
-                    </BottomBar>
+                {/* <BottomBar onPressHome={handleHome} onPressDownload={handleDownload} onPressPopular={handlePopular} onPressUser={handleUser}>
+                    </BottomBar> */}
                 </Footer>
             </Container>
         </>

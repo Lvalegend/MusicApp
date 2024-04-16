@@ -21,5 +21,8 @@ export { default as iconBack } from '../assets/svg/iconBack';
 export { default as icon3Cham } from '../assets/svg/icon3Cham';
 export { default as iconGoogle } from '../assets/svg/iconGoogle';
 export { default as iconFacebook } from '../assets/svg/iconFacebook';
+export { default as iconImage } from '../assets/svg/iconImage';
+
+
 
 

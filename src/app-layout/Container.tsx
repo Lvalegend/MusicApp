@@ -1,18 +1,19 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 interface Props {
-    backgroundColor: string;
+    colors: string[]
     children?: React.ReactNode;
 }
 
-const Container: React.FC<Props> = ({ backgroundColor, children }) => {
+const Container: React.FC<Props> = ({ colors, children }) => {
     return (
         <SafeAreaView>
-            <View style={[styles.container, { backgroundColor }]}>
+            <LinearGradient colors ={colors} style={[styles.container]}>
                 {children}
-            </View>
+            </LinearGradient>
         </SafeAreaView>
     );
 };

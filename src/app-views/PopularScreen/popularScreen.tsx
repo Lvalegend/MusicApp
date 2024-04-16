@@ -12,37 +12,37 @@ interface PopularProps {
 }
 
 const Popular: React.FC<PopularProps & { navigation: NavigationProp<any> }> = ({ navigation }) => {
-    const handleHome = ()=>{
+    const handleHome = () => {
         navigation.navigate('HomeScreen')
     }
-    const handleFavourite = ()=>{
+    const handleFavourite = () => {
         navigation.navigate('Favourite')
     }
-    const handleDownload = ()=>{
+    const handleDownload = () => {
         navigation.navigate('Download')
     }
-    const handleUser = ()=>{
+    const handleUser = () => {
         navigation.navigate('User')
     }
 
     return (
-        <> 
-        <Container backgroundColor={''}>
+        <>
+            <Container backgroundColor={'black'}>
 
 
-            <Header>
+                <Header>
 
 
-            </Header>
+                </Header>
 
-            <Content>
-                <Text style = {{color: 'white', fontSize: 32}}>PopularScreen</Text>
-            </Content>
-            <Footer>
+                <Content>
+                    <Text style={{ color: 'white', fontSize: 32 }}>PopularScreen</Text>
+                </Content>
+                <Footer>
                     <BottomBar onPressHome={handleHome} onPressDownload={handleDownload} onPressFavourite={handleFavourite} onPressUser={handleUser}>
                     </BottomBar>
                 </Footer>
-        </Container>
+            </Container>
 
         </>
     );

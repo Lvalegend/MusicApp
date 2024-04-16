@@ -19,7 +19,7 @@ const Login: React.FC<LoginProps & { navigation: NavigationProp<any> }> = ({ nav
 
     return (
         <>
-            <Container backgroundColor={'black'}>
+            <Container colors={['#4c669f', 'red', '#192f6a']} >
 
                 <Header>
 

@@ -9,11 +9,11 @@ import { useState } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 
 interface PlayListProps {
-
+    id:string
 }
 
 
-const PlayList: React.FC<PlayListProps> = ({}) => {
+const PlayList: React.FC<PlayListProps> = ({id}) => {
     const navigation = useNavigation();
     const handleNavigateBack = () => {
         navigation.goBack();

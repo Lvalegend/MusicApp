@@ -5,6 +5,7 @@ import { SvgXml } from 'react-native-svg';
 import { iconMusic } from '../../app-uikits/icon-svg';
 import { Container, Content, Footer, Header } from '../../app-layout/Layout';
 import BottomBar from '../GeneralComponents/BottomBar/BottomBar';
+import AvatarUpload from './components/AvatarUpload';
 
 
 
@@ -13,6 +14,7 @@ interface UserProps {
 }
 
 const User: React.FC<UserProps & { navigation: NavigationProp<any> }> = ({ navigation }) => {
+    const [redirect, setRedirect] = React.useState();
     const handleHome = () => {
         navigation.navigate('HomeScreen')
     }
@@ -33,7 +35,7 @@ const User: React.FC<UserProps & { navigation: NavigationProp<any> }> = ({ navig
     }
     return (
         <>
-            <Container backgroundColor={'black'}>
+            <Container colors={['#4c669f', 'red', '#192f6a']} >
 
                 <Header>
 
@@ -43,7 +45,7 @@ const User: React.FC<UserProps & { navigation: NavigationProp<any> }> = ({ navig
                 <Content>
 
                     
-                    <ImageBackground source={require('../../assets/images/ImageUserScreen/ảnh_nền_âm_nhạc.jpg')} style={{ width: '100%', height: 780, justifyContent: 'center', alignItems: 'center' }} resizeMode='cover'>
+                    <View style={{ width: '100%', height: 750, justifyContent: 'center', alignItems: 'center' }}>
 
                         <SvgXml xml={iconMusic()}></SvgXml>
 
@@ -62,7 +64,10 @@ const User: React.FC<UserProps & { navigation: NavigationProp<any> }> = ({ navig
                             </TouchableOpacity>
                         </View>
 
-                    </ImageBackground>
+                    </View>
+
+
+                    
 
 
 

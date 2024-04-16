@@ -9,6 +9,7 @@ import Popular from '../app-views/PopularScreen/PopularScreen';
 import User from '../app-views/UserScreen/UserScreen';
 import PlayList from '../app-views/HomeScreen/PlayList';
 import Downloads from '../app-views/Downloads/Downloads';
+import UserAfterLoginOrRegister from '../app-views/UserScreen/UserAfterLoginOrRegister'
 
 
 export {
@@ -23,5 +24,6 @@ export {
     PlayList,
     Downloads,
     User,
+    UserAfterLoginOrRegister,
 
 }

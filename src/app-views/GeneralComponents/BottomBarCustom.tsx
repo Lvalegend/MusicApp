@@ -1,45 +1,38 @@
 import * as React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { SvgXml } from 'react-native-svg';
-import { iconDownload, iconFavourite, iconHome, iconPopular, iconUser } from '../../../app-uikits/icon-svg';
-import { useNavigation } from '@react-navigation/native';
+import { iconDownload, iconFavourite, iconHome, iconPopular, iconUser } from '../../app-uikits/icon-svg';
 
-interface BottomBarProps {
-    onPressHome?: (screen: string) => void; 
-    onPressPopular?: (screen: string) => void; 
-    onPressFavourite?: (screen: string) => void; 
-    onPressDownload?: (screen: string) => void; 
-    onPressUser?: (screen: string) => void; 
+
+interface Props{
+
 }
 
-const BottomBar: React.FC<BottomBarProps> = ({ onPressHome, onPressPopular, onPressFavourite, onPressDownload, onPressUser }) => {
-    const navigation:any = useNavigation()
-    const handleLogin = () =>{
-        navigation.navigate("Login")
-    }
+
+const BottomBarCustom: React.FC<Props> = () => {
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={styles.touch} onPress={() => onPressHome && onPressHome('Home')}>
+            <TouchableOpacity style={styles.touch}>
                 <SvgXml xml={iconHome()} />
                 <Text style={styles.text}>Home</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.touch} onPress={() => onPressPopular && onPressPopular('Popular')}>
+            <TouchableOpacity style={styles.touch}>
                 <SvgXml xml={iconPopular()} />
                 <Text style={styles.text}>Popular</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.touch} onPress={() => onPressFavourite && onPressFavourite('Favourite')}>
+            <TouchableOpacity style={styles.touch}>
                 <SvgXml xml={iconFavourite()} />
                 <Text style={styles.text}>Favourite</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.touch} onPress={() => onPressDownload && onPressDownload('Download')}>
+            <TouchableOpacity style={styles.touch}>
                 <SvgXml xml={iconDownload()} />
                 <Text style={styles.text}>Download</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.touch} onPress={() => onPressUser && onPressUser('User')}>
+            <TouchableOpacity style={styles.touch}>
                 <SvgXml xml={iconUser()} />
                 <Text style={styles.text}>User</Text>
             </TouchableOpacity>
@@ -56,9 +49,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
         marginTop: 15,
         marginBottom:20,
-        
-     
-
+       
 
     },
     text: {
@@ -72,4 +63,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default BottomBar;
+export default BottomBarCustom;
