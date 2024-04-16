@@ -24,8 +24,8 @@ const User: React.FC<UserProps & { navigation: NavigationProp<any> }> = ({ navig
     const handlePopular = () => {
         navigation.navigate('Popular')
     }
-    const handleDownload = () => {
-        navigation.navigate('Download')
+    const handleDownloads = () => {
+        navigation.navigate('Downloads')
     }
     const handleLogin = () => {
         navigation.navigate('Login')
@@ -74,7 +74,7 @@ const User: React.FC<UserProps & { navigation: NavigationProp<any> }> = ({ navig
                 </Content>
 
                 <Footer>
-                    <BottomBar onPressHome={handleHome} onPressPopular={handlePopular} onPressFavourite={handleFavourite} onPressDownload={handleDownload}>
+                    <BottomBar onPressHome={handleHome} onPressPopular={handlePopular} onPressFavourite={handleFavourite} onPressDownloads={handleDownloads}>
                     </BottomBar>
                 </Footer>
             </Container>

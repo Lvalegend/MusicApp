@@ -20,8 +20,8 @@ const PlayList: React.FC<PlayListProps> = ({id}) => {
     };
     return(
         <>
-            <Container backgroundColor={''}>
-                <LinearGradient colors={['#b41b1b', '#101d1d']} style = {{flex: 1}}>
+            <Container colors={["green", "red", "black"]} >
+               
                     <Header>
                         <View style = {styles.containerHeader}
                         >
@@ -127,7 +127,6 @@ const PlayList: React.FC<PlayListProps> = ({id}) => {
                     <Footer>
 
                     </Footer>
-                </LinearGradient>
             </Container>
         </>
     );

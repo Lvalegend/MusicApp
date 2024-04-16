@@ -6,7 +6,7 @@ import { iconSreach } from '../../app-uikits/icon-svg';
 import { Header, Content, Footer, Container } from '../../app-layout/Layout';
 import BottomBar from '../GeneralComponents/BottomBar/BottomBar';
 import { useState } from 'react';
-
+import DownloadButton from '../GeneralComponents/DownloadButton.tsx/DownloadButton';
 interface HomeScreenProps {
     navigation: NavigationProp<any>
 }
@@ -21,7 +21,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
     const handleFavourite = () => {
         navigation.navigate('Favourite')
     }
-    const handleDownload = () => {
+
+    const handleDownloads = ()=>{
         navigation.navigate('Downloads')
     }
     const handleUser = () => {
@@ -38,7 +39,6 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
     const handleNavigateToPlaylist = () => {
         navigation.navigate('PlayList');
     };
-
 
     return (
 
@@ -176,12 +176,13 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
                                 <Text style={{ color: 'white' }}>Nguyen Kim Tuyen</Text>
                                 <Text style={{ color: 'white', marginTop: 8 }}>3:50</Text>
                             </View>
+                            <DownloadButton></DownloadButton>
                         </Pressable>
                     </ScrollView>
 
                 </Content>
                 <Footer>
-                    <BottomBar onPressPopular={handlePopular} onPressDownload={handleDownload} onPressFavourite={handleFavourite} onPressUser={handleUser}>
+                    <BottomBar onPressPopular={handlePopular} onPressDownloads={handleDownloads} onPressFavourite={handleFavourite} onPressUser={handleUser}>
                     </BottomBar>
                 </Footer>
 

@@ -22,7 +22,7 @@ export { default as icon3Cham } from '../assets/svg/icon3Cham';
 export { default as iconGoogle } from '../assets/svg/iconGoogle';
 export { default as iconFacebook } from '../assets/svg/iconFacebook';
 export { default as iconImage } from '../assets/svg/iconImage';
-
-
-
-
+export { default as iconSomot } from '../assets/svg/iconSo/iconsomot';
+export { default as iconSohai } from '../assets/svg/iconSo/iconsohai';
+export { default as iconSoba } from '../assets/svg/iconSo/iconsoba';
+export { default as iconSobon } from '../assets/svg/iconSo/iconsobon';
