@@ -8,8 +8,6 @@ import iconSearch from '../../assets/svg/IconSearch/iconSearch';
 import BottomBar from '../GeneralComponents/BottomBar/BottomBar';
 
 
-
-
 interface SearchProps {
 
 }
@@ -35,7 +33,7 @@ const SearchScreen: React.FC<SearchProps & { navigation: NavigationProp<any> }> 
         <View style={{flexDirection:'row', margin:20,}}>
             <SvgXml xml={iconRecentSong()} width="70" height="70" />
             <Text style = {{color :"white", fontSize:15, marginTop:20, left:15,}}>{item.recentText}</Text>
-            <SvgXml xml={icon3Cham()} width="35" height="35" style={{left:70, marginTop:15,}}/>
+            <SvgXml xml={icon3Cham()} width="35" height="35" style={{left:100, marginTop:15,}}/>
         </View>
             
     );
