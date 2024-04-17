@@ -19,5 +19,4 @@ export { default as iconMic } from '../assets/svg/iconMic';
 export { default as Underline } from '../assets/svg/Underline';
 export { default as iconBack } from '../assets/svg/iconBack';
 export { default as icon3Cham } from '../assets/svg/icon3Cham';
-export { default as iconAdd } from '../assets/svg/iconAdd';
-export { default as iconLoop } from '../assets/svg/iconLoop';
+

@@ -41,7 +41,7 @@ const PlayList: React.FC<PlayListProps> = ({handleNavigateBack, id}) => {
     return (
         <>
             {playlistItem && (
-                <Container backgroundColor={''}>
+                <Container colors={['black','black','black']}>
                     <LinearGradient colors={playlistItem.colorAlbum} style={{ flex: 1 }}>
                         <Header>
                             <View style={styles.containerHeader}>

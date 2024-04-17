@@ -4,11 +4,15 @@ import { NavigationProp } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
 import { Container, Content, Footer, Header } from '../../app-layout/Layout';
 import BottomBar from '../GeneralComponents/BottomBar/BottomBar';
+import { StackNavigationProp } from '@react-navigation/stack';
 import iconCommentsBlack from '../../assets/svg/IconComments/iconCommentsBlack';
 
 
-interface CommentsProps {
 
+
+interface CommentsProps {
+    
+    
 };
 
 const Comments: React.FC<CommentsProps & { navigation: NavigationProp<any> }> = ({ navigation }) => {
@@ -27,7 +31,7 @@ const Comments: React.FC<CommentsProps & { navigation: NavigationProp<any> }> = 
     }
     return (
 
-        <> <Container backgroundColor={''}>
+        <> <Container colors={[]} >
 
 
 

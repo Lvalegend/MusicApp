@@ -1,4 +1,4 @@
-export default (color:any,width:any,height:any) => `<svg width="${width}" height="${height}" viewBox="0 0 176 155" fill="${color}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+export default (width:any,height:any) => `<svg width="${width}" height="${height}" viewBox="0 0 176 155" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <rect width="176" height="155" fill="url(#pattern0_555_2938)"/>
 <defs>
 <pattern id="pattern0_555_2938" patternContentUnits="objectBoundingBox" width="1" height="1">

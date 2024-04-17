@@ -71,7 +71,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 
         <>
             {showPlayList ? (
-                <Container backgroundColor={'black'}>
+                <Container colors={['black','black','black']}>
                     <Header>
                         <Text style={{ color: 'white', fontSize: 32, marginLeft: 20, marginTop: 20 }}>Home</Text>
                         <View style={styles.searchContainer}>
@@ -130,7 +130,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
                     </Content>
 
                     <Footer>
-                        <BottomBar onPressPopular={handlePopular} onPressDownload={handleDownload} onPressFavourite={handleFavourite} onPressUser={handleUser} />
+                        <BottomBar onPressPopular={handlePopular} onPressDownloads={handleDownload} onPressFavourite={handleFavourite} onPressUser={handleUser} />
                     </Footer>
 
                 </Container>
