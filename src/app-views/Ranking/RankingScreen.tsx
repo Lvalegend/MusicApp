@@ -45,7 +45,7 @@ const RankingScreen: React.FC<RankingProps & { navigation: NavigationProp<any> }
             </View>
             <View style={styles.underline1}>
             </View>
-            <View style={{ flexDirection: 'row', top:-10 }}>
+            <View style={{ flexDirection: 'row', top: -10 }}>
                 <Text style={{ color: 'gray', fontSize: 25, fontWeight: 'bold', top: 40 }}>{item.title4}</Text>
                 <ImageBackground source={require('../../assets/images/ImageRanking/rank4.png')}
                     style={{ width: 80, height: 80, left: 20, top: 20 }}>
@@ -59,7 +59,7 @@ const RankingScreen: React.FC<RankingProps & { navigation: NavigationProp<any> }
 
             </View>
 
-            <View style={{ flexDirection: 'row', top:-18 }}>
+            <View style={{ flexDirection: 'row', top: -18 }}>
                 <Text style={{ color: 'gray', fontSize: 25, fontWeight: 'bold', top: 55 }}>{item.title5}</Text>
                 <ImageBackground source={require('../../assets/images/ImageRanking/rank5.png')}
                     style={{ width: 78, height: 70, left: 20, top: 40 }}>
@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
         width: '100%',
         marginTop: 35,
     },
-   
+
 
 })
 

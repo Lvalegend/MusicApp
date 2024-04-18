@@ -12,7 +12,7 @@ const Stack = createNativeStackNavigator();
 function AppNavigator() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="RankingScreen" screenOptions={{headerShown:false}}>
+      <Stack.Navigator initialRouteName="Song" screenOptions={{headerShown:false}}>
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
         <Stack.Screen name="SplashScreen" component={SplashScreen} />
         <Stack.Screen name="Login" component={Login} />

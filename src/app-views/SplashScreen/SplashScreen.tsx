@@ -21,17 +21,13 @@ const SplashScreen: React.FC<SplashScreenProps & { navigation: NavigationProp<an
   return (
     <>
       <Container backgroundColor={''}>
-
         <Header>
 
 
         </Header>
 
         <Content>
-           
-
-
-           
+            <Text>SplashScreen</Text>
         </Content>
 
         <Footer>
