@@ -1,34 +1,32 @@
 import * as React from 'react';
 import Content from '../../app-layout/Content';
 import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { icon3Cham } from '../../app-uikits/icon-svg';
+import { icon3Cham, iconAdd } from '../../app-uikits/icon-svg';
 import { SvgXml } from 'react-native-svg';
-import Artists from './Artists';
 
-interface AlbumsProps {
+interface PlaylistsProps {
     onPress: any
 }
 
-const Albums: React.FC<AlbumsProps> = ({onPress}) => {
-
-    const albumData = [
-        { id: '1', title: '99%', image: require('../../assets/images/ImageAlbum99/ImageAlbum.jpg'), colorAlbum: ['', ''], artist: 'MCK'},
-        { id: '2', title: 'Ai', image: require('../../assets/images/ImageAlbumAi/imageAlbum.jpg'), colorAlbum: ['', ''],artist: 'MCK'},
-        { id: '3', title: 'LoiChoi', image: require('../../assets/images/ImageLoiChoi/ImageAlbum.jpg'), colorAlbum: ['', ''],artist: 'MCK'},
-    ]
-
+const Playlists: React.FC<PlaylistsProps> = ({onPress}) => {
+    const playListFavouriteData = [
+        { id: '1', title: 'Chills', image: require('../../assets/images/song/albumChill.jpg'), artist: 'tling, hz52, mck' },
+        { id: '2', title: 'Anime', image: require('../../assets/images/ImageAnime/ImageAlbum.png'), artist: 'tling, hz52, mck' },
+        { id: '3', title: 'Gym', image: require('../../assets/images/ImageGym/imageAlbum.jpg'), artist: 'tling, hz52, mck' },
+        { id: '4', title: 'Sad', image: require('../../assets/images/ImageSad/imageAlbum.jpg'), artist: 'tling, hz52, mck' },
+    ];
     return(
         <>
             <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 style = {{padding:20}}>
-                <Pressable style = {styles.button}
-                onPress={()=>onPress('Playlists')}>
+                <Pressable style = {[styles.button, {backgroundColor: 'red'}]}>
                     <Text style= {styles.text}>Playlists</Text>
                 </Pressable>
                 <Pressable 
-                style = {[styles.button, {backgroundColor: 'red'}]}>
+                style = {styles.button}
+                onPress={()=>onPress('Albums')}>
                     <Text style= {styles.text}>Albums</Text>
                 </Pressable>
                 <Pressable style = {styles.button}
@@ -41,7 +39,13 @@ const Albums: React.FC<AlbumsProps> = ({onPress}) => {
                 </Pressable>
             </ScrollView>
             <View>
-                {albumData.map((item) => (
+                <Pressable style = {{padding:20, flexDirection: 'row', alignItems: 'center'}}>
+                        <View style={styles.add}><SvgXml xml={iconAdd('white', 20, 20)}/></View>
+                        <View><Text style={styles.textPlaylist}>Add new playlist</Text></View>
+                </Pressable>
+            </View>
+            <View>
+                {playListFavouriteData.map((item) => (
                     <Pressable key={item.id} style={styles.playlist}>
                         <View style={{ flexDirection: 'row', width: 360 }}>
                             <Image source={item.image} style={styles.image}></Image>
@@ -71,6 +75,20 @@ const styles = StyleSheet.create({
     text:{
         color: 'white'
     },
+    add: {
+        borderRadius:40,
+        borderWidth:1,
+        borderColor:'white',
+        width:40,
+        height:40,
+        alignItems:'center',
+        justifyContent: 'center',
+        marginRight: 30
+    },
+    textPlaylist: {
+        color: 'white',
+        fontSize: 20,
+    },
     image: {
         borderRadius: 10,
         width: 70,
@@ -84,5 +102,5 @@ const styles = StyleSheet.create({
 
     },
 
-})
-export default Albums;
+});
+export default Playlists;

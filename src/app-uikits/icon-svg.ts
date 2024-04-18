@@ -28,3 +28,5 @@ export { default as iconSomot } from '../assets/svg/iconSo/iconsomot';
 export { default as iconSohai } from '../assets/svg/iconSo/iconsohai';
 export { default as iconSoba } from '../assets/svg/iconSo/iconsoba';
 export { default as iconSobon } from '../assets/svg/iconSo/iconsobon';
+export { default as icon1 } from '../assets/svg/IconRanking/icon1';
+export { default as icon2 } from '../assets/svg/IconRanking/icon2';

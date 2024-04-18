@@ -15,25 +15,10 @@ const images = {
 
 interface DownloadProps {}
 
-const Downloads: React.FC<DownloadProps & { navigation: NavigationProp<any> }> = ({ navigation }) => {
+const Downloads: React.FC<DownloadProps & { navigation: NavigationProp<any> }> = () => {
     const [selectedItemIndex, setSelectedItemIndex] = useState<number | null>(null);
     const [modalVisible, setModalVisible] = useState(false);
 
-    const handleHome = () => {
-        navigation.navigate('HomeScreen');
-    };
-
-    const handleFavourite = () => {
-        navigation.navigate('Favourite');
-    };
-
-    const handlePopular = () => {
-        navigation.navigate('Popular');
-    };
-
-    const handleUser = () => {
-        navigation.navigate('User');
-    };
 
     const handleDelete = () => {  
         setModalVisible(false);
@@ -69,7 +54,7 @@ const Downloads: React.FC<DownloadProps & { navigation: NavigationProp<any> }> =
             </Content>
 
             <Footer>
-                <BottomBar onPressHome={handleHome} onPressPopular={handlePopular} onPressFavourite={handleFavourite} onPressUser={handleUser} />
+                <BottomBar/>
             </Footer>
 
             <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => setModalVisible(false)}>

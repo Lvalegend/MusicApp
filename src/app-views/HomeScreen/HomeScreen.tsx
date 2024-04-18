@@ -8,42 +8,39 @@ import BottomBar from '../GeneralComponents/BottomBar/BottomBar';
 import { ReactNode, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import PlayList from './PlayList';
-
+import Album from './Album';
 
 
 interface HomeScreenProps {
-    navigation: NavigationProp<any>;
 }
 
-const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
+const HomeScreen: React.FC<HomeScreenProps> = () => {
 
     const [text, setText] = useState('');
     const [showPlayList, setShowPlayList] = useState(true);
-    const [selectedId, setSelectedId] = useState<string>(''); 
+    const [selectedIdP, setSelectedIdP] = useState<string>(''); 
+
+    const [showAlbum, setShowAlbum] = useState(true);
+    const [selectedIdA, setSelectedIdA] = useState<string>(''); 
 
     const handleNavigateToPlaylist = (ID: string) => {
         setShowPlayList(false)
-        setSelectedId(ID);
+        setSelectedIdP(ID);
     }
-    const handleNavigateToBack = () => {
+    const handleNavigateToBackL = () => {
         setShowPlayList(true)
     };
 
-    const handlePopular = () => {
-        navigation.navigate('Popular')
+    const handleNavigateToAlbum = (ID: string) => {
+        setShowAlbum(false)
+        setSelectedIdA(ID);
+    }
+    const handleNavigateToBackA = () => {
+        setShowPlayList(true)
     };
 
-    const handleFavourite = () => {
-        navigation.navigate('Favourite')
-    };
 
-    const handleDownload = () => {
-        navigation.navigate('Downloads')
-    };
 
-    const handleUser = () => {
-        navigation.navigate('User')
-    };
 
     const handleChangeText = (newText: string) => {
         setText(newText);
@@ -65,6 +62,11 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
         { id: '4', title: 'Sad', image: require('../../assets/images/ImageSad/imageAlbum.jpg'),colorAlbum: ['#142e4e', '#966d74'] },
     ];
 
+    const albumData = [
+        { id: '1', title: '99%', image: require('../../assets/images/ImageAlbum99/ImageAlbum.jpg'), colorAlbum: ['', '']},
+        { id: '2', title: 'Ai', image: require('../../assets/images/ImageAlbumAi/imageAlbum.jpg'), colorAlbum: ['', '']},
+        { id: '3', title: 'LoiChoi', image: require('../../assets/images/ImageLoiChoi/ImageAlbum.jpg'), colorAlbum: ['', '']},
+    ]
 
 
     return (
@@ -86,9 +88,33 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
                     </Header>
 
                     <Content>
+                        <Text style={{ fontSize: 18, color: 'white', margin: 20, }}>
+                        Playlist Hot
+                        </Text>
                         <ScrollView
                         horizontal>
                             {playListData.map((item) => (
+                                <Pressable
+                                key={item.id}
+                                onPress={() => handleNavigateToPlaylist(item.id)}
+                            >
+                                <ImageBackground
+                                    style={styles.logo}
+                                    source={item.image}
+                                >
+                                    <Text style={styles.title}>{item.title}</Text>
+                                </ImageBackground>
+                            </Pressable>
+                            
+                            ))}
+                        </ScrollView>
+
+                        <Text style={{ fontSize: 18, color: 'white', margin: 20, }}>
+                        Album Hot
+                        </Text>
+                        <ScrollView
+                        horizontal>
+                            {albumData.map((item) => (
                                 <Pressable
                                 key={item.id}
                                 onPress={() => handleNavigateToPlaylist(item.id)}
@@ -130,12 +156,13 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
                     </Content>
 
                     <Footer>
-                        <BottomBar onPressPopular={handlePopular} onPressDownloads={handleDownload} onPressFavourite={handleFavourite} onPressUser={handleUser} />
+                        <BottomBar/>
                     </Footer>
 
                 </Container>
             ) : (
-                <PlayList handleNavigateBack={handleNavigateToBack} id={selectedId} />
+                <PlayList handleNavigateBack={handleNavigateToBackL} id={selectedIdP} />
+
             )}
         </>
 
