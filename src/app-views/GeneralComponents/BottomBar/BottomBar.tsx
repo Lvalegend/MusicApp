@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import { iconDownload, iconFavourite, iconHome, iconPopular, iconUser } from '../../../app-uikits/icon-svg';
 import { useNavigation } from '@react-navigation/native';
+import { getToken } from '../../../secure-storage/GetToken';
 
 interface BottomBarProps {
     
@@ -23,9 +24,25 @@ const BottomBar: React.FC<BottomBarProps> = () => {
     const handleDownloads = ()=>{
         navigation.navigate('Downloads')
     }
-    const handleUser = () => {
-        navigation.navigate('User')
-    }
+    const handleUser = async () => {
+        try {
+            // Gọi hàm getToken để lấy token từ Encrypted Storage
+            const token = await getToken();
+    
+            // Kiểm tra token và điều hướng tới màn hình tương ứng
+            if (token) {
+                // Nếu token tồn tại, điều hướng tới màn hình User1
+                navigation.navigate('UserAfterLoginOrRegister');
+            } else {
+                // Nếu token không tồn tại, điều hướng tới màn hình User
+                navigation.navigate('User');
+            }
+        } catch (error) {
+            console.error('Lỗi trong handleUser:', error);
+            // Bạn có thể xử lý lỗi thêm nếu cần thiết
+        }
+    };
+    
     
     return (
         <View style={styles.container}>
@@ -66,10 +83,6 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
         marginTop: 15,
         marginBottom:20,
-        
-     
-
-
     },
     text: {
        color: 'white',
