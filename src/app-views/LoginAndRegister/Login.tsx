@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { Button, View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { Button, View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, Pressable } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
-import { Underline, iconFacebook, iconGoogle, iconMusic } from '../../app-uikits/icon-svg';
+import { Underline, iconBack, iconFacebook, iconGoogle, iconMusic } from '../../app-uikits/icon-svg';
 import { Container, Content, Footer, Header } from '../../app-layout/Layout';
 import CheckBox from '@react-native-community/checkbox';
 import { useState } from 'react';
@@ -79,7 +79,10 @@ const Login: React.FC<LoginProps & { navigation: NavigationProp<any> }> = ({ nav
             <Container colors={['#4c669f', 'black', '#192f6a']} >
 
                 <Header>
-
+                <Pressable onPress={() => navigation.goBack()}
+                style = {{padding: 20}}>
+                    <SvgXml xml={iconBack()} />
+                </Pressable>
                 </Header>
 
                 <Content>
@@ -185,7 +188,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginHorizontal: 20,
-        marginTop: 30
 
 
     },

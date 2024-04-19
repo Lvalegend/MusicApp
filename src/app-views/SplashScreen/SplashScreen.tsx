@@ -21,7 +21,7 @@ const SplashScreen: React.FC<SplashScreenProps & { navigation: NavigationProp<an
   }, []);
   return (
     <>
-      <Container colors={[]}>
+      <Container colors={['black', 'black']}>
 
         <Header>
 

@@ -42,10 +42,10 @@ const Downloads: React.FC<{ navigation: NavigationProp<any> }> = ({ navigation }
             setFilteredSongs(filtered);
         }
     }, [text, songs]);
-
     const handleHome = () => {
         navigation.navigate('HomeScreen');
     };
+
 
     const handleFavourite = () => {
         navigation.navigate('Favourite');
@@ -72,6 +72,9 @@ const Downloads: React.FC<{ navigation: NavigationProp<any> }> = ({ navigation }
     const handlePlay = () => {
         navigation.navigate('Song');
         setModalVisible(false);
+    };
+    const handleChangeText = (newText: string) => {
+        setText(newText);
     };
 
     return (
@@ -116,7 +119,10 @@ const Downloads: React.FC<{ navigation: NavigationProp<any> }> = ({ navigation }
             </Content>
 
             <Footer>
-                <BottomBar onPressHome={handleHome} onPressPopular={handlePopular} onPressFavourite={handleFavourite} onPressUser={handleUser} />
+
+                <BottomBar></BottomBar>
+
+
             </Footer>
 
             <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => setModalVisible(false)}>

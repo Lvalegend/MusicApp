@@ -7,13 +7,13 @@ import { Header, Content, Footer, Container } from '../../app-layout/Layout';
 import LinearGradient from 'react-native-linear-gradient';
 
 
-interface PlayListProps {
+interface AlbumProps {
     handleNavigateBack: () => void;
     id: string;
 }
 
 
-const PlayList: React.FC<PlayListProps> = ({handleNavigateBack, id}) => {
+const Album: React.FC<AlbumProps> = ({handleNavigateBack, id}) => {
 
     const chillsData = [
         { id: '1', title: 'Point the star', artist: 'Jasper, Martin Arteta, 11:11 Music Group', image: require('../../assets/images/song/SongChill1.jpg') },
@@ -25,15 +25,14 @@ const PlayList: React.FC<PlayListProps> = ({handleNavigateBack, id}) => {
         { id: '7', title: 'You re Beautiful', artist: 'Peaceful Melody, soave lofi', image: require('../../assets/images/song/SongChill7.jpg') },
     ]
 
-    const playListData = [
-        { id: '1', title: 'Chills', image: require('../../assets/images/song/albumChill.jpg'), colorAlbum: ['#b41b1b', '#101d1d'] },
-        { id: '2', title: 'Anime', image: require('../../assets/images/ImageAnime/ImageAlbum.png'),colorAlbum: ['#5a6777', '#101221'] },
-        { id: '3', title: 'Gym', image: require('../../assets/images/ImageGym/imageAlbum.jpg'), colorAlbum: ['#e8a356', '#140000'] },
-        { id: '4', title: 'Sad', image: require('../../assets/images/ImageSad/imageAlbum.jpg'),colorAlbum: ['#142e4e', '#966d74'] },
-    ];
+    const albumData = [
+        { id: '1', title: '99%', image: require('../../assets/images/ImageAlbum99/ImageAlbum.jpg'), colorAlbum: ['#b41b1b', '#101d1d']},
+        { id: '2', title: 'Ai', image: require('../../assets/images/ImageAlbumAi/imageAlbum.jpg'), colorAlbum: ['#b41b1b', '#101d1d']},
+        { id: '3', title: 'LoiChoi', image: require('../../assets/images/ImageLoiChoi/ImageAlbum.jpg'), colorAlbum: ['#b41b1b', '#101d1d']},
+    ]
 
     const findPlaylistItemById = (itemId: string) => {
-        return playListData.find(item => item.id === itemId);
+        return albumData.find(item => item.id === itemId);
     };
     
     const playlistItem = findPlaylistItemById(id);
@@ -132,4 +131,4 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
 });
-export default PlayList;
+export default Album;
