@@ -18,20 +18,15 @@ const User: React.FC<UserProps & { navigation: NavigationProp<any> }> = ({ navig
     const handleHome = () => {
         navigation.navigate('HomeScreen')
     }
-    const handleFavourite = () => {
-        navigation.navigate('Favourite')
-    }
-    const handlePopular = () => {
-        navigation.navigate('Popular')
-    }
-    const handleDownloads = () => {
-        navigation.navigate('Downloads')
-    }
+   
     const handleLogin = () => {
         navigation.navigate('Login')
     }
     const handleRegister = () => {
         navigation.navigate('Register')
+    }
+    const handleUserAfterLoginOrRegister = () => {
+        navigation.navigate('UserAfterLoginOrRegister')
     }
     return (
         <>
@@ -66,6 +61,8 @@ const User: React.FC<UserProps & { navigation: NavigationProp<any> }> = ({ navig
 
                     </View>
 
+                    
+
 
                     
 
@@ -74,7 +71,7 @@ const User: React.FC<UserProps & { navigation: NavigationProp<any> }> = ({ navig
                 </Content>
 
                 <Footer>
-                    <BottomBar onPressHome={handleHome} onPressPopular={handlePopular} onPressFavourite={handleFavourite} onPressDownloads={handleDownloads}>
+                    <BottomBar >
                     </BottomBar>
                 </Footer>
             </Container>

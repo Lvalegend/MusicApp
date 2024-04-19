@@ -182,8 +182,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 
                 </Content>
                 <Footer>
-                    <BottomBar onPressPopular={handlePopular} onPressDownloads={handleDownloads} onPressFavourite={handleFavourite} onPressUser={handleUser}>
-                    </BottomBar>
+                    <BottomBar></BottomBar>
                 </Footer>
 
             </Container>

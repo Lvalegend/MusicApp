@@ -16,10 +16,32 @@ interface RegisterProps {
 
 }
 
-const Register: React.FC<RegisterProps & { navigation: NavigationProp<any> }> = ({ navigation}) => {
+const Register: React.FC<RegisterProps & { navigation: NavigationProp<any> }> = ({ navigation }) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+
+    // validate form
+    const [nameValidate, setNameValidate] = useState(false);
+    const [emailValidate, setEmailValidate] = useState(false)
+    const [passwordValidate, setPasswordValidate] = useState(false)
+
+    const ValidationName = (name: any) => {
+        setNameValidate(name.trim() !== '');
+    };
+
+    const ValidationEmail = (email: any) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const isValid = emailRegex.test(email);
+        setEmailValidate(isValid);
+
+    }
+    const ValidationPassword = (password: any) => {
+        const isValid = password.length >= 6
+        setPasswordValidate(isValid);
+    };
+    //
 
 
     const handleLogin = () => {
@@ -43,19 +65,8 @@ const Register: React.FC<RegisterProps & { navigation: NavigationProp<any> }> = 
                 email: email,
                 password: password
             };
-            const response = await axios.post('http://192.168.113.110:3000/register', userData);
-            // const response = await axios.post('http://localhost:3000/register', userData);
+            const response = await axios.post('http://192.168.2.14:3000/register', userData);
 
-            // const response = await fetch('http://localhost:3000/register', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //         'Accept': 'application/json'
-            //     },
-            //     body: JSON.stringify(userData)
-            // })
-            // .then(console.log)
-            // .catch(console.error)
             handleResponse(response.data)
             console.log('Response:', response);
             const token = response.data.token;
@@ -82,36 +93,39 @@ const Register: React.FC<RegisterProps & { navigation: NavigationProp<any> }> = 
 
                     <View style={{ width: '100%', marginTop: 10 }}>
                         <Text style={[styles.textColor, { alignSelf: 'flex-start', marginBottom: 10 }]}>Name</Text>
+                        {!nameValidate && name !== '' && <Text style={{ color: 'red', marginBottom: 10 }}>Invalid Name</Text>}
                         <TextInput
                             placeholder='Enter your name'
                             style={{ backgroundColor: 'white', borderRadius: 10, paddingLeft: 10 }}
                             value={name}
-                            onChangeText={text => setName(text)}
+                            onChangeText={text => { setName(text); ValidationName(text) }}
                         />
                     </View>
 
                     <View style={{ width: '100%', marginTop: 10 }}>
-                        <Text style={[styles.textColor, { alignSelf: 'flex-start', marginBottom: 10 }]}>Email</Text>
+                        <Text style={[styles.textColor, { alignSelf: 'flex-start', marginBottom: 5 }]}>Email</Text>
+                        {!emailValidate && email !== '' && <Text style={{ color: 'red', marginBottom: 10 }}>Invalid Email</Text>}
                         <TextInput
                             placeholder='Enter your email'
                             style={{ backgroundColor: 'white', borderRadius: 10, paddingLeft: 10 }}
                             value={email}
-                            onChangeText={text => setEmail(text)}
+                            onChangeText={text => { setEmail(text); ValidationEmail(text) }}
                         />
                     </View>
 
-                    <View style={{ width: '100%', marginTop: 10 }}>
-                        <Text style={[styles.textColor, { alignSelf: 'flex-start', marginBottom: 10 }]}>Password</Text>
+                    <View style={{ width: '100%', marginTop: 15 }}>
+                        <Text style={[styles.textColor, { alignSelf: 'flex-start', marginBottom: 5 }]}>Password</Text>
+                        {!passwordValidate && password !== '' && <Text style={{ color: 'red', marginBottom: 10 }}>Password must have at least 6 characters</Text>}
                         <TextInput
                             placeholder='Enter your password'
                             style={{ backgroundColor: 'white', borderRadius: 10, paddingLeft: 10 }}
                             secureTextEntry
                             value={password}
-                            onChangeText={text => setPassword(text)}
+                            onChangeText={text => { setPassword(text); ValidationPassword(text) }}
                         />
                     </View>
 
-                    <TouchableOpacity onPress={handleRegister} style={{ marginBottom: 20, width: '100%', marginTop: 30 }}>
+                    <TouchableOpacity onPress={handleRegister} style={{ marginBottom: 20, width: '100%', marginTop: 30 }} disabled={!nameValidate || !emailValidate || !passwordValidate}>
                         <Text style={[styles.textColor, { padding: 15, backgroundColor: '#23D6E4', borderRadius: 105 }]}>Sign Up</Text>
                     </TouchableOpacity>
 
