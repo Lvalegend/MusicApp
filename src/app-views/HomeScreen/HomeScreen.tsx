@@ -5,6 +5,7 @@ import { SvgXml } from 'react-native-svg';
 import { iconSreach } from '../../app-uikits/icon-svg';
 import { Header, Content, Footer, Container } from '../../app-layout/Layout';
 import BottomBar from '../GeneralComponents/BottomBar/BottomBar';
+<<<<<<< HEAD
 import { ReactNode, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import PlayList from './PlayList';
@@ -13,6 +14,12 @@ import PlayList from './PlayList';
 
 interface HomeScreenProps {
     navigation: NavigationProp<any>;
+=======
+import { useState } from 'react';
+import DownloadButton from '../GeneralComponents/DownloadButton.tsx/DownloadButton';
+interface HomeScreenProps {
+    navigation: NavigationProp<any>
+>>>>>>> cb282879cda04304949c3179bb03061c0e6d785b
 }
 
 const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
@@ -21,6 +28,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
     const [showPlayList, setShowPlayList] = useState(true);
     const [selectedId, setSelectedId] = useState<string>(''); 
 
+<<<<<<< HEAD
     const handleNavigateToPlaylist = (ID: string) => {
         setShowPlayList(false)
         setSelectedId(ID);
@@ -44,11 +52,30 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
     const handleUser = () => {
         navigation.navigate('User')
     };
+=======
+    const handlePopular = () => {
+        navigation.navigate('Popular')
+    }
+    const handleFavourite = () => {
+        navigation.navigate('Favourite')
+    }
+
+    const handleDownloads = ()=>{
+        navigation.navigate('Downloads')
+    }
+    const handleUser = () => {
+        navigation.navigate('User')
+    }
+    const handleSong = () => {
+        navigation.navigate('Song')
+    }
+>>>>>>> cb282879cda04304949c3179bb03061c0e6d785b
 
     const handleChangeText = (newText: string) => {
         setText(newText);
     };
 
+<<<<<<< HEAD
     const recentlyPlayedData = [
         { id: '1', title: 'Le Luu Ly', artist: 'Nguyen Kim Tuyen', duration: '3:50', image: require('../../assets/images/song/Leluuly.jpg') },
         { id: '2', title: 'Anh Mat Troi', artist: 'Nguyen Kim Tuyen', duration: '3:50', image: require('../../assets/images/song/anhMatTroi.jpg') },
@@ -66,10 +93,16 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
     ];
 
 
+=======
+    const handleNavigateToPlaylist = () => {
+        navigation.navigate('PlayList');
+    };
+>>>>>>> cb282879cda04304949c3179bb03061c0e6d785b
 
     return (
 
         <>
+<<<<<<< HEAD
             {showPlayList ? (
                 <Container backgroundColor={'black'}>
                     <Header>
@@ -92,6 +125,30 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
                                 <Pressable
                                 key={item.id}
                                 onPress={() => handleNavigateToPlaylist(item.id)}
+=======
+            <Container colors={['#4c669f', 'red', '#192f6a']}>
+                <Header>
+                    <Text style={{ color: 'white', fontSize: 32, marginLeft: 20, marginTop: 20 }}>Home</Text>
+                    <View style={styles.searchContainer}>
+                        <SvgXml xml={iconSreach()} style={{ margin: 20, marginRight: 0, }} />
+                        <TextInput
+                            style={styles.input}
+                            value={text}
+                            onChangeText={handleChangeText}
+                            placeholder="Search"
+                        />
+                    </View>
+                </Header>
+
+                <Content>
+                    <ScrollView
+                        horizontal
+                        showsHorizontalScrollIndicator={false}>
+                        <Pressable onPress={handleNavigateToPlaylist}>
+                            <ImageBackground
+                                style={styles.logo}
+                                source={require('../../assets/images/song/albumChill.jpg')}
+>>>>>>> cb282879cda04304949c3179bb03061c0e6d785b
                             >
                                 <ImageBackground
                                     style={styles.logo}
@@ -112,6 +169,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
                             </Text>
                         </View>
 
+<<<<<<< HEAD
                         {recentlyPlayedData.map((item) => (
                             <Pressable
                                 key={item.id}
@@ -125,6 +183,124 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
                                 </View>
                             </Pressable>
                         ))}
+=======
+                        <ImageBackground
+                            style={styles.logo}
+                            source={require('../../assets/images/song/album1.jpg')}
+                        >
+                            <Text style={styles.title}>Chills</Text>
+                        </ImageBackground>
+                        <ImageBackground
+                            style={styles.logo}
+                            source={require('../../assets/images/song/album1.jpg')}
+                        >
+                            <Text style={styles.title}>GYM</Text>
+                        </ImageBackground>
+                        <ImageBackground
+                            style={styles.logo}
+                            source={require('../../assets/images/song/album1.jpg')}
+                        >
+                            <Text style={styles.title}>GYM</Text>
+                        </ImageBackground>
+                        <ImageBackground
+                            style={styles.logo}
+                            source={require('../../assets/images/song/album1.jpg')}
+                        >
+                            <Text style={styles.title}>GYM</Text>
+                        </ImageBackground>
+                    </ScrollView>
+                    <View style={{ flexDirection: 'row' }}>
+                        <Text style={{ fontSize: 18, color: 'white', marginLeft: 20, marginTop: 20, }}>
+                            Recently Play
+                        </Text>
+                        <Text style={{ fontSize: 18, color: 'white', marginLeft: 190, marginTop: 20, }}>
+                            See all
+                        </Text>
+                    </View>
+                    <ScrollView
+                        showsHorizontalScrollIndicator={false}>
+                        <Pressable style={styles.item} onPress={handleSong}>
+                            <Image source={require('../../assets/images/song/Leluuly.jpg')} style={styles.song}></Image>
+                            <View style={{ flexDirection: 'column', marginHorizontal: 18, justifyContent: 'center' }}>
+                                <Text style={{ color: 'white' }}>Le Luu Ly</Text>
+                                <Text style={{ color: 'white' }}>Nguyen Kim Tuyen</Text>
+                                <Text style={{ color: 'white', marginTop: 8 }}>3:50</Text>
+                            </View>
+                        </Pressable>
+                        <Pressable style={styles.item}>
+                            <Image source={require('../../assets/images/song/anhMatTroi.jpg')} style={styles.song}></Image>
+                            <View style={{ flexDirection: 'column', marginHorizontal: 18, justifyContent: 'center' }}>
+                                <Text style={{ color: 'white' }}>Anh Mat Troi</Text>
+                                <Text style={{ color: 'white' }}>Nguyen Kim Tuyen</Text>
+                                <Text style={{ color: 'white', marginTop: 8 }}>3:50</Text>
+                            </View>
+                        </Pressable>
+                        <Pressable style={styles.item}>
+                            <Image source={require('../../assets/images/song/KhiAnhGanEm.jpg')} style={styles.song}></Image>
+                            <View style={{ flexDirection: 'column', marginHorizontal: 18, justifyContent: 'center' }}>
+                                <Text style={{ color: 'white' }}>Khi Anh Gan Em</Text>
+                                <Text style={{ color: 'white' }}>Nguyen Kim Tuyen</Text>
+                                <Text style={{ color: 'white', marginTop: 8 }}>3:50</Text>
+                            </View>
+                        </Pressable>
+                        <Pressable style={styles.item}>
+                            <Image source={require('../../assets/images/song/Hoacuoijpg.jpg')} style={styles.song}></Image>
+                            <View style={{ flexDirection: 'column', marginHorizontal: 18, justifyContent: 'center' }}>
+                                <Text style={{ color: 'white' }}>Hoa Cuoi</Text>
+                                <Text style={{ color: 'white' }}>Nguyen Kim Tuyen</Text>
+                                <Text style={{ color: 'white', marginTop: 8 }}>3:50</Text>
+                            </View>
+                        </Pressable>
+                        <Pressable style={styles.item}>
+                            <Image source={require('../../assets/images/song/OIP.jpg')} style={styles.song}></Image>
+                            <View style={{ flexDirection: 'column', marginHorizontal: 18, justifyContent: 'center' }}>
+                                <Text style={{ color: 'white' }}>Tinh Yeu Sai</Text>
+                                <Text style={{ color: 'white' }}>Nguyen Kim Tuyen</Text>
+                                <Text style={{ color: 'white', marginTop: 8 }}>3:50</Text>
+                            </View>
+                        </Pressable>
+                        <Pressable style={styles.item}>
+                            <Image source={require('../../assets/images/song/Leluuly.jpg')} style={styles.song}></Image>
+                            <View style={{ flexDirection: 'column', marginHorizontal: 18, justifyContent: 'center' }}>
+                                <Text style={{ color: 'white' }}>Mehaboba</Text>
+                                <Text style={{ color: 'white' }}>Nguyen Kim Tuyen</Text>
+                                <Text style={{ color: 'white', marginTop: 8 }}>3:50</Text>
+                            </View>
+                        </Pressable>
+                        <Pressable style={styles.item}>
+                            <Image source={require('../../assets/images/song/Leluuly.jpg')} style={styles.song}></Image>
+                            <View style={{ flexDirection: 'column', marginHorizontal: 18, justifyContent: 'center' }}>
+                                <Text style={{ color: 'white' }}>Mehaboba</Text>
+                                <Text style={{ color: 'white' }}>Nguyen Kim Tuyen</Text>
+                                <Text style={{ color: 'white', marginTop: 8 }}>3:50</Text>
+                            </View>
+                        </Pressable>
+                        <Pressable style={styles.item}>
+                            <Image source={require('../../assets/images/song/Leluuly.jpg')} style={styles.song}></Image>
+                            <View style={{ flexDirection: 'column', marginHorizontal: 18, justifyContent: 'center' }}>
+                                <Text style={{ color: 'white' }}>Mehaboba</Text>
+                                <Text style={{ color: 'white' }}>Nguyen Kim Tuyen</Text>
+                                <Text style={{ color: 'white', marginTop: 8 }}>3:50</Text>
+                            </View>
+                        </Pressable>
+                        <Pressable style={styles.item}>
+                            <Image source={require('../../assets/images/song/Leluuly.jpg')} style={styles.song}></Image>
+                            <View style={{ flexDirection: 'column', marginHorizontal: 18, justifyContent: 'center' }}>
+                                <Text style={{ color: 'white' }}>Mehaboba</Text>
+                                <Text style={{ color: 'white' }}>Nguyen Kim Tuyen</Text>
+                                <Text style={{ color: 'white', marginTop: 8 }}>3:50</Text>
+                            </View>
+                            <DownloadButton></DownloadButton>
+                        </Pressable>
+                    </ScrollView>
+
+                </Content>
+                <Footer>
+                    <BottomBar></BottomBar>
+                </Footer>
+
+            </Container>
+>>>>>>> cb282879cda04304949c3179bb03061c0e6d785b
 
 
                     </Content>
@@ -188,6 +364,19 @@ const styles = StyleSheet.create({
         padding: 16,
         borderRadius: 20,
         flexDirection: 'row'
+<<<<<<< HEAD
+=======
+    },
+    itemPlayList: {
+        backgroundColor: '#f9c2ff',
+        height: 170,
+        width: 170,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginVertical: 8,
+        marginHorizontal: 16,
+        padding: 20,
+>>>>>>> cb282879cda04304949c3179bb03061c0e6d785b
     },
     title: {
         fontSize: 16,

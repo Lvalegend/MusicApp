@@ -59,10 +59,6 @@ const Downloads: React.FC<{ navigation: NavigationProp<any> }> = ({ navigation }
         navigation.navigate('User');
     };
 
-    const handleChangeText = (newText: string) => {
-        setText(newText);
-    };
-
     const handleDelete = () => {
         if (selectedItemIndex !== null) {
             const songToDelete = songs[selectedItemIndex];
@@ -79,7 +75,7 @@ const Downloads: React.FC<{ navigation: NavigationProp<any> }> = ({ navigation }
     };
 
     return (
-        <Container backgroundColor={'black'}>
+        <Container colors={['#4c669f', 'red', '#192f6a']} >
             <Header>
                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                     <Text style={{ color: 'white', fontSize: 26, marginTop: 15 }}>Downloads</Text>
@@ -120,7 +116,7 @@ const Downloads: React.FC<{ navigation: NavigationProp<any> }> = ({ navigation }
             </Content>
 
             <Footer>
-                <BottomBar onPressHome={() => navigation.navigate('HomeScreen')} onPressPopular={() => navigation.navigate('Popular')} onPressFavourite={() => navigation.navigate('Favourite')} onPressUser={() => navigation.navigate('User')} />
+                <BottomBar onPressHome={handleHome} onPressPopular={handlePopular} onPressFavourite={handleFavourite} onPressUser={handleUser} />
             </Footer>
 
             <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => setModalVisible(false)}>
