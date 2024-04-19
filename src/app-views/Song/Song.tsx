@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Button, View, Text, StyleSheet, Image, TextInput, TouchableOpacity, ActivityIndicator, GestureResponderEvent} from 'react-native';
+import { Button, View, Text, StyleSheet, Image, TextInput, TouchableOpacity, ActivityIndicator, GestureResponderEvent, Pressable} from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
-import { iconPrevSong, iconNextSong, iconPause, iconPlay, iconLove, iconSong, iconShuffle, iconCommentsWhite} from '../../app-uikits/icon-svg'
+import { iconPrevSong, iconNextSong, iconPause, iconPlay, iconLove, iconSong, iconShuffle, iconCommentsWhite, iconBack} from '../../app-uikits/icon-svg'
 import {Footer, Content, Header} from '../../app-layout/Layout';
 import Slider from '@react-native-community/slider';
 
@@ -52,9 +52,15 @@ const Song: React.FC<SongProps & { navigation: NavigationProp<any> }> = ({ navig
 
             <View style={styles.container}>
 
-                <Header style={styles.header}>
-                    <Text style={styles.headerText}>Playing now</Text>
-
+                <Header>
+                    <View style= {styles.header}>
+                        
+                        <Pressable onPress={() => navigation.goBack()}
+                        style = {{padding: 20}}>
+                            <SvgXml xml={iconBack()} />
+                        </Pressable>
+                        <Text style={styles.headerText}>Playing now</Text>
+                    </View>
                 </Header>
                 {isCommentVisible && <View style={styles.overlay} />}
                 <Content>
@@ -145,6 +151,7 @@ const styles = StyleSheet.create({
     },
     header: {
         height: 100,
+        flexDirection: 'row'
 
     },
     headerText: {
@@ -153,6 +160,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
         marginBottom: 30,
         textAlign: 'center',
+        marginLeft: 70,
     },
     footer: {
         borderTopWidth: 1,
