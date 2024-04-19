@@ -11,14 +11,13 @@ const DownloadButton = () => {
   };
 
   const handleDownload = () => {
-    console.log('Bắt đầu tải xuống');
     setModalVisible(false);
     showAlert();
   };
 
   const showAlert = () => {
     Alert.alert('Thông báo', 'Tải xuống hoàn thành',
-      [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
+      [{ text: 'OK'}],
       { cancelable: false }
     );
   };
