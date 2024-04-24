@@ -1,4 +1,4 @@
-export { default as iconCommentsBlack } from '../assets/svg/IconComments/iconCommentsBlack';
+export { default as iconComments } from '../assets/svg/IconComments/iconComments';
 export { default as iconCommentsWhite } from '../assets/svg/IconComments/iconCommentsWhite';
 export { default as iconPlay } from '../assets/svg/IconSong/iconPlay';
 export { default as iconPause } from '../assets/svg/IconSong/iconPause';
@@ -19,6 +19,10 @@ export { default as iconMic } from '../assets/svg/iconMic';
 export { default as Underline } from '../assets/svg/Underline';
 export { default as iconBack } from '../assets/svg/iconBack';
 export { default as icon3Cham } from '../assets/svg/icon3Cham';
+export { default as iconRecentSong } from '../assets/svg/IconSearch/iconRecentSong';
+export { default as iconLyrics } from '../assets/svg/IconSong/iconLyrics';
+export { default as icon1 } from '../assets/svg/IconRanking/icon1';
+export { default as icon2 } from '../assets/svg/IconRanking/icon2';
 export { default as iconAdd } from '../assets/svg/iconAdd';
 export { default as iconLoop } from '../assets/svg/iconLoop';
 export { default as iconGoogle } from '../assets/svg/iconGoogle';

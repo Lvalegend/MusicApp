@@ -4,6 +4,7 @@ import { NavigationProp } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
 import { iconSreach } from '../../app-uikits/icon-svg';
 import { Header, Content, Footer, Container } from '../../app-layout/Layout';
+import Login from '../LoginAndRegister/Login';
 import BottomBar from '../GeneralComponents/BottomBar/BottomBar';
 import { ReactNode, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -70,7 +71,6 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
 
 
     return (
-
         <>
             {showPlayList ? (
                 <Container colors={['black','black','black']}>
@@ -220,6 +220,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
         top: 110,
         margin: 20,
+        top: 110,
+        margin: 20,
         color: 'white'
     },
     word: {
@@ -230,6 +232,7 @@ const styles = StyleSheet.create({
     song: {
         height: 70,
         width: 70,
+        borderRadius: 10,
         borderRadius: 10,
     },
 });

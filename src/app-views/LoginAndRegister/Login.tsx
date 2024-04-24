@@ -170,13 +170,11 @@ const Login: React.FC<LoginProps & { navigation: NavigationProp<any> }> = ({ nav
 
                     </View>
 
-                </Content>
+            </Content>
 
-                <Footer>
+            <Footer>
 
-                </Footer>
-
-            </Container>
+            </Footer>
 
         </>
     );

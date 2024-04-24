@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, View, Text, StyleSheet, Image, TextInput, TouchableOpacity, Dimensions } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
+import { iconComments } from '../../app-uikits/icon-svg';
 import { Container, Content, Footer, Header } from '../../app-layout/Layout';
 import BottomBar from '../GeneralComponents/BottomBar/BottomBar';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -31,7 +32,7 @@ const Comments: React.FC<CommentsProps & { navigation: NavigationProp<any> }> = 
     }
     return (
 
-        <> <Container colors={[]} >
+        <> <Container backgroundColor={''}>
 
 
 
@@ -44,46 +45,40 @@ const Comments: React.FC<CommentsProps & { navigation: NavigationProp<any> }> = 
 
             <Content>
                 <View style={styles.container}>
-                    <View style={styles.header}>
+                    <Header style={styles.header}>
                         <Text style={styles.headerText}>Bình luận</Text>
-
-                    </View>
-
-
-                    <View style={styles.commentContainer}>
-
-                        <SvgXml width={200} height={200} xml={iconCommentsBlack()}></SvgXml>
-                        <Text style={styles.noCommentText}>Hãy là người đầu tiên bình luận</Text>
-                    </View>
-                    <View style={styles.footer}>
-
-                        <View style={styles.commentBox}>
-                            <Image style={styles.imageCaNhan} source={require('../../assets/images/ImageComments/avt_ca_nhan.png')}></Image>
-                            <TextInput
-                                placeholder="Nhập bình luận..."
-                                value={comment}
-                                onChangeText={(text) => setComment(text)}
-                                style={styles.input}
-                            />
-
-                            <TouchableOpacity onPress={addComment} style={styles.button}>
-                                <Text style={styles.buttonText}>Gửi</Text>
-                            </TouchableOpacity>
+                      
+                    </Header>
+                    <Content>
+                        <View style={styles.commentContainer}>
+                            <SvgXml width={200} height={200} xml={iconComments('#000000')}></SvgXml>
+                            <Text style={styles.noCommentText}>Hãy là người đầu tiên bình luận</Text>
                         </View>
-                    </View>
+                    </Content>
 
+                    <Footer>
+                        <View style={styles.footer}>
+
+                            <View style={styles.commentBox}>
+                                <Image style={styles.imageCaNhan} source={require('../../assets/images/ImageComments/avt_ca_nhan.png')}></Image>
+                                <TextInput
+                                    placeholder="Nhập bình luận..."
+                                    value={comment}
+                                    onChangeText={(text) => setComment(text)}
+                                    style={styles.input}
+                                />
+
+                                <TouchableOpacity onPress={addComment} style={styles.button}>
+                                    <Text style={styles.buttonText}>Gửi</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </Footer>
                 </View>
-            </Content>
-
-
-            <Footer>
-
-
-            </Footer>
 
 
 
-        </Container >
+            </Container>
 
         </>
     );
