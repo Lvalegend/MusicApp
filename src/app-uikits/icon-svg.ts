@@ -21,5 +21,16 @@ export { default as iconBack } from '../assets/svg/iconBack';
 export { default as icon3Cham } from '../assets/svg/icon3Cham';
 export { default as iconRecentSong } from '../assets/svg/IconSearch/iconRecentSong';
 export { default as iconLyrics } from '../assets/svg/IconSong/iconLyrics';
+export { default as iconAdd } from '../assets/svg/iconAdd';
+export { default as iconLoop } from '../assets/svg/iconLoop';
+export { default as iconGoogle } from '../assets/svg/iconGoogle';
+export { default as iconFacebook } from '../assets/svg/iconFacebook';
+export { default as iconImage } from '../assets/svg/iconImage';
+export { default as iconSomot } from '../assets/svg/iconSo/iconsomot';
+export { default as iconSohai } from '../assets/svg/iconSo/iconsohai';
+export { default as iconSoba } from '../assets/svg/iconSo/iconsoba';
+export { default as iconSobon } from '../assets/svg/iconSo/iconsobon';
 export { default as icon1 } from '../assets/svg/IconRanking/icon1';
 export { default as icon2 } from '../assets/svg/IconRanking/icon2';
+export { default as iconChuX} from '../assets/svg/iconChuX';
+

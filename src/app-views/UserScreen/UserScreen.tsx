@@ -5,6 +5,7 @@ import { SvgXml } from 'react-native-svg';
 import { iconMusic } from '../../app-uikits/icon-svg';
 import { Container, Content, Footer, Header } from '../../app-layout/Layout';
 import BottomBar from '../GeneralComponents/BottomBar/BottomBar';
+import AvatarUpload from './components/AvatarUpload';
 
 
 
@@ -13,27 +14,23 @@ interface UserProps {
 }
 
 const User: React.FC<UserProps & { navigation: NavigationProp<any> }> = ({ navigation }) => {
+    const [redirect, setRedirect] = React.useState();
     const handleHome = () => {
         navigation.navigate('HomeScreen')
     }
-    const handleFavourite = () => {
-        navigation.navigate('Favourite')
-    }
-    const handlePopular = () => {
-        navigation.navigate('Popular')
-    }
-    const handleDownload = () => {
-        navigation.navigate('Download')
-    }
+   
     const handleLogin = () => {
         navigation.navigate('Login')
     }
     const handleRegister = () => {
         navigation.navigate('Register')
     }
+    const handleUserAfterLoginOrRegister = () => {
+        navigation.navigate('UserAfterLoginOrRegister')
+    }
     return (
         <>
-            <Container backgroundColor={'black'}>
+            <Container colors={['#4c669f', 'red', '#192f6a']} >
 
                 <Header>
 
@@ -41,12 +38,14 @@ const User: React.FC<UserProps & { navigation: NavigationProp<any> }> = ({ navig
                 </Header>
 
                 <Content>
-                    <ImageBackground source={require('../../assets/images/ImageUserScreen/ảnh_nền_âm_nhạc.jpg')} style={{ width: '100%', height: 780, justifyContent: 'center', alignItems: 'center' }} resizeMode='cover'>
-                       
+
+                    
+                    <View style={{ width: '100%', height: 750, justifyContent: 'center', alignItems: 'center' }}>
+
                         <SvgXml xml={iconMusic()}></SvgXml>
 
                         <Text style={[styles.textColor, { fontSize: 25, marginTop: 30 }]}>Listen to music freely with many different music genres</Text>
-                        
+
                         <Text style={[styles.textColor, { fontSize: 18, marginVertical: 10 }]}>Quickly register an account and experience together</Text>
 
                         <TouchableOpacity style={{ marginVertical: 20, width: '100%' }} onPress={handleLogin}>
@@ -60,11 +59,19 @@ const User: React.FC<UserProps & { navigation: NavigationProp<any> }> = ({ navig
                             </TouchableOpacity>
                         </View>
 
-                    </ImageBackground>
+                    </View>
+
+                    
+
+
+                    
+
+
+
                 </Content>
 
                 <Footer>
-                    <BottomBar onPressHome={handleHome} onPressPopular={handlePopular} onPressFavourite={handleFavourite} onPressDownload={handleDownload}>
+                    <BottomBar >
                     </BottomBar>
                 </Footer>
             </Container>

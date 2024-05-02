@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "image": "Jack97.png",
+        "name": "Jack - J97",
+        "follow": "2,5M quan tâm"
+    },
+    {
+        "id": 2,
+        "image": "MartinGarrix.png",
+        "name": "Martin Garix",
+        "follow": "145K quan tâm"
+    },
+    {
+        "id": 3,
+        "image": "Pitbull.png",
+        "name": "Pitbull",
+        "follow": "80,3K quan tâm"
+    },
+    {
+        "id": 4,
+        "image": "Vicetone.png",
+        "name": "Vicetone",
+        "follow": "30,4K quan tâm"
+    }
+]

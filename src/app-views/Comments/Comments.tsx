@@ -8,7 +8,11 @@ import BottomBar from '../GeneralComponents/BottomBar/BottomBar';
 
 
 
+
+
 interface CommentsProps {
+    id: number;
+    text: string;
 
 };
 
@@ -27,39 +31,45 @@ const Comments: React.FC<CommentsProps & { navigation: NavigationProp<any> }> = 
         };
     }
     return (
+
         <>
-            <Container backgroundColor={''}>
-                <View style={styles.container}>
-                    <Header style={styles.header}>
-                        <Text style={styles.headerText}>Bình luận</Text>
-                      
-                    </Header>
-                    <Content>
-                        <View style={styles.commentContainer}>
-                            <SvgXml width={200} height={200} xml={iconComments('#000000')}></SvgXml>
-                            <Text style={styles.noCommentText}>Hãy là người đầu tiên bình luận</Text>
+            <Container colors={['white', 'white']}>
+
+
+
+                <Header style={styles.header}>
+                    <Text style={styles.headerText}>Bình luận</Text>
+
+                </Header>
+                <Content>
+                    {comments.map(comment => (
+                        <View key={comment.id} style={styles.commentContainer}>
+                            
+                            <Text style={styles.comment}>{comment.text}</Text>
                         </View>
-                    </Content>
+                    ))}
+                </Content>
 
-                    <Footer>
-                        <View style={styles.footer}>
 
-                            <View style={styles.commentBox}>
-                                <Image style={styles.imageCaNhan} source={require('../../assets/images/ImageComments/avt_ca_nhan.png')}></Image>
-                                <TextInput
-                                    placeholder="Nhập bình luận..."
-                                    value={comment}
-                                    onChangeText={(text) => setComment(text)}
-                                    style={styles.input}
-                                />
+                <Footer>
+                    <View style={styles.footer}>
 
-                                <TouchableOpacity onPress={addComment} style={styles.button}>
-                                    <Text style={styles.buttonText}>Gửi</Text>
-                                </TouchableOpacity>
-                            </View>
+                        <View style={styles.commentBox}>
+                            <Image style={styles.imageCaNhan} source={require('../../assets/images/ImageComments/avt_ca_nhan.png')}></Image>
+                            <TextInput
+                                placeholder="Nhập bình luận..."
+                                value={comment}
+                                onChangeText={(text) => setComment(text)}
+                                style={styles.input}
+                            />
+
+                            <TouchableOpacity onPress={addComment} style={styles.button}>
+                                <Text style={styles.buttonText}>Gửi</Text>
+                            </TouchableOpacity>
                         </View>
-                    </Footer>
-                </View>
+                    </View>
+                </Footer>
+
 
 
 
@@ -68,14 +78,13 @@ const Comments: React.FC<CommentsProps & { navigation: NavigationProp<any> }> = 
         </>
     );
 };
-const screenHeight = Dimensions.get('window').height;
+
 const styles = StyleSheet.create({
     container: {
         position: 'absolute',
         bottom: 0,
         left: 0,
         right: 0,
-        height: screenHeight * (2 / 3),
         backgroundColor: 'white',
         alignItems: 'center',
         paddingVertical: 10,
@@ -84,14 +93,14 @@ const styles = StyleSheet.create({
 
     },
     header: {
-        height: 100,
+        height: 10,
 
     },
     headerText: {
         fontSize: 25,
         color: 'black',
-        marginTop: 20,
-        marginBottom: 1,
+        marginTop: 10,
+
         textAlign: 'center',
     },
     footer: {
@@ -125,7 +134,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#f0f0f0',
         borderRadius: 25,
         paddingHorizontal: 15,
-        marginBottom: 10,
+
     },
     noCommentText: {
         textAlign: 'center',
@@ -133,9 +142,7 @@ const styles = StyleSheet.create({
         color: '#999',
     },
     commentContainer: {
-        paddingHorizontal: 10,
-        alignItems: 'center',
-        marginTop: 70,
+        marginTop:5
     },
     imageTrongsuot: {
         width: '100%',

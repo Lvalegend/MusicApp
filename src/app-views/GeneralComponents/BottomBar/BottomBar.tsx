@@ -2,39 +2,71 @@ import * as React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import { iconDownload, iconFavourite, iconHome, iconPopular, iconUser } from '../../../app-uikits/icon-svg';
+import { useNavigation } from '@react-navigation/native';
+import { getToken } from '../../../secure-storage/GetToken';
 
 interface BottomBarProps {
-    onPressHome?: (screen: string) => void; 
-    onPressPopular?: (screen: string) => void; 
-    onPressFavourite?: (screen: string) => void; 
-    onPressDownload?: (screen: string) => void; 
-    onPressUser?: (screen: string) => void; 
+    
 }
 
-const BottomBar: React.FC<BottomBarProps> = ({ onPressHome, onPressPopular, onPressFavourite, onPressDownload, onPressUser }) => {
+const BottomBar: React.FC<BottomBarProps> = () => {
+    const navigation:any = useNavigation()
+
+    const handleHome = () => {
+        navigation.navigate('HomeScreen')
+    }
+    const handlePopular = () => {
+        navigation.navigate('Popular')
+    }
+    const handleFavourite = () => {
+        navigation.navigate('Favourite')
+    }
+    const handleDownloads = ()=>{
+        navigation.navigate('Downloads')
+    }
+    const handleUser = async () => {
+        try {
+            // Gọi hàm getToken để lấy token từ Encrypted Storage
+            const token = await getToken();
+    
+            // Kiểm tra token và điều hướng tới màn hình tương ứng
+            if (token) {
+                // Nếu token tồn tại, điều hướng tới màn hình User1
+                navigation.navigate('UserAfterLoginOrRegister');
+            } else {
+                // Nếu token không tồn tại, điều hướng tới màn hình User
+                navigation.navigate('User');
+            }
+        } catch (error) {
+            console.error('Lỗi trong handleUser:', error);
+            // Bạn có thể xử lý lỗi thêm nếu cần thiết
+        }
+    };
+    
+    
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={styles.touch} onPress={() => onPressHome && onPressHome('Home')}>
+            <TouchableOpacity style={styles.touch} onPress={handleHome}>
                 <SvgXml xml={iconHome()} />
                 <Text style={styles.text}>Home</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.touch} onPress={() => onPressPopular && onPressPopular('Popular')}>
+            <TouchableOpacity style={styles.touch} onPress={handlePopular}>
                 <SvgXml xml={iconPopular()} />
                 <Text style={styles.text}>Popular</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.touch} onPress={() => onPressFavourite && onPressFavourite('Favourite')}>
+            <TouchableOpacity style={styles.touch} onPress={handleFavourite}>
                 <SvgXml xml={iconFavourite()} />
                 <Text style={styles.text}>Favourite</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.touch} onPress={() => onPressDownload && onPressDownload('Download')}>
+            <TouchableOpacity style={styles.touch} onPress={handleDownloads}>
                 <SvgXml xml={iconDownload()} />
                 <Text style={styles.text}>Download</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.touch} onPress={() => onPressUser && onPressUser('User')}>
+            <TouchableOpacity style={styles.touch} onPress={handleUser}>
                 <SvgXml xml={iconUser()} />
                 <Text style={styles.text}>User</Text>
             </TouchableOpacity>
@@ -50,8 +82,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginHorizontal: 20,
         marginTop: 15,
-        marginBottom:20
-
+        marginBottom:20,
     },
     text: {
        color: 'white',
