@@ -1,0 +1,10 @@
+export default () => `<svg width="20" height="20" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<rect width="100" height="100" fill="url(#pattern0_1012_883)"/>
+<defs>
+<pattern id="pattern0_1012_883" patternContentUnits="objectBoundingBox" width="1" height="1">
+<use xlink:href="#image0_1012_883" transform="scale(0.01)"/>
+</pattern>
+<image id="image0_1012_883" width="100" height="100" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAAAXNSR0IArs4c6QAAA9lJREFUeAHtnb2vDFEYh38RgihFKDQaDRo1Eb0EhUai8f1ZaQmNP0BBLUHDHyAqjUgkGh0FlUSpQCW+3thznUzeszs7e2beye4zyc2ZeXd2zpnnOe+cmXP37pVYIAABCEAAAhCAAAQgAAEIQGDsBPZIOiPpkKQNY2/ssrfvtKQfkn5Pfr5Ieizp8LKf+BjPz7LiZyYjSUnl60nWjLHtS9emszNkJCm/JN2XtGXpCIzohGZlRpKRl28l7RzROSxNU85Lsl6fw267/kHSjqUhMYITubCAjCTtDZevOibPtRwzEvhp5b06TVrdoxyskBm5ILvk2TFZOhK43XHMyCU01191bAtvm/TmrgN5U0S+bU/2LB0JXKl82TIxDzu2hbdNCNjAXjNTbJqFua8Z3euopKeSbkja6OxbO1MY3B3IKdSE/UzSpvRiVjb3y8eFeddtcpLFIVCC3KcUmyW2qXuWBoGSjNTb+5Bis8RkR0OEbbadm3ouabPz/i4Dvd0YXHKOtfKhtjJSptSQgoxCt5tXRg0pJuNyoT0rHe4qYxEpyCh0uUVldJFiMuzGgaVBYNbdVILdtmxz90VmNCSkzdoykrSSFHsCvyXpQGoA5X8CtS5TSUKzLN19/W8Ba2sE+sqMphTLFG/ua60hrPwbSO0a3oTX1/ZNoJcJDJUZudwn5eas9isRMiwTbeqepUGg7wE8z4i0bjKuNdrB5hwThQlkjRIZha5HZhTARISREUG9UCcyCmAiwsiIoF6oExkFMBFhZERQL9SJjAKYiDAyIqgX6uzy6Y5FH/x46ENGgcCIwmQGMpgo9PoAmeFRCYohIwi8Vy0yPCpBMWQEgfeqRYZHJSiGjCDwXrXI8KgExZARBN6rFhkelaAYMoLAe9Uiw6MSFENGEHivWmR4VIJiyAgC71WLDI9KUAwZQeC9apHhUQmKISMIvFctMjwqQTFkBIH3qkWGRyUodqrydxG2+YCbfYjtatD5jrradZI+D/inxyYLGVO6xL4AGfyB5RQh9gX1bS4xNfbhs7ZTRKSXHgwkBBmJ+Izy/QBCkDFDQnp56wB3V8hItFuUR3rODmS0kJDvcqdHIcjISbdcf9GTEGS0FJDvtl7S1x6EICOnPMf6fmTMQWuAXe07qWo87KVjkBkLSntUUQgyFpRhb/9YSQgyKsjYXknGJ0knK7Rn5Q9xrKOQd5Js7su+kWGvJJu6Z6lA4GILId8kvZR0V9IJSdsq1MshCgR2SfrekGJjig309ls8uyW25xSWAQns/vtgeF3Scf4D8oDUqQoCEIAABCAAAQhAAAIQgMAABP4A1jgBQTDMvwkAAAAASUVORK5CYII="/>
+</defs>
+</svg>
+`

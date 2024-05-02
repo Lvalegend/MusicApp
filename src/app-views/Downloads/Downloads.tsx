@@ -70,7 +70,7 @@ const Downloads: React.FC<{ navigation: NavigationProp<any> }> = ({ navigation }
         }
     };
     const handlePlay = () => {
-        navigation.navigate('Song');
+        navigation.navigate('ManageScreen');
         setModalVisible(false);
     };
     const handleChangeText = (newText: string) => {
@@ -121,11 +121,7 @@ const Downloads: React.FC<{ navigation: NavigationProp<any> }> = ({ navigation }
             <Footer>
 
                 <BottomBar></BottomBar>
-
-
-            </Footer>
-
-            <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => setModalVisible(false)}>
+                <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => setModalVisible(false)}>
                 <View style={styles.centeredView}>
                     <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.buttonClose}>
                         <SvgXml xml={iconChuX()} />
@@ -142,6 +138,10 @@ const Downloads: React.FC<{ navigation: NavigationProp<any> }> = ({ navigation }
                     </View>
                 </View>
             </Modal>
+
+            </Footer>
+
+            
         </Container>
     );
 };
@@ -164,7 +164,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 22,
         backgroundColor: 'rgba(0, 0, 0, 0.5)'
     },
     modalView: {
@@ -203,7 +202,7 @@ const styles = StyleSheet.create({
     buttonClose: {
         position: 'absolute',
         top: 290,
-        right: 70,
+        right: 45,
         borderRadius: 20,
         elevation: 2,
         backgroundColor: "gray",
