@@ -30,10 +30,13 @@ const SplashScreen: React.FC<SplashScreenProps & { navigation: NavigationProp<an
 
         <Content>
 
+            <Text>SplashScreen</Text>
+
           <View style={{ height: 800, justifyContent: 'center', alignItems: 'center' }}>
             <SvgXml xml={iconMusic()}></SvgXml>
             <Text style={{ marginTop: 10, fontWeight: '600', color: 'white' }}>Music 60T</Text>
           </View>
+
 
 
         </Content>

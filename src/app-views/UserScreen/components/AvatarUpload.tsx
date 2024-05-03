@@ -71,8 +71,15 @@ const AvatarPicker = () => {
 
 const styles = StyleSheet.create({
     container: {
-        alignItems: 'center'
-    }
+       
+      
+        alignItems:'center'
+
+
+
+    },
+
+
 });
 
 export default AvatarPicker;

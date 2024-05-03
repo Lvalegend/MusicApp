@@ -42,10 +42,21 @@ const Downloads: React.FC<{ navigation: NavigationProp<any> }> = ({ navigation }
             setFilteredSongs(filtered);
         }
     }, [text, songs]);
+    const handleHome = () => {
+        navigation.navigate('HomeScreen');
+    };
 
 
-    const handleChangeText = (newText: string) => {
-        setText(newText);
+    const handleFavourite = () => {
+        navigation.navigate('Favourite');
+    };
+
+    const handlePopular = () => {
+        navigation.navigate('Popular');
+    };
+
+    const handleUser = () => {
+        navigation.navigate('User');
     };
 
     const handleDelete = () => {
@@ -59,8 +70,11 @@ const Downloads: React.FC<{ navigation: NavigationProp<any> }> = ({ navigation }
         }
     };
     const handlePlay = () => {
-        navigation.navigate('Song');
+        navigation.navigate('ManageScreen');
         setModalVisible(false);
+    };
+    const handleChangeText = (newText: string) => {
+        setText(newText);
     };
 
     return (
@@ -105,10 +119,9 @@ const Downloads: React.FC<{ navigation: NavigationProp<any> }> = ({ navigation }
             </Content>
 
             <Footer>
-                <BottomBar />
-            </Footer>
 
-            <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => setModalVisible(false)}>
+                <BottomBar></BottomBar>
+                <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => setModalVisible(false)}>
                 <View style={styles.centeredView}>
                     <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.buttonClose}>
                         <SvgXml xml={iconChuX()} />
@@ -125,6 +138,10 @@ const Downloads: React.FC<{ navigation: NavigationProp<any> }> = ({ navigation }
                     </View>
                 </View>
             </Modal>
+
+            </Footer>
+
+            
         </Container>
     );
 };
@@ -147,7 +164,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 22,
         backgroundColor: 'rgba(0, 0, 0, 0.5)'
     },
     modalView: {
@@ -186,7 +202,7 @@ const styles = StyleSheet.create({
     buttonClose: {
         position: 'absolute',
         top: 290,
-        right: 70,
+        right: 45,
         borderRadius: 20,
         elevation: 2,
         backgroundColor: "gray",
