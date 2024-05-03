@@ -7,6 +7,8 @@ import { Header, Content, Footer, Container } from '../../app-layout/Layout';
 import LinearGradient from 'react-native-linear-gradient';
 
 
+interface PlaylistProps {
+}
 interface PlayListProps {
     handleNavigateBack: () => void;
     id: string;
@@ -35,7 +37,7 @@ const PlayList: React.FC<PlayListProps> = ({handleNavigateBack, id}) => {
     const findPlaylistItemById = (itemId: string) => {
         return playListData.find(item => item.id === itemId);
     };
-    
+
     const playlistItem = findPlaylistItemById(id);
 
     return (

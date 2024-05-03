@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { GestureHandlerRootView } from 'react-native-gesture-handler'; 
-import { Comments, HomeScreen, Login, Popular, Register, SplashScreen, User, Downloads, Favourite, Song, UserAfterLoginOrRegister,ManageScreen, ManageCateScreen, ManageSongScreen, ManageUserScreen, ManageCountScreen, ManagePlaylistScreen, ManageInformScreen } from './types';
+import { Comments, HomeScreen, Login, Popular, Register, SplashScreen, User, Downloads, Favourite, Song, UserAfterLoginOrRegister,ManageScreen, ManageCateScreen, ManageSongScreen, ManageUserScreen, ManageCountScreen, ManagePlaylistScreen, ManageInformScreen, ArtistInf } from './types';
 
 export interface AppRoutes{
     OriginScreen: never
@@ -47,6 +47,7 @@ function AppNavigator() {
         <Stack.Screen name="UserAfterLoginOrRegister" component={UserAfterLoginOrRegister} />
 
 
+        {/* <Stack.Screen name="ArtistInf" component={ArtistInf} /> */}
       </Stack.Navigator>
     </NavigationContainer>
     </GestureHandlerRootView>

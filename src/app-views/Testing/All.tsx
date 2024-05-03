@@ -27,7 +27,7 @@ const YourComponent = () => {
 
     return (
         <View style={{ flex: 1 }}>
-            <PagerView ref={pagerRef} style={{ flex: 1 }}  onPageSelected={(event) => setCurrentPage(event.nativeEvent.position)}>
+            <PagerView ref={pagerRef} style={{ flex: 1 }} onPageSelected={(event: { nativeEvent: { position: React.SetStateAction<number>; }; }) => setCurrentPage(event.nativeEvent.position)} useNext={false}>
                 <View key="1">
                     <Text>Screen 1</Text>
                 </View>
