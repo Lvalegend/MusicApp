@@ -21,8 +21,6 @@ export { default as iconBack } from '../assets/svg/iconBack';
 export { default as icon3Cham } from '../assets/svg/icon3Cham';
 export { default as iconRecentSong } from '../assets/svg/IconSearch/iconRecentSong';
 export { default as iconLyrics } from '../assets/svg/IconSong/iconLyrics';
-export { default as icon1 } from '../assets/svg/IconRanking/icon1';
-export { default as icon2 } from '../assets/svg/IconRanking/icon2';
 export { default as iconAdd } from '../assets/svg/iconAdd';
 export { default as iconLoop } from '../assets/svg/iconLoop';
 export { default as iconGoogle } from '../assets/svg/iconGoogle';
