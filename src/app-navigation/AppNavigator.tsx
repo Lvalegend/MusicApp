@@ -3,15 +3,12 @@ import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { GestureHandlerRootView } from 'react-native-gesture-handler'; 
-
-import { Comments, HomeScreen, Login, Popular, Register, SplashScreen, User, Downloads, Favourite, Song, UserAfterLoginOrRegister } from './types';
+import { Comments, HomeScreen, Login, Popular, Register, SplashScreen, User, Downloads, Favourite, Song, UserAfterLoginOrRegister,ManageScreen, ManageCateScreen, ManageSongScreen, ManageUserScreen, ManageCountScreen, ManagePlaylistScreen, ManageInformScreen } from './types';
 
 export interface AppRoutes{
     OriginScreen: never
     test: never
     [key: string]: never
-
-
 }
 const Stack = createNativeStackNavigator();
 
@@ -19,6 +16,7 @@ const Stack = createNativeStackNavigator();
 function AppNavigator() {
   return (
     <GestureHandlerRootView>
+
     <NavigationContainer>
       <Stack.Navigator initialRouteName="HomeScreen" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
@@ -31,7 +29,23 @@ function AppNavigator() {
         <Stack.Screen name="Favourite" component={Favourite} />
         <Stack.Screen name="User" component={User} />
         <Stack.Screen name="Downloads" component={Downloads} />
+
+        
+        <Stack.Screen name ="ManageScreen" component={ManageScreen}/>
+        <Stack.Screen name ="ManageCateScreen" component={ManageCateScreen}/>
+        <Stack.Screen name ="ManageSongScreen" component={ManageSongScreen}/>
+        <Stack.Screen name ="ManageUserScreen" component={ManageUserScreen}/>
+        <Stack.Screen name ="ManageCountScreen" component={ManageCountScreen}/>
+        <Stack.Screen name ="ManagePlaylistScreen" component={ManagePlaylistScreen}/>
+        <Stack.Screen name ="ManageInformScreen" component={ManageInformScreen}/>
+    
+
+
+
+
+
         <Stack.Screen name="UserAfterLoginOrRegister" component={UserAfterLoginOrRegister} />
+
 
       </Stack.Navigator>
     </NavigationContainer>
