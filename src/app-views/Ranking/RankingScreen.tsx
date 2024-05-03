@@ -100,7 +100,7 @@ const RankingScreen: React.FC<RankingProps & { navigation: NavigationProp<any> }
     return (
         <>
 
-            <Container backgroundColor={'black'} >
+            <Container colors={['black', 'black', 'black']} >
                 <Header>
 
                 </Header>
@@ -130,7 +130,7 @@ const RankingScreen: React.FC<RankingProps & { navigation: NavigationProp<any> }
                 </Content>
 
                 <Footer>
-                    <BottomBar onPressHome={handleHome} onPressDownload={handleDownload} onPressFavourite={handleFavourite} onPressUser={handleUser}>
+                    <BottomBar>
                     </BottomBar>
                 </Footer>
             </Container>

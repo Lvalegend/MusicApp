@@ -99,7 +99,7 @@ const Song: React.FC<SongProps & { navigation: NavigationProp<any> }> = ({ navig
 
                             <View style={styles.iconCmt}>
                                 <TouchableOpacity onPress={handleCommentPress} >
-                                    <SvgXml width={30} height={30} xml={iconCommentsWhite(50,60)}></SvgXml>
+                                    <SvgXml width={30} height={30} xml={iconCommentsWhite()}></SvgXml>
                                 </TouchableOpacity>
 
                             </View>

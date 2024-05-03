@@ -12,23 +12,18 @@ import Download from '../app-views/Downloads/Downloads';
 import User from '../app-views/UserScreen/UserScreen';
 import PlayList from '../app-views/HomeScreen/PlayList';
 import Downloads from '../app-views/Downloads/Downloads';
-import SearchScreen from '../app-views/Search/SearchScreen';
-import RankingScreen from '../app-views/Ranking/RankingScreen';
-
 import UserAfterLoginOrRegister from '../app-views/UserScreen/UserAfterLoginOrRegister'
 
 
 export {
-    HomeScreen, 
-    SplashScreen,
-    Login,
-    Comments,
-    Song,
-    Register,
-    Favourite,
-    Popular,
-    PlayList,
-    Downloads,
-    User,
-
-}
+  HomeScreen,
+  SplashScreen,
+  Login,
+  Comments,
+  Song,
+  Register,
+  PlayList,
+  Downloads,
+  User,
+  UserAfterLoginOrRegister, Favourite, Popular,
+};

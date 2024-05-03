@@ -55,7 +55,7 @@ const SearchScreen: React.FC<SearchProps & { navigation: NavigationProp<any> }> 
     return (
         <> 
 
-    <Container backgroundColor={'black'}>
+    <Container colors={['black', 'black', 'black']}>
             <Header>
                 
             </Header>   
@@ -88,7 +88,7 @@ const SearchScreen: React.FC<SearchProps & { navigation: NavigationProp<any> }> 
             </Content>
 
             <Footer>
-            <BottomBar onPressHome={handleHome} onPressDownload={handleDownload} onPressFavourite={handleFavourite} onPressUser={handleUser}>
+            <BottomBar>
                     </BottomBar>
             </Footer>
             </Container>

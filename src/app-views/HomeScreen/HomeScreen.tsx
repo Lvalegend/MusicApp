@@ -220,8 +220,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         top: 110,
         margin: 20,
-        top: 110,
-        margin: 20,
         color: 'white'
     },
     word: {
@@ -232,7 +230,6 @@ const styles = StyleSheet.create({
     song: {
         height: 70,
         width: 70,
-        borderRadius: 10,
         borderRadius: 10,
     },
 });
