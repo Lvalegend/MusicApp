@@ -72,16 +72,7 @@ const User: React.FC<UserProps & { navigation: NavigationProp<any> }> = ({ navig
                 {/* <TouchableOpacity style={{ backgroundColor: 'red' }} onPress={handleUserAfterLoginOrRegister}>
                     <Text>Go to UserAfter</Text>
                 </TouchableOpacity> */}
-                <View>
-                    {songs.map((item: any) => (
-                        <View key={item._id}>
-                            <Image
-                                source={{ uri: item.imageLink }}
-                                style={{ width: '100%', height: 200 }}
-                            />
-                        </View>
-                    ))}
-                </View>
+               
 
 
 
