@@ -8,6 +8,7 @@ import CheckBox from '@react-native-community/checkbox';
 import { useState } from 'react';
 import axios from 'axios';
 import { setToken } from '../../secure-storage/SetToken';
+import { hostNetwork } from '../../host/HostNetwork';
 
 
 
@@ -55,7 +56,7 @@ const Login: React.FC<LoginProps & { navigation: NavigationProp<any> }> = ({ nav
                     email: email,
                     password: password
                 };
-                const response = await axios.post('http://192.168.2.14:3000/login', userData);
+                const response = await axios.post(`http://${hostNetwork}:3000/login`, userData);
 
                 handleResponse(response.data)
                 console.log('Response:', response);

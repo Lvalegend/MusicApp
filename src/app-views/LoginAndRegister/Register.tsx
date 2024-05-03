@@ -7,6 +7,7 @@ import { Underline, iconFacebook, iconGoogle, iconMusic } from '../../app-uikits
 import { Container, Content, Footer, Header } from '../../app-layout/Layout';
 import CheckBox from '@react-native-community/checkbox';
 import { setToken } from '../../secure-storage/SetToken';
+import { hostNetwork } from '../../host/HostNetwork';
 
 
 
@@ -65,7 +66,7 @@ const Register: React.FC<RegisterProps & { navigation: NavigationProp<any> }> = 
                 email: email,
                 password: password
             };
-            const response = await axios.post('http://192.168.2.14:3000/register', userData);
+            const response = await axios.post(`http://${hostNetwork}:3000/register`, userData);
 
             handleResponse(response.data)
             console.log('Response:', response);
