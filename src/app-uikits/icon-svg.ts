@@ -31,3 +31,5 @@ export { default as iconSobon } from '../assets/svg/iconSo/iconsobon';
 export { default as icon1 } from '../assets/svg/IconRanking/icon1';
 export { default as icon2 } from '../assets/svg/IconRanking/icon2';
 export { default as iconChuX} from '../assets/svg/iconChuX';
+export { default as iconCamera} from '../assets/svg/iconCamera';
+

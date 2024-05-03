@@ -32,7 +32,6 @@ function AppNavigator() {
         <Stack.Screen name="User" component={User} />
         <Stack.Screen name="Downloads" component={Downloads} />
         <Stack.Screen name="UserAfterLoginOrRegister" component={UserAfterLoginOrRegister} />
-
       </Stack.Navigator>
     </NavigationContainer>
     </GestureHandlerRootView>
