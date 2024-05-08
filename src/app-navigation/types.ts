@@ -4,7 +4,7 @@ import Login from '../app-views/LoginAndRegister/Login';
 import Comments from '../app-views/Comments/Comments';
 import Song from '../app-views/SongScreen/Song';
 import Register from '../app-views/LoginAndRegister/Register';
-import Favourite from '../app-views/FavouriteScreen/FavouriteScreen';
+
 import Popular from '../app-views/PopularScreen/PopularScreen';
 import ManageScreen from '../app-views/Manages/ManageScreen';
 import Download from '../app-views/Downloads/Downloads';
@@ -29,7 +29,7 @@ export {
   Comments,
   Song,
   Register,
-  Favourite,
+  
   Popular,
   PlayList,
   Downloads,
