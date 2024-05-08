@@ -4,9 +4,7 @@ import { NavigationProp } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
 import {iconBack , icon3Cham, iconAdd } from '../../app-uikits/icon-svg';
 import { Header, Content, Footer, Container } from '../../app-layout/Layout';
-import BottomBar from '../GeneralComponents/BottomBar/BottomBar';
 import { ReactNode, useState } from 'react';
-import { ScrollView } from 'react-native-gesture-handler';
 import { launchImageLibrary } from 'react-native-image-picker';
 
 
@@ -94,7 +92,7 @@ const ManagePlaylistScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ n
                                     <Text style={{ color: 'white', fontSize: 18, marginBottom: 7 }}>{item.title}</Text>
                                     <Text style={{ color: 'gray', fontSize: 15 }}>{item.artist}</Text>
                                 </View>
-                                <SvgXml xml={icon3Cham()} style={{ marginTop: 20,marginLeft:120 }} />
+                                <SvgXml xml={icon3Cham()} style={{ marginTop: 18, marginLeft:90 }} />
                             </View>
                         </Pressable>
                     ))}
@@ -176,6 +174,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         width: 70,
         height: 70,
+        marginHorizontal:10
 
     },
     playlist: {
