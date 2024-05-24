@@ -7,8 +7,6 @@ import { iconDownload, iconFavourite, iconHome, iconPopular, iconUser } from '..
 interface Props{
 
 }
-
-
 const BottomBarCustom: React.FC<Props> = () => {
     return (
         <View style={styles.container}>
