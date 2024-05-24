@@ -137,19 +137,15 @@ const UserAfterLoginOrRegister: React.FC<UserAfterLoginOrRegisterProps & { navig
         };
 
         fetchData();
-
-
-
         const getImage = async (songId: any) => {
             try {
                 const response = await fetch(`http://${hostNetwork}:3000/songImages?id=${songId}`, {
                     method: 'GET',
+            
                 });
-
                 if (!response.ok) {
                     throw new Error('Failed to fetch image');
                 }
-
                 const contentType = response.headers.get('Content-Type');
                 if (!contentType || !contentType.startsWith('image/')) {
                     throw new Error('Response is not an image');
@@ -292,8 +288,7 @@ const UserAfterLoginOrRegister: React.FC<UserAfterLoginOrRegisterProps & { navig
                     ))}
                 </View>
 
-
-
+            
             </Content>
 
             <Footer>

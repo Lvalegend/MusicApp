@@ -1,1 +1,1 @@
-export const hostNetwork = '192.168.2.14'   
+export const hostNetwork = '192.168.1.14'
