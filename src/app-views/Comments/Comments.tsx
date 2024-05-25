@@ -1,61 +1,82 @@
 import React, { useState } from 'react';
 import { Button, View, Text, StyleSheet, Image, TextInput, TouchableOpacity, Dimensions } from 'react-native';
-import { NavigationProp } from '@react-navigation/native';
+import { NavigationProp, RouteProp } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
-import { iconComments } from '../../app-uikits/icon-svg';
+import { iconBack, iconComments } from '../../app-uikits/icon-svg';
 import { Container, Content, Footer, Header } from '../../app-layout/Layout';
 import BottomBar from '../GeneralComponents/BottomBar/BottomBar';
 
 
 
 
-
 interface CommentsProps {
+    onPress: () => void
+    handleNavigateBack: () => void;
+}
+interface User {
+    id: number;
+    name: string;
+    avatar: any;
+}
+interface Comments {
     id: number;
     text: string;
-
+    user: User;
 };
 
-const Comments: React.FC<CommentsProps & { navigation: NavigationProp<any> }> = ({ navigation }) => {
+const Comments: React.FC<CommentsProps & { navigation: NavigationProp<any>} >= ({navigation}) => {
     const [comment, setComment] = useState<string>('');
-    const [comments, setComments] = useState<CommentsProps[]>([]);
+    const [comments, setComments] = useState<Comments[]>([]);
+    const currentUser:
+        User = { id: 1, name: 'Someone', avatar: require('../../assets/images/ImageComments/avt_ca_nhan.png') };
 
     const addComment = () => {
         if (comment.trim() !== '') {
-            const newComment: CommentsProps = {
+            const newComment: Comments = {
                 id: comments.length + 1,
                 text: comment.trim(),
+                user: currentUser,
             };
             setComments([...comments, newComment]);
             setComment('');
         };
     }
+
+    const handleNavigateBack = () => {
+        navigation.goBack();
+    };
     return (
 
         <>
             <Container colors={['white', 'white']}>
 
-
-
                 <Header style={styles.header}>
-                    <Text style={styles.headerText}>Bình luận</Text>
-
+                <TouchableOpacity onPress = {handleNavigateBack} style={styles.goBackButton}>
+                    <SvgXml width={30} height={30} xml={iconBack()}></SvgXml>
+                    </TouchableOpacity>
+                    <Text style={styles.headerText}>Bình luận</Text>                  
                 </Header>
+
+
                 <Content>
                     {comments.map(comment => (
                         <View key={comment.id} style={styles.commentContainer}>
-                            
-                            <Text style={styles.comment}>{comment.text}</Text>
+                            <View style={styles.commentBox}>
+                                <Image style={styles.imageCaNhan} source={comment.user.avatar} />
+                                <Text style={styles.commentText}>
+                                    <Text style={styles.comment}>{comment.user.name}</Text>: {comment.text}
+                                </Text>
+                            </View>
                         </View>
                     ))}
+
                 </Content>
 
 
                 <Footer>
-                    <View style={styles.footer}>
-
+                    <View style={styles.cmtDetails}>
                         <View style={styles.commentBox}>
-                            <Image style={styles.imageCaNhan} source={require('../../assets/images/ImageComments/avt_ca_nhan.png')}></Image>
+                            <Image style={styles.imageCaNhan} source={currentUser.avatar}></Image>
                             <TextInput
                                 placeholder="Nhập bình luận..."
                                 value={comment}
@@ -81,7 +102,6 @@ const Comments: React.FC<CommentsProps & { navigation: NavigationProp<any> }> = 
 
 const styles = StyleSheet.create({
     container: {
-        position: 'absolute',
         bottom: 0,
         left: 0,
         right: 0,
@@ -89,29 +109,29 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingVertical: 10,
         paddingHorizontal: 10,
-        justifyContent: 'flex-end',
+      
 
     },
     header: {
-        height: 10,
+        height: 60,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingHorizontal: 10,
 
     },
     headerText: {
         fontSize: 25,
         color: 'black',
-        marginTop: 10,
-
         textAlign: 'center',
     },
-    footer: {
+    cmtDetails: {
         borderTopWidth: 1,
         borderTopColor: '#ccc',
         paddingVertical: 10,
         paddingHorizontal: 10,
-    },
-    footerText: {
-        color: "white",
-        fontSize: 20,
+     
+
     },
     input: {
         flex: 1,
@@ -136,17 +156,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
 
     },
-    noCommentText: {
-        textAlign: 'center',
-        fontStyle: 'italic',
-        color: '#999',
-    },
     commentContainer: {
-        marginTop:5
-    },
-    imageTrongsuot: {
-        width: '100%',
-        height: 200,
+        marginTop: 5,
+
     },
     imageCaNhan: {
         width: 40,
@@ -155,5 +167,12 @@ const styles = StyleSheet.create({
     comment: {
         marginBottom: 10,
     },
+    commentText: {
+        marginLeft:10
+    },
+    goBackButton:{
+       padding:10,
+       color:'black'
+    }
 });
 export default Comments;

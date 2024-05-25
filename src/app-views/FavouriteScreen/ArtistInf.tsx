@@ -13,6 +13,7 @@ interface ArtistInfProps {
     onPress: any
     id: string
     handleNavigateBack: () => void;
+    
 }
 
 const ArtistInf: React.FC<ArtistInfProps> = ({ handleNavigateBack, id }) => {
