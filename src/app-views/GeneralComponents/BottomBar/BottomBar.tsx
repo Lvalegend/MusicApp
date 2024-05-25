@@ -39,7 +39,6 @@ const BottomBar: React.FC<BottomBarProps> = () => {
             }
         } catch (error) {
             console.error('Lỗi trong handleUser:', error);
-            // Bạn có thể xử lý lỗi thêm nếu cần thiết
         }
     };
     

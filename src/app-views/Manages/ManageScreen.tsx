@@ -1,11 +1,8 @@
 import * as React from 'react';
 import { Button, View, Text, Image, SafeAreaView, StyleSheet, StatusBar, TextInput, ImageBackground, TouchableOpacity, FlatList } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
-import { SvgXml } from 'react-native-svg';
-import { iconsong } from '../../app-uikits/icon-svg';
 import { Header, Content, Footer, Container } from '../../app-layout/Layout';
-import { ReactNode, useState } from 'react';
-import { ScrollView } from 'react-native-gesture-handler';
+
 
 
 interface ManageScreenProps {
@@ -60,6 +57,12 @@ const ManageScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ navigatio
                         </TouchableOpacity>
                     </View>
                     <View style={styles.menuItem}>
+                        <TouchableOpacity onPress={handleCate} style={styles.menuItemButton}>
+                        <Image source={require("../../assets/images/ImageManage/catemn.png")} style={styles.menuImage}></Image> 
+                            <Text style={styles.menuItemText}>Album</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.menuItem}>
                         <TouchableOpacity onPress={handleUser} style={styles.menuItemButton}>
                         <Image source={require("../../assets/images/ImageManage/usermn.jpg")} style={styles.menuImage}></Image> 
                             <Text style={styles.menuItemText}>Người dùng</Text>
@@ -77,7 +80,6 @@ const ManageScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ navigatio
                             <Text style={styles.menuItemText}>Thông tin cá nhân</Text>
                         </TouchableOpacity>
                     </View>
-
                 </View>
             </Content>
             <Footer></Footer>
