@@ -5,6 +5,8 @@ import { Svg, SvgXml } from 'react-native-svg';
 import { icon3Cham, iconBack, iconDownload, iconFavourite, iconSreach } from '../../app-uikits/icon-svg';
 import { Header, Content, Footer, Container } from '../../app-layout/Layout';
 import LinearGradient from 'react-native-linear-gradient';
+import Song from '../SongScreen/Song';
+import { useState } from 'react';
 
 
 interface PlaylistProps {
@@ -12,10 +14,11 @@ interface PlaylistProps {
 interface PlayListProps {
     handleNavigateBack: () => void;
     id: string;
+   
 }
 
-
-const PlayList: React.FC<PlayListProps> = ({handleNavigateBack, id}) => {
+const PlayList: React.FC<PlayListProps & { navigation: NavigationProp<any>}> = ({handleNavigateBack, id, navigation}) => {
+    const [selectedSong, setSelectedSong] = React.useState<string | null>(null);;
 
     const chillsData = [
         { id: '1', title: 'Point the star', artist: 'Jasper, Martin Arteta, 11:11 Music Group', image: require('../../assets/images/song/SongChill1.jpg') },
@@ -37,9 +40,15 @@ const PlayList: React.FC<PlayListProps> = ({handleNavigateBack, id}) => {
     const findPlaylistItemById = (itemId: string) => {
         return playListData.find(item => item.id === itemId);
     };
-
+    const handleNavigateToSong = (songId: string) => {
+        setSelectedSong(songId)
+      
+    }
     const playlistItem = findPlaylistItemById(id);
-
+    if (selectedSong) {
+        return <Song song={selectedSong} handleNavigateBack={() => setSelectedSong(null)} navigation={navigation} onPress={() => {}}
+        />;
+    }
     return (
         <>
             {playlistItem && (
@@ -71,8 +80,9 @@ const PlayList: React.FC<PlayListProps> = ({handleNavigateBack, id}) => {
                                     <Text style={styles.text}>Favourite</Text>
                                 </Pressable>
                             </View>
+                    
                             {chillsData.map((item) => (
-                            <Pressable key={item.id} style={styles.song}>
+                            <Pressable key={item.id} style={styles.song} onPress ={() => handleNavigateToSong(item.id)}>
                                 <View style={{ flexDirection: 'row', width: 360 }}>
                                     <Image source={item.image} style={styles.image}></Image>
                                     <View style={{ margin: 10 }}>
@@ -89,6 +99,7 @@ const PlayList: React.FC<PlayListProps> = ({handleNavigateBack, id}) => {
                         </Footer>
                     </LinearGradient>
                 </Container>
+                   
             )}
         </>
     );

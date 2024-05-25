@@ -40,8 +40,6 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
     };
 
 
-
-
     const handleChangeText = (newText: string) => {
         setText(newText);
     };

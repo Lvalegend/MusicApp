@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { Text, StyleSheet, ImageBackground, View } from 'react-native';
+import { Text, StyleSheet, ImageBackground, View, Touchable } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
 import { Container, Content, Footer, Header } from '../../app-layout/Layout';
 import BottomBar from '../GeneralComponents/BottomBar/BottomBar';
 import { icon1, icon2 } from '../../app-uikits/icon-svg';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 interface RankingProps {}
 
@@ -12,24 +13,18 @@ const RankingScreen: React.FC<RankingProps & { navigation: NavigationProp<any> }
     const rankingSongs = [
         {
             id: '1',
-            title3: '#3',
-            title4: '#4',
-            title5: '#5',
-            title6: '#6',
-            titleRank3: 'Sau lời từ khước',
-            voteText3: '48,2M',
-            titleRank4: 'Lệ lưu ly',
-            titleRank5: 'À Lôi',
-            titleRank6: 'Buồn hay vui',
-            voteText4: '40,9M',
-            voteText5: '36,7M',
-            voteText6: '34,1M',
+            ranks: [
+                { title: '#3', titleRank: 'Sau lời từ khước', voteText: '48,2M', image: require('../../assets/images/ImageRanking/rank3.png') },
+                { title: '#4', titleRank: 'Lệ lưu ly', voteText: '40,9M', image: require('../../assets/images/ImageRanking/rank4.png') },
+                { title: '#5', titleRank: 'À Lôi', voteText: '36,7M', image: require('../../assets/images/ImageRanking/rank5.png') },
+                { title: '#6', titleRank: 'Buồn hay vui', voteText: '34,1M', image: require('../../assets/images/ImageRanking/rank6.png') },
+            ],
         },
     ];
 
     return (
         <Container colors={['black', 'black', 'black']}>
-            <Header></Header>
+            <Header />
             <Content>
                 <Text style={styles.headerText}>Bảng xếp hạng</Text>
                 <SvgXml style={styles.icon1} width={50} height={50} xml={icon1()} />
@@ -37,41 +32,21 @@ const RankingScreen: React.FC<RankingProps & { navigation: NavigationProp<any> }
                     <ImageBackground source={require('../../assets/images/ImageRanking/rank1.png')} style={styles.imageRank1}>
                         <SvgXml style={styles.icon2} width={60} height={60} xml={icon2()} />
                     </ImageBackground>
-                    <ImageBackground source={require('../../assets/images/ImageRanking/rank2.png')} style={styles.imageRank2}></ImageBackground>
+                    <ImageBackground source={require('../../assets/images/ImageRanking/rank2.png')} style={styles.imageRank2} />
                 </View>
-
                 {rankingSongs.map((item) => (
                     <View key={item.id} style={styles.songContainer}>
-                        <View style={styles.songItem}>
-                            <Text style={styles.songRanking}>{item.title3}</Text>
-                            <ImageBackground source={require('../../assets/images/ImageRanking/rank3.png')} style={styles.songImage}></ImageBackground>
-                            <Text style={styles.songName}>{item.titleRank3}</Text>
-                            <Text style={styles.voteText}>{item.voteText3}</Text>
-                        </View>
-                        <View style={styles.underline}></View>
-
-                        <View style={styles.songItem}>
-                            <Text style={styles.songRanking}>{item.title4}</Text>
-                            <ImageBackground source={require('../../assets/images/ImageRanking/rank4.png')} style={styles.songImage}></ImageBackground>
-                            <Text style={styles.songName}>{item.titleRank4}</Text>
-                            <Text style={styles.voteText}>{item.voteText4}</Text>
-                        </View>
-                        <View style={styles.underline}></View>
-
-                        <View style={styles.songItem}>
-                            <Text style={styles.songRanking}>{item.title5}</Text>
-                            <ImageBackground source={require('../../assets/images/ImageRanking/rank5.png')} style={styles.songImage}></ImageBackground>
-                            <Text style={styles.songName}>{item.titleRank5}</Text>
-                            <Text style={styles.voteText}>{item.voteText5}</Text>
-                        </View>
-                        <View style={styles.underline}></View>
-
-                        <View style={styles.songItem}>
-                            <Text style={styles.songRanking}>{item.title6}</Text>
-                            <ImageBackground source={require('../../assets/images/ImageRanking/rank6.png')} style={styles.songImage}></ImageBackground>
-                            <Text style={styles.songName}>{item.titleRank6}</Text>
-                            <Text style={styles.voteText}>{item.voteText6}</Text>
-                        </View>
+                        {item.ranks.map((rankItem, index) => (
+                            <React.Fragment key={rankItem.title}>
+                                <TouchableOpacity style={styles.songItem}>
+                                    <Text style={styles.songRanking}>{rankItem.title}</Text>
+                                    <ImageBackground source={rankItem.image} style={styles.songImage} />
+                                    <Text style={styles.songName}>{rankItem.titleRank}</Text>
+                                    <Text style={styles.voteText}>{rankItem.voteText}</Text>
+                                </TouchableOpacity>
+                                {index < item.ranks.length - 1 && <View style={styles.underline} />}
+                            </React.Fragment>
+                        ))}
                     </View>
                 ))}
             </Content>

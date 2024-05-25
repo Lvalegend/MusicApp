@@ -10,10 +10,6 @@ import { hostNetwork } from '../../../host/HostNetwork';
 
 const AvatarPicker = () => {
     const [image, setImage] = useState('');
-
-    
-   
-
     const requesCameraPermissions = async () => {
         try {
             const token = await getToken()
