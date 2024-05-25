@@ -3,7 +3,6 @@ import SplashScreen from '../app-views/SplashScreen/SplashScreen';
 import Login from '../app-views/LoginAndRegister/Login';
 import Comments from '../app-views/Comments/Comments';
 import Register from '../app-views/LoginAndRegister/Register';
-
 import Popular from '../app-views/PopularScreen/PopularScreen';
 import ManageScreen from '../app-views/Manages/ManageScreen';
 import User from '../app-views/UserScreen/UserScreen';
@@ -27,7 +26,7 @@ export {
   Login,
   Song,
   Register,
-  
+  Comments,
   Popular,
   PlayList,
   Downloads,

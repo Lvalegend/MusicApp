@@ -8,6 +8,7 @@ import Slider from '@react-native-community/slider';
 import TrackPlayer, { Capability, State, Event, usePlaybackState, useProgress } from 'react-native-track-player';
 import Swiper from 'react-native-swiper';
 import { load } from 'react-native-track-player/lib/src/trackPlayer';
+import Comments from '../Comments/Comments';
 
 export type RootStackParamList = {
     Song: undefined;
@@ -16,10 +17,10 @@ export type RootStackParamList = {
 };
 
 interface SongProps {
-    navigation: any
     song: string
     onPress: () => void
     handleNavigateBack: () => void;
+
 }
 
 
@@ -29,8 +30,10 @@ const Song: React.FunctionComponent<SongProps> = ({ handleNavigateBack }) => {
     const [currentPosition, setCurrentPosition] = useState(0);
     const [totalDuration, setTotalDuration] = useState(0);
     const progress = useProgress();
-    const navigation = useNavigation<NavigationProp<RootStackParamList>>();;
     const [currentLyric, setCurrentLyric] = useState("");
+    const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
+
 
     const lyricsArray = [
         { startTime: 0, text: "Và bao nhiêu đêm dài\nAnh mong có em ở lại" },
@@ -139,6 +142,10 @@ const Song: React.FunctionComponent<SongProps> = ({ handleNavigateBack }) => {
         return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
     };
 
+    const handleCommentPress = () => {
+        navigation.navigate('Comments')
+    };
+
     return (
         <>
 
@@ -194,7 +201,7 @@ const Song: React.FunctionComponent<SongProps> = ({ handleNavigateBack }) => {
                         </View>
 
                         <View style={styles.iconCmt}>
-                            <TouchableOpacity onPress={() => navigation.navigate('Comments')} >
+                            <TouchableOpacity onPress={handleCommentPress} >
                                 <SvgXml width={30} height={30} xml={iconCommentsWhite()}></SvgXml>
                             </TouchableOpacity>
 
@@ -220,6 +227,7 @@ const Song: React.FunctionComponent<SongProps> = ({ handleNavigateBack }) => {
 
                     </View>
 
+                
                 </Content>
 
                 <Footer>
@@ -315,10 +323,10 @@ const styles = StyleSheet.create({
     slide: {
 
     },
-    lyricText:{
-        color:'white',
-        textAlign:'center',
-        fontSize:20
+    lyricText: {
+        color: 'white',
+        textAlign: 'center',
+        fontSize: 20
     },
     goBackButton: {
         color: 'white',

@@ -10,8 +10,11 @@ import BottomBar from '../GeneralComponents/BottomBar/BottomBar';
 
 
 interface CommentsProps {
+    goBack(): unknown;
     onPress: () => void
     handleNavigateBack: () => void;
+    navigation :any
+
 }
 interface User {
     id: number;
@@ -22,14 +25,14 @@ interface Comments {
     id: number;
     text: string;
     user: User;
+    
 };
 
-const Comments: React.FC<CommentsProps & { navigation: NavigationProp<any>} >= ({navigation}) => {
+const Comments: React.FC<CommentsProps> = ( navigation) => {
     const [comment, setComment] = useState<string>('');
     const [comments, setComments] = useState<Comments[]>([]);
     const currentUser:
         User = { id: 1, name: 'Someone', avatar: require('../../assets/images/ImageComments/avt_ca_nhan.png') };
-
     const addComment = () => {
         if (comment.trim() !== '') {
             const newComment: Comments = {
@@ -90,9 +93,6 @@ const Comments: React.FC<CommentsProps & { navigation: NavigationProp<any>} >= (
                         </View>
                     </View>
                 </Footer>
-
-
-
 
             </Container>
 
