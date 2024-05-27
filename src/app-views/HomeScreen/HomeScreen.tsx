@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Button, View, Text, Image, SafeAreaView, StyleSheet, StatusBar, TextInput, ImageBackground, Pressable, FlatList} from 'react-native';
-import { NavigationProp } from '@react-navigation/native';
+import { Button, View, Text, Image, SafeAreaView, StyleSheet, StatusBar, TextInput, ImageBackground, Pressable, FlatList } from 'react-native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
 import { iconSreach } from '../../app-uikits/icon-svg';
 import { Header, Content, Footer, Container } from '../../app-layout/Layout';
@@ -9,20 +9,23 @@ import { ReactNode, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import PlayList from './PlayList';
 import Album from './Album';
+import SearchScreen from '../Search/SearchScreen';
 
 
 interface HomeScreenProps {
+
 }
 
 const HomeScreen: React.FC<HomeScreenProps> = () => {
-
     const [text, setText] = useState('');
     const [showPlayList, setShowPlayList] = useState(true);
-    const [selectedIdP, setSelectedIdP] = useState<string>(''); 
-
+    const [selectedIdP, setSelectedIdP] = useState<string>('');
     const [showAlbum, setShowAlbum] = useState(true);
-    const [selectedIdA, setSelectedIdA] = useState<string>(''); 
+    const [selectedIdA, setSelectedIdA] = useState<string>('');
+    const navigation = useNavigation<NavigationProp<any>>();
+    const [showSearch, setShowSearch] = useState(true);
 
+    
     const handleNavigateToPlaylist = (ID: string) => {
         setShowPlayList(false)
         setSelectedIdP(ID);
@@ -39,11 +42,13 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
         setShowPlayList(true)
     };
 
+    const handleNavigateSearch = () => {
+        setShowSearch(false)
+    }
 
-    const handleChangeText = (newText: string) => {
-        setText(newText);
-    };
-
+    const handleNavigateBackFromSearch = () => {
+        setShowSearch(true);
+    }
     const recentlyPlayedData = [
         { id: '1', title: 'Le Luu Ly', artist: 'Nguyen Kim Tuyen', duration: '3:50', image: require('../../assets/images/song/Leluuly.jpg') },
         { id: '2', title: 'Anh Mat Troi', artist: 'Nguyen Kim Tuyen', duration: '3:50', image: require('../../assets/images/song/anhMatTroi.jpg') },
@@ -55,115 +60,119 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
 
     const playListData = [
         { id: '1', title: 'Chills', image: require('../../assets/images/song/albumChill.jpg'), colorAlbum: ['#b41b1b', '#101d1d'] },
-        { id: '2', title: 'Anime', image: require('../../assets/images/ImageAnime/ImageAlbum.png'),colorAlbum: ['#5a6777', '#101221'] },
+        { id: '2', title: 'Anime', image: require('../../assets/images/ImageAnime/ImageAlbum.png'), colorAlbum: ['#5a6777', '#101221'] },
         { id: '3', title: 'Gym', image: require('../../assets/images/ImageGym/imageAlbum.jpg'), colorAlbum: ['#e8a356', '#140000'] },
-        { id: '4', title: 'Sad', image: require('../../assets/images/ImageSad/imageAlbum.jpg'),colorAlbum: ['#142e4e', '#966d74'] },
+        { id: '4', title: 'Sad', image: require('../../assets/images/ImageSad/imageAlbum.jpg'), colorAlbum: ['#142e4e', '#966d74'] },
     ];
 
     const albumData = [
-        { id: '1', title: '99%', image: require('../../assets/images/ImageAlbum99/ImageAlbum.jpg'), colorAlbum: ['', '']},
-        { id: '2', title: 'Ai', image: require('../../assets/images/ImageAlbumAi/imageAlbum.jpg'), colorAlbum: ['', '']},
-        { id: '3', title: 'LoiChoi', image: require('../../assets/images/ImageLoiChoi/ImageAlbum.jpg'), colorAlbum: ['', '']},
+        { id: '1', title: '99%', image: require('../../assets/images/ImageAlbum99/ImageAlbum.jpg'), colorAlbum: ['', ''] },
+        { id: '2', title: 'Ai', image: require('../../assets/images/ImageAlbumAi/imageAlbum.jpg'), colorAlbum: ['', ''] },
+        { id: '3', title: 'LoiChoi', image: require('../../assets/images/ImageLoiChoi/ImageAlbum.jpg'), colorAlbum: ['', ''] },
     ]
 
 
     return (
+    <>
+    { showSearch ? (
 
-        <>
-            {showPlayList ? (
-                <Container colors={['black','black','black']}>
-                    <Header>
-                        <Text style={{ color: 'white', fontSize: 32, marginLeft: 20, marginTop: 20 }}>Home</Text>
-                        <View style={styles.searchContainer}>
-                            <SvgXml xml={iconSreach()} style={{ margin: 12, marginRight: 0, }} />
-                            <TextInput
-                                style={styles.input}
-                                value={text}
-                                onChangeText={handleChangeText}
-                                placeholder="Search"
-                            />
-                        </View>
-                    </Header>
+        showPlayList ? (
+            <Container colors={['black', 'black', 'black']}>
+                <Header>
+                    <Text style={{ color: 'white', fontSize: 32, marginLeft: 20, marginTop: 20 }}>Home</Text>
+                    <View style={styles.searchContainer}>
+                        <SvgXml xml={iconSreach()} style={{ margin: 12, marginRight: 0, }} />
+                        <TextInput
+                            style={styles.input}
+                            value={text}
+                            onChangeText={setText}
+                            placeholder="Search"
+                            // onPressIn={handleNavigateSearch}
+                        />
+                    </View>
+                </Header>
 
-                    <Content>
-                        <Text style={{ fontSize: 18, color: 'white', margin: 20, }}>
+                <Content>
+                    <Text style={{ fontSize: 18, color: 'white', margin: 20}}>
                         Playlist Hot
-                        </Text>
-                        <ScrollView
+                    </Text>
+                    <ScrollView
                         horizontal>
-                            {playListData.map((item) => (
-                                <Pressable
-                                key={item.id}
-                                onPress={() => handleNavigateToPlaylist(item.id)}
-                            >
-                                <ImageBackground
-                                    style={styles.logo}
-                                    source={item.image}
-                                >
-                                    <Text style={styles.title}>{item.title}</Text>
-                                </ImageBackground>
-                            </Pressable>
-                            
-                            ))}
-                        </ScrollView>
-
-                        <Text style={{ fontSize: 18, color: 'white', margin: 20, }}>
-                        Album Hot
-                        </Text>
-                        <ScrollView
-                        horizontal>
-                            {albumData.map((item) => (
-                                <Pressable
-                                key={item.id}
-                                onPress={() => handleNavigateToPlaylist(item.id)}
-                            >
-                                <ImageBackground
-                                    style={styles.logo}
-                                    source={item.image}
-                                >
-                                    <Text style={styles.title}>{item.title}</Text>
-                                </ImageBackground>
-                            </Pressable>
-                            
-                            ))}
-                        </ScrollView>
-                        <View style={{ flexDirection: 'row' }}>
-                            <Text style={{ fontSize: 18, color: 'white', marginLeft: 20, marginTop: 20, }}>
-                                Recently Play
-                            </Text>
-                            <Text style={{ fontSize: 18, color: 'white', marginLeft: 190, marginTop: 20, }}>
-                                See all
-                            </Text>
-                        </View>
-
-                        {recentlyPlayedData.map((item) => (
+                        {playListData.map((item) => (
                             <Pressable
                                 key={item.id}
-                                style={styles.item}
+                                onPress={() => handleNavigateToPlaylist(item.id)}
                             >
-                                <Image source={item.image} style={styles.song} />
-                                <View style={{ flexDirection: 'column', marginHorizontal: 18, justifyContent: 'center' }}>
-                                    <Text style={{ color: 'white' }}>{item.title}</Text>
-                                    <Text style={{ color: 'white' }}>{item.artist}</Text>
-                                    <Text style={{ color: 'white', marginTop: 8 }}>{item.duration}</Text>
-                                </View>
+                                <ImageBackground
+                                    style={styles.logo}
+                                    source={item.image}
+                                >
+                                    <Text style={styles.title}>{item.title}</Text>
+                                </ImageBackground>
                             </Pressable>
+
                         ))}
+                    </ScrollView>
+
+                    <Text style={{ fontSize: 18, color: 'white', margin: 20, }}>
+                        Album Hot
+                    </Text>
+                    <ScrollView
+                        horizontal>
+                        {albumData.map((item) => (
+                            <Pressable
+                                key={item.id}
+                                onPress={() => handleNavigateToPlaylist(item.id)}
+                            >
+                                <ImageBackground
+                                    style={styles.logo}
+                                    source={item.image}
+                                >
+                                    <Text style={styles.title}>{item.title}</Text>
+                                </ImageBackground>
+                            </Pressable>
+
+                        ))}
+                    </ScrollView>
+                    <View style={{ flexDirection: 'row' }}>
+                        <Text style={{ fontSize: 18, color: 'white', marginLeft: 20, marginTop: 20, }}>
+                            Recently Play
+                        </Text>
+                        <Text style={{ fontSize: 18, color: 'white', marginLeft: 190, marginTop: 20, }}>
+                            See all
+                        </Text>
+                    </View>
+
+                    {recentlyPlayedData.map((item) => (
+                        <Pressable
+                            key={item.id}
+                            style={styles.item}
+                        >
+                            <Image source={item.image} style={styles.song} />
+                            <View style={{ flexDirection: 'column', marginHorizontal: 18, justifyContent: 'center' }}>
+                                <Text style={{ color: 'white' }}>{item.title}</Text>
+                                <Text style={{ color: 'white' }}>{item.artist}</Text>
+                                <Text style={{ color: 'white', marginTop: 8 }}>{item.duration}</Text>
+                            </View>
+                        </Pressable>
+                    ))}
 
 
-                    </Content>
+                </Content>
 
-                    <Footer>
-                        <BottomBar/>
-                    </Footer>
+                <Footer>
+                    <BottomBar />
+                </Footer>
 
-                </Container>
-            ) : (
-                <PlayList handleNavigateBack={handleNavigateToBackL} id={selectedIdP} />
-
-            )}
-        </>
-
+            </Container>
+        ) : (
+            <PlayList handleNavigateBack={handleNavigateToBackL} id={selectedIdP} navigation={navigation} />
+        )
+     ) : (
+            <SearchScreen handleNavigateBack={handleNavigateBackFromSearch} navigation={navigation}/>
+        )}
+    </>
+    
     );
 };
 const styles = StyleSheet.create({

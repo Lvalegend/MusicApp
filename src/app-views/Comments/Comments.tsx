@@ -8,12 +8,13 @@ import BottomBar from '../GeneralComponents/BottomBar/BottomBar';
 
 
 
-
 interface CommentsProps {
-    goBack(): unknown;
+}
+interface CommentsProps {
+    goBack: any;
     onPress: () => void
     handleNavigateBack: () => void;
-    navigation :any
+    navigation: any
 
 }
 interface User {
@@ -25,39 +26,94 @@ interface Comments {
     id: number;
     text: string;
     user: User;
-    
+    replies: Comments[];
+    showReplyBox: boolean;
 };
 
-const Comments: React.FC<CommentsProps> = ( navigation) => {
+const Comments: React.FC<CommentsProps> = ({ handleNavigateBack }) => {
     const [comment, setComment] = useState<string>('');
     const [comments, setComments] = useState<Comments[]>([]);
-    const currentUser:
-        User = { id: 1, name: 'Someone', avatar: require('../../assets/images/ImageComments/avt_ca_nhan.png') };
+    const users:
+        User[] = [{ id: 1, name: 'phog', avatar: require('../../assets/images/ImageComments/avt_ca_nhan.png') },
+       
+        ];
+        
+    const [replyTo, setReplyTo] = useState<number | null>(null);
+    const [replyTexts, setReplyTexts] = useState<{ [key: number]: string }>({});
+
+    
+
     const addComment = () => {
         if (comment.trim() !== '') {
             const newComment: Comments = {
                 id: comments.length + 1,
                 text: comment.trim(),
-                user: currentUser,
+                user: users[0],
+                replies: [],
+                showReplyBox: false
             };
             setComments([...comments, newComment]);
             setComment('');
         };
     }
+    
+    const handleReply = (parentCommentId: number, isReply: boolean = false) => {
+        const text = replyTexts[parentCommentId] || '';
+        if (text.trim() === '') {
+            return;
+        }
+       
+        const updatedComments = comments.map(comment => {
+            if (comment.id === parentCommentId) {
+                const newReply: Comments = {
+                    id: comment.replies.length + 1,
+                    text: text.trim(),
+                    user: users[0],
+                    replies: [],
+                    showReplyBox: false
+                };
+                return { ...comment, replies: [...comment.replies, newReply] };
+            }
+            return comment;
+        });
+        setComments(updatedComments);
+        setReplyTo(null);
+        setReplyTexts({ ...replyTexts, [parentCommentId]: '' });
+    }
 
-    const handleNavigateBack = () => {
-        navigation.goBack();
+    const handleChangeReplyText = (commentId: number, text: string) => {
+        setReplyTexts({ ...replyTexts, [commentId]: text });
     };
+
+    const toggleReplyBox = (commentId: number, parentCommentId?: number) => {
+        setComments(prevComments => {
+            return prevComments.map(comment => {
+                if (comment.id === commentId || (parentCommentId && comment.id === parentCommentId)) {
+                    return { ...comment, showReplyBox: !comment.showReplyBox };
+                } else {
+                    return {
+                        ...comment,
+                        replies: comment.replies.map(reply => ({
+                            ...reply,
+                            showReplyBox: reply.id === commentId ? !reply.showReplyBox : false
+                        }))
+                    };
+                }
+            });
+        });
+    };
+
+
     return (
 
         <>
             <Container colors={['white', 'white']}>
 
                 <Header style={styles.header}>
-                <TouchableOpacity onPress = {handleNavigateBack} style={styles.goBackButton}>
-                    <SvgXml width={30} height={30} xml={iconBack()}></SvgXml>
+                    <TouchableOpacity onPress={handleNavigateBack} style={styles.goBackButton}>
+                        <SvgXml width={30} height={30} xml={iconBack()}></SvgXml>
                     </TouchableOpacity>
-                    <Text style={styles.headerText}>Bình luận</Text>                  
+                    <Text style={styles.headerText}>Bình luận</Text>
                 </Header>
 
 
@@ -69,17 +125,51 @@ const Comments: React.FC<CommentsProps> = ( navigation) => {
                                 <Text style={styles.commentText}>
                                     <Text style={styles.comment}>{comment.user.name}</Text>: {comment.text}
                                 </Text>
+                                <TouchableOpacity onPress={() => toggleReplyBox(comment.id)}>
+                                    <Text style={styles.replyText}>Trả lời</Text>
+                                </TouchableOpacity>
                             </View>
+                            {comment.showReplyBox && (
+                                <View style={styles.replyBox}>
+                                    <Image style={styles.imageCaNhan} source={comment.user.avatar} />
+                                    <TextInput
+                                        placeholder={`Trả lời ${comment.user.name}:`}
+                                        value={replyTexts[comment.id] || ''}
+                                        onChangeText={(text) => handleChangeReplyText(comment.id, text)}
+                                        style={styles.input}
+                                    />
+
+                                    <TouchableOpacity onPress={() => handleReply(comment.id)} style={styles.button}>
+                                        <Text style={styles.buttonText}>Gửi</Text>
+                                    </TouchableOpacity>
+
+                                </View>
+                            )}
+                            {comment.replies.map(reply => (
+                                <View key={reply.id} style={styles.replyContainer}>
+                                    <View style={styles.replyBox}>
+                                        <Image style={styles.imageCaNhan} source={reply.user.avatar} />
+                                        <Text style={styles.replyText}>
+                                            <Text style={styles.comment}>{reply.user.name}</Text>: {reply.text}
+                                        </Text>
+                                        <TouchableOpacity onPress={() => toggleReplyBox(reply.id)}>
+                                            <Text style={styles.replyButton}>Trả lời</Text>
+                                        </TouchableOpacity>
+
+                                    </View>
+                                    
+                                </View>
+
+                            ))}
                         </View>
                     ))}
-
                 </Content>
 
 
                 <Footer>
                     <View style={styles.cmtDetails}>
                         <View style={styles.commentBox}>
-                            <Image style={styles.imageCaNhan} source={currentUser.avatar}></Image>
+                            <Image style={styles.imageCaNhan} source={users[0].avatar}></Image>
                             <TextInput
                                 placeholder="Nhập bình luận..."
                                 value={comment}
@@ -91,10 +181,11 @@ const Comments: React.FC<CommentsProps> = ( navigation) => {
                                 <Text style={styles.buttonText}>Gửi</Text>
                             </TouchableOpacity>
                         </View>
+                        
                     </View>
                 </Footer>
 
-            </Container>
+            </Container >
 
         </>
     );
@@ -109,15 +200,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingVertical: 10,
         paddingHorizontal: 10,
-      
+
 
     },
     header: {
         height: 60,
-        flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        paddingHorizontal: 10,
 
     },
     headerText: {
@@ -130,7 +219,7 @@ const styles = StyleSheet.create({
         borderTopColor: '#ccc',
         paddingVertical: 10,
         paddingHorizontal: 10,
-     
+
 
     },
     input: {
@@ -168,11 +257,29 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     commentText: {
-        marginLeft:10
+        marginLeft: 10
     },
-    goBackButton:{
-       padding:10,
-       color:'black'
+    goBackButton: {
+        padding: 10,
+        color: 'black'
+    },
+    replyText: {
+        color: 'black',
+
+    },
+    replyBox: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#f0f0f0',
+        borderRadius: 25,
+        paddingHorizontal: 15,
+        marginBottom: 10,
+    },
+    replyContainer: {
+        marginLeft: 50,
+    },
+    replyButton: {
+
     }
 });
 export default Comments;

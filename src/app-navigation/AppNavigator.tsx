@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { GestureHandlerRootView } from 'react-native-gesture-handler'; 
-import { Comments, HomeScreen, Login, Popular, Register, SplashScreen, User, Downloads, Song, UserAfterLoginOrRegister,ManageScreen, ManageCateScreen, ManageSongScreen, ManageUserScreen, ManageCountScreen, ManagePlaylistScreen, ManageInformScreen, ArtistInf } from './types';
+import { Comments, HomeScreen, Login, Popular, Register, SplashScreen, User, Downloads,  UserAfterLoginOrRegister,ManageScreen, ManageCateScreen, ManageSongScreen, ManageUserScreen, ManageCountScreen, ManagePlaylistScreen, ManageInformScreen, ArtistInf } from './types';
 
 export interface AppRoutes{
     OriginScreen: never
@@ -23,8 +23,9 @@ function AppNavigator() {
         <Stack.Screen name="SplashScreen" component={SplashScreen} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Register" component={Register} />
-        <Stack.Screen name="Popular" component={Popular} />
         <Stack.Screen name="Comments" component={Comments} />
+        <Stack.Screen name="Popular" component={Popular} />
+        <Stack.Screen name="Favor" component={Popular} />
         <Stack.Screen name="User" component={User} />
         <Stack.Screen name="Downloads" component={Downloads} />
         <Stack.Screen name ="ManageScreen" component={ManageScreen}/>

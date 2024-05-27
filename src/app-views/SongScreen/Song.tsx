@@ -7,8 +7,8 @@ import { Footer, Content, Header, Container } from '../../app-layout/Layout';
 import Slider from '@react-native-community/slider';
 import TrackPlayer, { Capability, State, Event, usePlaybackState, useProgress } from 'react-native-track-player';
 import Swiper from 'react-native-swiper';
-import { load } from 'react-native-track-player/lib/src/trackPlayer';
-import Comments from '../Comments/Comments';
+import lyricsArray from './lyricsData';
+import { hostNetwork } from '../../host/HostNetwork';
 
 export type RootStackParamList = {
     Song: undefined;
@@ -17,9 +17,10 @@ export type RootStackParamList = {
 };
 
 interface SongProps {
-    song: string
-    onPress: () => void
-    handleNavigateBack: () => void;
+    song: string;
+     handleNavigateBack: () => void; 
+     navigation: NavigationProp<any>; 
+     onPress: () => void;
 
 }
 
@@ -30,32 +31,7 @@ const Song: React.FunctionComponent<SongProps> = ({ handleNavigateBack }) => {
     const [currentPosition, setCurrentPosition] = useState(0);
     const [totalDuration, setTotalDuration] = useState(0);
     const progress = useProgress();
-    const [currentLyric, setCurrentLyric] = useState("");
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-
-
-
-    const lyricsArray = [
-        { startTime: 0, text: "Và bao nhiêu đêm dài\nAnh mong có em ở lại" },
-        { startTime: 10, text: "Chẳng chi trông mong\nở nơi hư không\nCho anh giấc ngủ của ngài" },
-        { startTime: 20, text: "Phải chăng anh biết đường\nTìm ra những lẽ thường\nPhải chăng anh biết đường\nđi tìm em giữa bốn phương" },
-        { startTime: 30, text: "Chiếc hôn thật xinh xắn\nNhững nụ cười tươi tắn\nThế nhưng thời gian với nhau\nCủa anh với em là hơi ngắn" },
-        { startTime: 40, text: "Hãy ở lại đây\nVòng tay bên anh ấm ôm tràn đầy\nCho dù anh\nChẳng chắc mình có\nChỉ ôm em ngủ say\nôm em ngủ say" },
-        { startTime: 50, text: "Vì một điều mà anh\nRất ngại nói ra\nKhông em ơi\nAnh không có người thứ ba" },
-        { startTime: 60, text: "Chỉ là điều mà anh\nRất ngại nói ra với em" },
-        { startTime: 70, text: "Mùa đông cho đêm nay thêm xanh\nBao nhiêu câu ca trong anh\nDa di da di con đường\nVề phải đi bao nhiêu phố phường" },
-        { startTime: 80, text: "Thôi em ơi, con đường xa\nAnh cũng ngại phải đưa em về nhà\nAnh cũng ngại phải chào ông chào bà\nVà anh cũng ngại\nPhải cô đơn tại gia" },
-        { startTime: 90, text: "Nhiều ngày rồi mình có nhau\nNhưng em thì nào có biết đâu\nNhững suy nghĩ ở trong đầu\nChẳng thể nói được ra cho quá mau" },
-        { startTime: 100, text: "Để rồi lại mong\nCho đêm mai em sang\nCho dù anh chẳng dám\nLe lám bẽ bàng này" },
-        { startTime: 110, text: "Cho dù anh chẳng chắc\nMình có chỉ ôm em ngủ say\nôm em ngủ say" },
-        { startTime: 120, text: "Vì một điều mà anh\nRất ngại nói ra\nKhông em ơi\nAnh không có người thứ ba" },
-        { startTime: 130, text: "Chỉ là điều mà anh\nRất ngại nói ra với em" },
-        { startTime: 140, text: "Và anh biết chẳng cần thiết\nPhải như thế\nNếu vẫn muốn bên nhau" },
-        { startTime: 150, text: "Một điều mà ai đã từng\nMột điều chẳng ai muốn dừng\nLại đâu" },
-        { startTime: 160, text: "Vì một điều mà anh\nRất ngại nói ra\nKhông em ơi\nAnh không có người thứ ba" },
-        { startTime: 170, text: "Chỉ là điều mà anh\nRất ngại nói ra với em" },
-        { startTime: 180, text: "Chỉ là điều mà anh\nRất ngại nói ra" }
-    ];
 
     useEffect(() => {
         const interval = setInterval(async () => {
@@ -66,8 +42,7 @@ const Song: React.FunctionComponent<SongProps> = ({ handleNavigateBack }) => {
         }, 1000);
         return () => clearInterval(interval);
     }, [playState]);
-
-
+    
 
     useEffect(() => {
         const trackPlayerListener = TrackPlayer.addEventListener(Event.PlaybackTrackChanged, async ({ nextTrack }) => {
@@ -85,23 +60,6 @@ const Song: React.FunctionComponent<SongProps> = ({ handleNavigateBack }) => {
         loadTrack();
     }, [])
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            if (playState) {
-                updateCurrentLyric(progress.position);
-            }
-        }, 1000);
-        return () => clearInterval(interval);
-    }, [playState, progress.position]);
-
-    const updateCurrentLyric = (position: number) => {
-        const currentLyricData = lyricsArray.find((lyric: { startTime: number; }, index: number) => {
-            const nextLyric = lyricsArray[index + 1];
-            return position >= lyric.startTime && (!nextLyric || position < nextLyric.startTime);
-        });
-        setCurrentLyric(currentLyricData ? currentLyricData.text : "");
-    };
-
 
     const loadTrack = async () => {
         await TrackPlayer.setupPlayer();
@@ -115,7 +73,7 @@ const Song: React.FunctionComponent<SongProps> = ({ handleNavigateBack }) => {
 
         await TrackPlayer.add({
             id: 'track1',
-            url: require('../../assets/images/song/Mot-Dieu-Ma-Anh-Rat-Ngai-Noi-Ra-Hai-Sam.mp3'),
+            url: `http://${hostNetwork}:3000/audio?id=${songId}`,
             title: 'Adiyee',
             artist: 'Bachelor Dhibu Ninan Thomas, Kapil Kapilan',
 
@@ -168,7 +126,7 @@ const Song: React.FunctionComponent<SongProps> = ({ handleNavigateBack }) => {
                                 <SvgXml width={400} height={400} xml={iconSong()}></SvgXml>
                             </View>
                             <View style={styles.slide}>
-                                <Text style={styles.lyricText}>{currentLyric}</Text>
+                            <SvgXml width={400} height={400} xml={iconLyrics()}></SvgXml>
                             </View>
                         </Swiper>
                     </View>
@@ -326,7 +284,7 @@ const styles = StyleSheet.create({
     lyricText: {
         color: 'white',
         textAlign: 'center',
-        fontSize: 20
+        fontSize: 20,
     },
     goBackButton: {
         color: 'white',
