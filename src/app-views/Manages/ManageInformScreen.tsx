@@ -69,7 +69,7 @@ const ManageInformScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ nav
                     
                     <View style={{ flexDirection:"row" }}>
                         <Text style={{ fontSize: 20, fontWeight: '800', }}>Là một người hòa đồng vui vẻ</Text>
-                        <SvgXml xml={iconpencil()} style={{marginLeft:5}}/>
+                        <SvgXml xml={iconpencil()} style={{marginLeft:10, marginTop:5}}/>
                     </View>
 
                     <TouchableOpacity onPress={() => requesCameraPermissions()} style={{ padding: 10, borderRadius: 50, backgroundColor: '#23D6E4', marginTop: 10 }}>
@@ -103,7 +103,7 @@ const ManageInformScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ nav
                         </View>
 
                         <TouchableOpacity onPress={handleManage} style={{ padding: 10, borderRadius: 50, backgroundColor: '#23D6E4', marginTop: 10, width: 100, marginLeft:140 }}>
-                            <Text style={{ color: 'white', fontSize: 15, fontWeight: '700', textAlign: 'center' }}>Logout</Text>
+                            <Text style={{ color: 'white', fontSize: 15, fontWeight: '700', textAlign: 'center' }}>Log out</Text>
                         </TouchableOpacity>
                     </View>
                     </View>

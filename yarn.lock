@@ -3662,6 +3662,11 @@ ee-first@1.1.1:
 electron-to-chromium@^1.4.668:
   version "1.4.719"
 
+eme-encryption-scheme-polyfill@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.npmjs.org/eme-encryption-scheme-polyfill/-/eme-encryption-scheme-polyfill-2.1.1.tgz"
+  integrity sha512-njD17wcUrbqCj0ArpLu5zWXtaiupHb/2fIUQGdInf83GlI+Q6mmqaPGLdrke4savKAu15J/z1Tg/ivDgl14g0g==
+
 emittery@^0.13.1:
   version "0.13.1"
 
@@ -6905,6 +6910,13 @@ setimmediate@^1.0.5:
 
 setprototypeof@1.2.0:
   version "1.2.0"
+
+shaka-player@^4.7.9:
+  version "4.8.1"
+  resolved "https://registry.npmjs.org/shaka-player/-/shaka-player-4.8.1.tgz"
+  integrity sha512-n+VTi+EZ4YWzGOxDy+yqascA6wNEliPy1jIvbHGxW2Prk8fitUozRffsP7aRbyoFwQekJ3D0P+Ngk7nSQU6IZA==
+  dependencies:
+    eme-encryption-scheme-polyfill "^2.1.1"
 
 shallow-clone@^3.0.0:
   version "3.0.1"

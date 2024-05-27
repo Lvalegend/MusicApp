@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, Image, TextInput, TouchableOpacity, Modal, StyleSheet, PermissionsAndroid, Pressable } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
-import { iconSreach, iconBack } from '../../app-uikits/icon-svg';
+import { iconSreach, iconBack, iconAdd } from '../../app-uikits/icon-svg';
 import { Header, Content, Footer, Container } from '../../app-layout/Layout';
 import { launchImageLibrary } from 'react-native-image-picker';
 
@@ -123,12 +123,10 @@ const ManageSongScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ navig
 
       <Footer>
         <View style={styles.footer}>
-          <TouchableOpacity style={styles.footerItem}>
-            <Text style={styles.footerItemText} onPress={() => setModalVisible(true)}>Thêm </Text>
+          <TouchableOpacity style={styles.footerItem} onPress={() => setModalVisible(true)}>
+             <View style={styles.addImage}><SvgXml xml={iconAdd('white', 20, 20)} /></View>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.footerItem}>
-            <Text style={styles.footerItemText}>Xóa</Text>
-          </TouchableOpacity>
+
         </View>
 
         <Modal
@@ -201,6 +199,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     margin: 20
   },
+
   input: {
     flex: 1,
     paddingVertical: 10,
@@ -212,14 +211,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
+    opacity:0.9
   },
   footerItem: {
     margin: 5,
     borderRadius: 5,
   },
-  footerItemText: {
-    fontSize: 20,
-    color: 'white',
+  addImage:{
+    borderRadius: 40,
+    borderWidth: 1,
+    borderColor: 'white',
+    width: 40,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding:10
   },
   item: {
     backgroundColor: '#24242E',
