@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Button, View, Text, Image, SafeAreaView, StyleSheet, Modal, TextInput, ImageBackground, Pressable, FlatList, TouchableOpacity } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
-import { iconSreach, iconBack } from '../../app-uikits/icon-svg';
+import { iconSreach, iconBack, iconChuX } from '../../app-uikits/icon-svg';
 import { Header, Content, Footer, Container } from '../../app-layout/Layout';
 import BottomBar from '../GeneralComponents/BottomBar/BottomBar';
 import { ReactNode, useState } from 'react';
@@ -93,6 +93,9 @@ const ManageUserScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ navig
                             <Text style={{ color: 'white' }}>{item.phone}</Text>
                             <Text style={{ color: 'white', marginTop: 8 }}>{item.email}</Text>
                         </View>
+                        <TouchableOpacity>
+                                <SvgXml xml={iconChuX()} style={{ marginTop: 18, marginLeft:90 }} />
+                                </TouchableOpacity>
                     </Pressable>
                 ))}
             </Content>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, Image, TextInput, TouchableOpacity, Modal, StyleSheet, PermissionsAndroid, Pressable } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
-import { iconSreach, iconBack, iconAdd } from '../../app-uikits/icon-svg';
+import { iconSreach, iconBack, iconAdd, icon3Cham, iconChuX } from '../../app-uikits/icon-svg';
 import { Header, Content, Footer, Container } from '../../app-layout/Layout';
 import { launchImageLibrary } from 'react-native-image-picker';
 
@@ -14,15 +14,16 @@ interface ManageSongScreenProps {
 const ManageSongScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ navigation }) => {
   const [text, setText] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
+  const [menuModalVisible, setMenuModalVisible] = useState(false);
   const [formData, setFormData] = useState({
     id: '',
     name: '',
     artist: '',
     duration: '',
-    category:'',
+    category: '',
     image: null
   });
-
+  const [selectedSong, setSelectedSong] = useState(null);
   const [recentlyPlayedData, setRecentlyPlayedData] = useState([
     { id: '1', title: 'Le Luu Ly', artist: 'Nguyen Kim Tuyen', duration: '3:50', image: require('../../assets/images/song/Leluuly.jpg') },
     { id: '2', title: 'Anh Mat Troi', artist: 'Nguyen Kim Tuyen', duration: '3:50', image: require('../../assets/images/song/anhMatTroi.jpg') },
@@ -81,7 +82,19 @@ const ManageSongScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ navig
   const handleCancel = () => {
     setModalVisible(false);
   };
+  const handleEdit = () => {
+    if (selectedSong) {
+      setFormData(selectedSong);
+      setModalVisible(true);
+      setMenuModalVisible(false);
+    }
+  };
 
+  const handleDelete = () => {
+    if (selectedSong) {
+      setMenuModalVisible(false);
+    }
+  };
 
   return (
     <Container colors={['#4c669f', 'red', '#192f6a']}>
@@ -107,7 +120,7 @@ const ManageSongScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ navig
 
       <Content>
         {recentlyPlayedData.map((item) => (
-          <Pressable
+          <TouchableOpacity
             key={item.id}
             style={styles.item}
           >
@@ -117,14 +130,17 @@ const ManageSongScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ navig
               <Text style={{ color: 'white' }}>{item.artist}</Text>
               <Text style={{ color: 'white', marginTop: 8 }}>{item.duration}</Text>
             </View>
-          </Pressable>
+            <TouchableOpacity>
+              <SvgXml xml={icon3Cham()} style={{ marginTop: 18, marginLeft: 90 }} onPress={() => setMenuModalVisible(true)} />
+            </TouchableOpacity>
+          </TouchableOpacity>
         ))}
       </Content>
 
       <Footer>
         <View style={styles.footer}>
           <TouchableOpacity style={styles.footerItem} onPress={() => setModalVisible(true)}>
-             <View style={styles.addImage}><SvgXml xml={iconAdd('white', 20, 20)} /></View>
+            <View style={styles.addImage}><SvgXml xml={iconAdd('white', 20, 20)} /></View>
           </TouchableOpacity>
 
         </View>
@@ -141,7 +157,7 @@ const ManageSongScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ navig
               <TouchableOpacity onPress={() => requesCameraPermissions()} style={{ padding: 15, borderRadius: 50, backgroundColor: '#23D6E4', marginHorizontal: 10, marginBottom: 10 }}>
                 <Text style={{ color: 'white', fontSize: 20, fontWeight: '700', textAlign: 'center' }}>Chọn ảnh</Text>
               </TouchableOpacity>
-               <TextInput
+              <TextInput
                 placeholder="ID"
                 style={styles.inputAdd}
                 value={formData.id}
@@ -172,13 +188,37 @@ const ManageSongScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ navig
                 onChangeText={handleChangeCategory}
               />
               <View style={{ flexDirection: 'row' }}>
-              <TouchableOpacity style={styles.buttonSave} onPress={handleSave}>
+                <TouchableOpacity style={styles.buttonSave} onPress={handleSave}>
                   <Text style={styles.buttonText}>Lưu</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={handleCancel} style={styles.buttonClose}>
                   <Text style={styles.buttonText}>Hủy bỏ</Text>
                 </TouchableOpacity>
               </View>
+            </View>
+          </View>
+        </Modal>
+
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={menuModalVisible}
+          onRequestClose={() => {
+            setMenuModalVisible(!menuModalVisible);
+          }}>
+          <View style={styles.centeredView}>
+            <TouchableOpacity onPress={() => setMenuModalVisible(false)} style={styles.close}>
+              <SvgXml xml={iconChuX()} />
+            </TouchableOpacity>
+            <View style={styles.modalView}>
+              <TouchableOpacity onPress={handleEdit} style={styles.menuEdit}>
+                <Text style={styles.menuOptionText}>Sửa thông tin</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={handleDelete} style={styles.menuDelete}>
+                <Text style={styles.menuOptionText}>Xóa</Text>
+              </TouchableOpacity>
+
             </View>
           </View>
         </Modal>
@@ -211,13 +251,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    opacity:0.9
+    opacity: 0.9
   },
   footerItem: {
     margin: 5,
     borderRadius: 5,
   },
-  addImage:{
+  addImage: {
     borderRadius: 40,
     borderWidth: 1,
     borderColor: 'white',
@@ -225,7 +265,7 @@ const styles = StyleSheet.create({
     height: 40,
     alignItems: 'center',
     justifyContent: 'center',
-    padding:10
+    padding: 10
   },
   item: {
     backgroundColor: '#24242E',
@@ -275,23 +315,57 @@ const styles = StyleSheet.create({
   buttonSave: {
     backgroundColor: "blue",
     paddingVertical: 15,
-    paddingHorizontal:30,
+    paddingHorizontal: 30,
     marginTop: 10,
     borderRadius: 10,
   },
   buttonClose: {
     backgroundColor: 'red',
     paddingVertical: 15,
-    paddingHorizontal:25,
+    paddingHorizontal: 25,
     borderRadius: 10,
     marginTop: 10,
-    marginLeft:5
+    marginLeft: 5
   },
   buttonText: {
     fontSize: 15,
     color: 'black',
-    fontWeight:"bold"
+    fontWeight: "bold"
   },
+  menuEdit: {
+    flexDirection: 'row',
+    borderRadius: 20,
+    paddingVertical: 15,
+    paddingHorizontal: 60,
+    elevation: 2,
+    backgroundColor: "black",
+    marginTop: 10
+  },
+  menuDelete: {
+    flexDirection: 'row',
+    borderRadius: 20,
+    paddingVertical: 15,
+    paddingHorizontal: 100,
+    elevation: 2,
+    backgroundColor: "black",
+    marginTop: 10
+  },
+  menuOptionText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: '700',
+    textAlign: 'center',
+  },
+  close: {
+    position: 'absolute',
+    top: 290,
+    right: 45,
+    borderRadius: 20,
+    elevation: 2,
+    backgroundColor: "gray",
+    padding: 10,
+    zIndex: 1
+},
 });
 
 export default ManageSongScreen;

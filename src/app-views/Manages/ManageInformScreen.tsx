@@ -6,10 +6,10 @@ import { SvgXml } from 'react-native-svg';
 import { Header, Content, Footer, Container } from '../../app-layout/Layout';
 import { ReactNode, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
-import { iconSreach, iconBack,iconpencil } from '../../app-uikits/icon-svg';
+import { iconSreach, iconBack, iconpencil } from '../../app-uikits/icon-svg';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 
- interface ManageInformScreenProps {
+interface ManageInformScreenProps {
 }
 
 const ManageInformScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ navigation }) => {
@@ -21,7 +21,11 @@ const ManageInformScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ nav
     const handleManage = () => {
         navigation.navigate('ManageScreen');
     };
+    const handleLogout = () => {
+        navigation.navigate('User');
+    };
     
+
     const [image, setImage] = useState('')
     const requesCameraPermissions = async () => {
         try {
@@ -53,7 +57,7 @@ const ManageInformScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ nav
                     </Pressable>
                 </View>
                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                    <Text style={{ color: 'white', fontSize: 26, marginTop: 0, marginBottom:10 }}>Thông tin cá nhân</Text>
+                    <Text style={{ color: 'white', fontSize: 26, marginTop: 0, marginBottom: 10 }}>Thông tin cá nhân</Text>
                 </View>
             </Header>
             <Content>
@@ -66,47 +70,49 @@ const ManageInformScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ nav
                     <View >
                         <Text style={{ fontSize: 25, fontWeight: '600' }}>Lê Văn An</Text>
                     </View>
-                    
-                    <View style={{ flexDirection:"row" }}>
+
+                    <View style={{ flexDirection: "row" }}>
                         <Text style={{ fontSize: 20, fontWeight: '800', }}>Là một người hòa đồng vui vẻ</Text>
-                        <SvgXml xml={iconpencil()} style={{marginLeft:10, marginTop:5}}/>
+                        <SvgXml xml={iconpencil()} style={{ marginLeft: 10, marginTop: 5 }} />
                     </View>
 
                     <TouchableOpacity onPress={() => requesCameraPermissions()} style={{ padding: 10, borderRadius: 50, backgroundColor: '#23D6E4', marginTop: 10 }}>
                         <Text style={{ color: 'white', fontSize: 15, fontWeight: '700', textAlign: 'center' }}>Change Avatar</Text>
                     </TouchableOpacity>
-                    
+
 
                     <View style={styles.container}>
                         <View style={styles.item}>
-                        <View style={styles.infoContainer}>
-                            <Text style={styles.label}>Email:</Text>
-                            <Text style={styles.text}>{userInfo.email}</Text>
-                        </View>
-                        <SvgXml xml={iconpencil()} style={styles.pencil}/>
-                        </View>
-
-                        <View style={styles.item}>
-                        <View style={styles.infoContainer}>
-                            <Text style={styles.label}>Số Điện Thoại:</Text>
-                            <Text style={styles.text}>{userInfo.phoneNumber}</Text>
-                        </View>
-                        <SvgXml xml={iconpencil()} style={styles.pencil}/>
+                            <View style={styles.infoContainer}>
+                                <Text style={styles.label}>Email:</Text>
+                                <Text style={styles.text}>{userInfo.email}</Text>
+                            </View>
+                            <SvgXml xml={iconpencil()} style={styles.pencil} />
                         </View>
 
                         <View style={styles.item}>
-                        <View style={styles.infoContainer}>
-                            <Text style={styles.label}>Địa Chỉ:</Text>
-                            <Text style={[styles.text, { textAlignVertical: 'top' }]}>{userInfo.address}</Text> 
-                        </View>
-                        <SvgXml xml={iconpencil()} style={styles.pencil}/>
+                            <View style={styles.infoContainer}>
+                                <Text style={styles.label}>Số Điện Thoại:</Text>
+                                <Text style={styles.text}>{userInfo.phoneNumber}</Text>
+                            </View>
+                            <TouchableOpacity>
+                                <SvgXml xml={iconpencil()} style={styles.pencil} />
+                            </TouchableOpacity>
                         </View>
 
-                        <TouchableOpacity onPress={handleManage} style={{ padding: 10, borderRadius: 50, backgroundColor: '#23D6E4', marginTop: 10, width: 100, marginLeft:140 }}>
+                        <View style={styles.item}>
+                            <View style={styles.infoContainer}>
+                                <Text style={styles.label}>Địa Chỉ:</Text>
+                                <Text style={[styles.text, { textAlignVertical: 'top' }]}>{userInfo.address}</Text>
+                            </View>
+                            <SvgXml xml={iconpencil()} style={styles.pencil} />
+                        </View>
+
+                        <TouchableOpacity onPress={handleLogout} style={{ padding: 10, borderRadius: 50, backgroundColor: '#23D6E4', marginTop: 10, width: 100, marginLeft: 140 }}>
                             <Text style={{ color: 'white', fontSize: 15, fontWeight: '700', textAlign: 'center' }}>Log out</Text>
                         </TouchableOpacity>
                     </View>
-                    </View>
+                </View>
             </Content>
             <Footer></Footer>
         </Container>
@@ -119,12 +125,12 @@ const styles = StyleSheet.create({
     },
     containerHeader: {
         margin: 15,
-        
+
     },
 
     infoContainer: {
         marginBottom: 15,
-        width:260
+        width: 260
     },
     label: {
         fontSize: 26,
@@ -135,15 +141,15 @@ const styles = StyleSheet.create({
         fontSize: 22,
         fontWeight: 'bold',
     },
-    pencil:{
+    pencil: {
         alignItems: 'flex-end',
         marginTop: 45,
-        marginLeft:10
+        marginLeft: 10
     },
-    item:{
-        alignContent: 'center', 
-        flexDirection:"row",
-        backgroundColor:'Salmon1',
+    item: {
+        alignContent: 'center',
+        flexDirection: "row",
+        backgroundColor: 'Salmon1',
         borderRadius: 20,
         marginHorizontal: 25,
         paddingHorizontal: 16,
