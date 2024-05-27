@@ -85,7 +85,7 @@ const UserAfterLoginOrRegister: React.FC<UserAfterLoginOrRegisterProps & { navig
         // getImage();
         const getInfo = async () => {
             try {
-                // const token = await getToken()
+                const token = await getToken()
                 const response = await axios.get(`http://${hostNetwork}:3000/infoUser`, {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -146,6 +146,8 @@ const UserAfterLoginOrRegister: React.FC<UserAfterLoginOrRegisterProps & { navig
                 if (!response.ok) {
                     throw new Error('Failed to fetch image');
                 }
+                console.log(response);
+                
                 const contentType = response.headers.get('Content-Type');
                 if (!contentType || !contentType.startsWith('image/')) {
                     throw new Error('Response is not an image');
@@ -176,6 +178,36 @@ const UserAfterLoginOrRegister: React.FC<UserAfterLoginOrRegisterProps & { navig
         sendMultipleRequests();
 
     }, []);
+
+    useEffect(()=> {
+        const getImage = async (songId: any) => {
+            try {
+                const response = await fetch(`http://${hostNetwork}:3000/songImages?id=${songId}`, {
+                    method: 'GET',
+
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to fetch image');
+                }
+                console.log(response);
+                
+                const contentType = response.headers.get('Content-Type');
+                if (!contentType || !contentType.startsWith('image/')) {
+                    throw new Error('Response is not an image');
+                }
+
+                const blob = await response.blob();
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    const base64data: any = reader.result;
+                    setSongImages((prevImageData: any) => [...prevImageData, base64data]);
+                };
+                reader.readAsDataURL(blob);
+            } catch (error) {
+                console.error('Error fetching image:', error);
+            }
+        };
+    });
 
     return (
 
@@ -320,23 +352,7 @@ const UserAfterLoginOrRegister: React.FC<UserAfterLoginOrRegisterProps & { navig
                     ))}
                 </View>
 
-                <View>
-                    <Modal
-                        animationType='fade'
-                        visible={false}
-                        transparent={false}>
-                        <View >
-                            <AvatarPicker />
-                            <View style={{marginTop:50,marginHorizontal:20}}>
-                                <View>
-                                    <Text>Name</Text>
-                                    <TextInput placeholder='Name'></TextInput>
-                                </View>
-                            </View>
-                        </View>
-
-                    </Modal>
-                </View>
+                
 
 
             </Content>
