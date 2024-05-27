@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, View, Text, ImageBackground, TouchableOpacity, StyleSheet, Alert, Image, ScrollView, ActivityIndicator } from 'react-native';
+import { Button, View, Text, ImageBackground, TouchableOpacity, StyleSheet, Alert, Image, ScrollView, ActivityIndicator, Modal, TextInput } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
 import { iconMusic } from '../../app-uikits/icon-svg';
@@ -83,24 +83,24 @@ const UserAfterLoginOrRegister: React.FC<UserAfterLoginOrRegisterProps & { navig
         //     }
         // }
         // getImage();
-        // const getInfo = async () => {
-        //     try {
-        //         // const token = await getToken()
-        //         const response = await axios.get(`http://${hostNetwork}:3000/infoUser`, {
-        //             headers: {
-        //                 Authorization: `Bearer ${token}`
-        //             }
-        //         });
-        //         if (response.data) {
-        //             console.log(response.data);
-        //             setInfo(response.data);
-        //         }
+        const getInfo = async () => {
+            try {
+                // const token = await getToken()
+                const response = await axios.get(`http://${hostNetwork}:3000/infoUser`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                if (response.data) {
+                    console.log(response.data);
+                    setInfo(response.data);
+                }
 
-        //     } catch (error) {
-        //         console.error('Error fetching image:', error);
-        //     }
-        // }
-        // getInfo();
+            } catch (error) {
+                console.error('Error fetching image:', error);
+            }
+        }
+        getInfo();
     }, []);
 
 
@@ -141,7 +141,7 @@ const UserAfterLoginOrRegister: React.FC<UserAfterLoginOrRegisterProps & { navig
             try {
                 const response = await fetch(`http://${hostNetwork}:3000/songImages?id=${songId}`, {
                     method: 'GET',
-            
+
                 });
                 if (!response.ok) {
                     throw new Error('Failed to fetch image');
@@ -162,8 +162,6 @@ const UserAfterLoginOrRegister: React.FC<UserAfterLoginOrRegisterProps & { navig
                 console.error('Error fetching image:', error);
             }
         };
-
-
         const sendMultipleRequests = async () => {
             try {
                 idSongs.forEach(async (idSongObj) => {
@@ -200,22 +198,6 @@ const UserAfterLoginOrRegister: React.FC<UserAfterLoginOrRegisterProps & { navig
                     </View>
                 </View>
                 <View style={{ marginHorizontal: 15, marginVertical: 10 }}>
-                    <Text style={{ fontWeight: '500', color: 'white', fontSize: 18 }}>Upgrade Account</Text>
-                    <View style={{ flexDirection: 'row', gap: 15, width: '100%' }}>
-                        <TouchableOpacity style={{ width: '100%', height: 200, backgroundColor: '#342252', marginVertical: 10, borderRadius: 10, padding: 10 }}>
-                            <View style={{ flexDirection: 'row', gap: 7, alignItems: 'center' }}>
-                                <Text style={{ color: 'violet', }}>Music</Text>
-                                <View style={{ backgroundColor: '#9456FF', padding: 5, borderRadius: 10 }}>
-                                    <Text >Premium</Text>
-                                </View>
-                            </View>
-                            <Text style={{ color: 'white' }}>10$</Text>
-                            <Text style={{ fontWeight: '500', color: 'white', fontSize: 15 }}>Nghe nhạc không giới hạn với chất lượng cao nhất, thỏa sức khám phá những điều mới mẻ</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-
-                <View style={{ marginHorizontal: 15, marginVertical: 20 }}>
                     <Text style={{ fontWeight: '500', color: 'white', fontSize: 18 }}>My PlayList</Text>
                     <ScrollView horizontal={true}>
                         <View style={{ flexDirection: 'row', gap: 15 }}>
@@ -261,11 +243,62 @@ const UserAfterLoginOrRegister: React.FC<UserAfterLoginOrRegisterProps & { navig
                         </View>
                     </ScrollView>
                 </View>
+
+                <View style={{ marginHorizontal: 15, marginVertical: 10 }}>
+                    <Text style={{ fontWeight: '500', color: 'white', fontSize: 18 }}>Recommend For You</Text>
+                    <ScrollView horizontal={true}>
+                        <View style={{ flexDirection: 'row', gap: 15 }}>
+                            <View>
+                                <TouchableOpacity style={{ marginVertical: 10 }}>
+                                    <ImageBackground source={require('../../assets/images/ImageUserScreen/ảnh_nền_âm_nhạc.jpg')} style={{ width: 170, height: 150, justifyContent: 'center', alignItems: 'center' }} imageStyle={{ borderRadius: 10 }}>
+                                        <Text style={{ fontWeight: '500', color: 'white', fontSize: 15 }}>Best of 2023</Text>
+                                    </ImageBackground>
+                                </TouchableOpacity>
+                                <TouchableOpacity>
+                                    <Text style={{ fontSize: 17, color: 'white', fontWeight: '500' }}>Show Me Love</Text>
+                                </TouchableOpacity>
+                                <View style={{ marginBottom: 10 }}>
+                                    <Text style={{ fontSize: 15, color: '#D9DADC', fontWeight: '300' }}>Alan Walker</Text>
+                                </View>
+                            </View>
+                            <View>
+                                <TouchableOpacity style={{ marginVertical: 10 }}>
+                                    <ImageBackground source={require('../../assets/images/ImageUserScreen/ảnh_nền_âm_nhạc.jpg')} style={{ width: 170, height: 150, justifyContent: 'center', alignItems: 'center' }} imageStyle={{ borderRadius: 10 }}>
+                                        <Text style={{ fontWeight: '500', color: 'white', fontSize: 15 }}>Best of 2023</Text>
+                                    </ImageBackground>
+                                </TouchableOpacity>
+                                <TouchableOpacity>
+                                    <Text style={{ fontSize: 17, color: 'white', fontWeight: '500' }}>So Beautiful</Text>
+                                </TouchableOpacity>
+                                <View style={{ marginBottom: 10 }}>
+                                    <Text style={{ fontSize: 15, color: '#D9DADC', fontWeight: '300' }}>Alan Walker</Text>
+                                </View>
+                            </View>
+                            <View>
+                                <TouchableOpacity style={{ marginVertical: 10 }}>
+                                    <ImageBackground source={require('../../assets/images/ImageUserScreen/ảnh_nền_âm_nhạc.jpg')} style={{ width: 170, height: 150, justifyContent: 'center', alignItems: 'center' }} imageStyle={{ borderRadius: 10 }}>
+                                        <Text style={{ fontWeight: '500', color: 'white', fontSize: 15 }}>Best of 2023</Text>
+                                    </ImageBackground>
+                                </TouchableOpacity>
+                                <TouchableOpacity>
+                                    <Text style={{ fontSize: 17, color: 'white', fontWeight: '500' }}>Give Me Money</Text>
+                                </TouchableOpacity>
+                                <View style={{ marginBottom: 10 }}>
+                                    <Text style={{ fontSize: 15, color: '#D9DADC', fontWeight: '300' }}>Alan Walker</Text>
+                                </View>
+                            </View>
+                        </View>
+                    </ScrollView>
+                </View>
+
                 <TouchableOpacity style={{ backgroundColor: '#797E8D', padding: 10, marginHorizontal: 20, borderRadius: 10, marginBottom: 10 }}>
-                    <Text style={{ textAlign: 'center', color: 'white', fontWeight: '600', fontSize: 15 }}>Chỉnh sửa thông tin</Text>
+                    <Text style={{ textAlign: 'center', color: 'white', fontWeight: '600', fontSize: 15 }}>Edit Profile</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={{ backgroundColor: 'red', padding: 10, marginHorizontal: 20, borderRadius: 10 }} onPress={handleLogout}>
                     <Text style={{ textAlign: 'center', color: 'white', fontWeight: '600', fontSize: 15 }}>Logout</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={{ backgroundColor: 'red', padding: 10, marginHorizontal: 20, borderRadius: 10, marginTop:10 }} onPress={() => navigation.navigate('Manager')}>
+                    <Text style={{ textAlign: 'center', color: 'white', fontWeight: '600', fontSize: 15 }}>Navigate to Manager</Text>
                 </TouchableOpacity>
 
 
@@ -277,8 +310,7 @@ const UserAfterLoginOrRegister: React.FC<UserAfterLoginOrRegisterProps & { navig
                     }
                 </View>
 
-
-                <View style={{marginVertical:10}}>
+                <View style={{ marginVertical: 10 }}>
                     {songImages.map((item: any, index: any) => (
                         <View key={index} style={{ width: '100%', height: 200, backgroundColor: 'transparent' }}>
                             <Image source={{
@@ -288,7 +320,25 @@ const UserAfterLoginOrRegister: React.FC<UserAfterLoginOrRegisterProps & { navig
                     ))}
                 </View>
 
-            
+                <View>
+                    <Modal
+                        animationType='fade'
+                        visible={false}
+                        transparent={false}>
+                        <View >
+                            <AvatarPicker />
+                            <View style={{marginTop:50,marginHorizontal:20}}>
+                                <View>
+                                    <Text>Name</Text>
+                                    <TextInput placeholder='Name'></TextInput>
+                                </View>
+                            </View>
+                        </View>
+
+                    </Modal>
+                </View>
+
+
             </Content>
 
             <Footer>

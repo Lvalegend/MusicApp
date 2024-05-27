@@ -4,13 +4,15 @@ import { SvgXml } from 'react-native-svg';
 import { iconDownload, iconFavourite, iconHome, iconPopular, iconUser } from '../../../app-uikits/icon-svg';
 import { useNavigation } from '@react-navigation/native';
 import { getToken } from '../../../secure-storage/GetToken';
+import axios from 'axios';
+import { hostNetwork } from '../../../host/HostNetwork';
 
 interface BottomBarProps {
-    
+
 }
 
 const BottomBar: React.FC<BottomBarProps> = () => {
-    const navigation:any = useNavigation()
+    const navigation: any = useNavigation()
 
     const handleHome = () => {
         navigation.navigate('HomeScreen')
@@ -21,19 +23,38 @@ const BottomBar: React.FC<BottomBarProps> = () => {
     const handleFavourite = () => {
         navigation.navigate('Favourite')
     }
-    const handleDownloads = ()=>{
+    const handleDownloads = () => {
         navigation.navigate('Downloads')
     }
+
+    const handleResponse = async (responseData: any) => {
+        const { redirect } = responseData;
+
+        if (redirect) {
+            navigation.navigate(redirect.slice(1));
+        }
+    };
+
     const handleUser = async () => {
         try {
             // Gọi hàm getToken để lấy token từ Encrypted Storage
             const token = await getToken();
-    
-            // Kiểm tra token và điều hướng tới màn hình tương ứng
             if (token) {
-                // Nếu token tồn tại, điều hướng tới màn hình User1
-                navigation.navigate('UserAfterLoginOrRegister');
-            } else {
+                const response = await axios.get(`http://${hostNetwork}:3000/decentralization`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                if (response.data) {
+                    console.log(response.data);
+                    handleResponse(response.data);
+                }
+                else {
+                    console.log("No Respone");
+
+                }
+            }
+            else {
                 // Nếu token không tồn tại, điều hướng tới màn hình User
                 navigation.navigate('User');
             }
@@ -41,8 +62,8 @@ const BottomBar: React.FC<BottomBarProps> = () => {
             console.error('Lỗi trong handleUser:', error);
         }
     };
-    
-    
+
+
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.touch} onPress={handleHome}>
@@ -74,19 +95,19 @@ const BottomBar: React.FC<BottomBarProps> = () => {
 };
 
 const styles = StyleSheet.create({
-    
+
     container: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         marginHorizontal: 20,
         marginTop: 15,
-        marginBottom:20,
+        marginBottom: 20,
     },
     text: {
-       color: 'white',
-       marginTop: 5
-    
+        color: 'white',
+        marginTop: 5
+
     },
     touch: {
         justifyContent: 'center',
