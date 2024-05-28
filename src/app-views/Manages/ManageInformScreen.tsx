@@ -8,6 +8,7 @@ import { ReactNode, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import { iconSreach, iconBack,iconpencil } from '../../app-uikits/icon-svg';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { deleteToken } from '../../secure-storage/DeleteToken';
 
  interface ManageInformScreenProps {
 }
@@ -43,6 +44,11 @@ const ManageInformScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ nav
 
         }
 
+
+    }
+    const handleLogout = async () => {
+        await deleteToken()
+        navigation.navigate('User')
     }
     return (
         <Container colors={['#4c669f', 'red', '#192f6a']} >
@@ -102,7 +108,7 @@ const ManageInformScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ nav
                         <SvgXml xml={iconpencil()} style={styles.pencil}/>
                         </View>
 
-                        <TouchableOpacity onPress={handleManage} style={{ padding: 10, borderRadius: 50, backgroundColor: '#23D6E4', marginTop: 10, width: 100, marginLeft:140 }}>
+                        <TouchableOpacity onPress={handleLogout} style={{ padding: 10, borderRadius: 50, backgroundColor: '#23D6E4', marginTop: 10, width: 100, marginLeft:140 }}>
                             <Text style={{ color: 'white', fontSize: 15, fontWeight: '700', textAlign: 'center' }}>Log out</Text>
                         </TouchableOpacity>
                     </View>

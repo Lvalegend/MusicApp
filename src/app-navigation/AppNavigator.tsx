@@ -30,13 +30,13 @@ function AppNavigator() {
         <Stack.Screen name="Favourite" component={Favourite} />
         <Stack.Screen name="User" component={User} />
         <Stack.Screen name="Downloads" component={Downloads} />
-        
+
         <Stack.Screen name ="ManageScreen" component={ManageScreen}/>
         <Stack.Screen name ="Manager" component={Manager}/>
 
 
 
-        
+            
 
         <Stack.Screen name ="ManageCateScreen" component={ManageCateScreen}/>
         <Stack.Screen name ="ManageSongScreen" component={ManageSongScreen}/>

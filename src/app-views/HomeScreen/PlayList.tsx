@@ -5,17 +5,78 @@ import { Svg, SvgXml } from 'react-native-svg';
 import { icon3Cham, iconBack, iconDownload, iconFavourite, iconSreach } from '../../app-uikits/icon-svg';
 import { Header, Content, Footer, Container } from '../../app-layout/Layout';
 import LinearGradient from 'react-native-linear-gradient';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { hostNetwork } from '../../host/HostNetwork';
 
-
-interface PlaylistProps {
-}
 interface PlayListProps {
     handleNavigateBack: () => void;
     id: string;
 }
-
+interface Playlist {
+    _id: string;
+    name: string;
+    color: string[];
+    songs: any[];
+    __v: number;
+  }
 
 const PlayList: React.FC<PlayListProps> = ({handleNavigateBack, id}) => {
+    const [playlists, setPlaylists] = useState<Playlist[]>([]);
+    const [playlistImages, setPlaylistImages] = useState<any>([])
+
+  useEffect(() => {
+    axios.get(`http://${hostNetwork}:3000/playlist/665501d355830afa1a7b4318`)
+      .then(response => {
+        setPlaylists(response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }, []);
+  console.log(playlists)
+  
+
+//   const getImage = async (playlistId: any) => {
+//     try {
+//         const response = await fetch(`http://${hostNetwork}:3000/playlistImages?id=${playlistId}`, {
+//             method: 'GET',
+
+//         });
+//         if (!response.ok) {
+//             throw new Error('Failed to fetch image');
+//         }
+//         // const contentType = response.headers.get('Content-Type');
+//         // if (!contentType || !contentType.startsWith('playlist/')) {
+//         //     throw new Error('Response is not an image');
+//         // }
+
+//         const blob = await response.blob();
+//         const reader = new FileReader();
+//         reader.onloadend = () => {
+//             const base64data: any = reader.result;
+//             setPlaylistImages((prevImageData: any) => [...prevImageData, base64data]);
+//         };
+//         reader.readAsDataURL(blob);
+//     } catch (error) {
+//         console.error('Error fetching image:', error);
+//     }
+//  };
+//  useEffect(() => {
+//   const sendMultipleRequests = async () => {
+//     try {
+//       for (const idSongObj of playlists) {
+//         const songId = Object.values(idSongObj)[0];
+//         await getImage(songId);
+//         console.log(songId)
+//       }
+//     } catch (error) {
+//       console.error('Error sending multiple requests:', error);
+//     }
+//   };
+//   sendMultipleRequests();
+//   }, [playlists]);
+    
 
     const chillsData = [
         { id: '1', title: 'Point the star', artist: 'Jasper, Martin Arteta, 11:11 Music Group', image: require('../../assets/images/song/SongChill1.jpg') },
@@ -42,7 +103,7 @@ const PlayList: React.FC<PlayListProps> = ({handleNavigateBack, id}) => {
 
     return (
         <>
-            {playlistItem && (
+            {/* {playlistItem && (
                 <Container colors={['black','black','black']}>
                     <LinearGradient colors={playlistItem.colorAlbum} style={{ flex: 1 }}>
                         <Header>
@@ -89,7 +150,8 @@ const PlayList: React.FC<PlayListProps> = ({handleNavigateBack, id}) => {
                         </Footer>
                     </LinearGradient>
                 </Container>
-            )}
+            )} */}
+            <Text>khoa</Text>
         </>
     );
     

@@ -20,9 +20,9 @@ const BottomBar: React.FC<BottomBarProps> = () => {
     const handlePopular = () => {
         navigation.navigate('Popular')
     }
-    const handleFavourite = () => {
-        navigation.navigate('Favourite')
-    }
+    // const handleFavourite = () => {
+    //     navigation.navigate('Favourite')
+    // }
     const handleDownloads = () => {
         navigation.navigate('Downloads')
     }
@@ -48,6 +48,35 @@ const BottomBar: React.FC<BottomBarProps> = () => {
                 if (response.data) {
                     console.log(response.data);
                     handleResponse(response.data);
+                }
+                else {
+                    console.log("No Respone");
+
+                }
+            }
+            else {
+                // Nếu token không tồn tại, điều hướng tới màn hình User
+                navigation.navigate('User');
+            }
+        } catch (error) {
+            console.error('Lỗi trong handleUser:', error);
+        }
+    };
+
+    const handleFavourite = async () => {
+        try {
+            // Gọi hàm getToken để lấy token từ Encrypted Storage
+            const token = await getToken();
+            if (token) {
+                const response = await axios.get(`http://${hostNetwork}:3000/decentralization`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                if (response.data) {
+                    console.log(response.data);
+                    // handleResponse(response.data);
+                    navigation.navigate('Favourite')
                 }
                 else {
                     console.log("No Respone");
