@@ -1,51 +1,54 @@
 import * as React from 'react';
-import { Button, View, Text, Image, SafeAreaView, StyleSheet, Modal, TextInput, ImageBackground, Pressable, FlatList, TouchableOpacity } from 'react-native';
+import { useEffect, useState } from 'react';
+import { View, Text, Image, StyleSheet, TextInput, Pressable, TouchableOpacity } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
 import { iconSreach, iconBack, iconChuX } from '../../app-uikits/icon-svg';
 import { Header, Content, Footer, Container } from '../../app-layout/Layout';
-import BottomBar from '../GeneralComponents/BottomBar/BottomBar';
-import { ReactNode, useState } from 'react';
-import { ScrollView } from 'react-native-gesture-handler';
+import axios from 'axios';
+import { hostNetwork } from '../../host/HostNetwork';
 
-
-
-interface ManageUserScreenProps {
-
+interface Account {
+    name: string;
+    email: string;
+    avatar: string;
 }
 
 const ManageUserScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ navigation }) => {
     const [text, setText] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
-    const [formData, setFormData] = useState({
-        id: '',
+    const [formData, setFormData] = useState<Account>({
         name: '',
-        phone: '',
-        email:'',
-        image: null
+        email: '',
+        avatar: ''
     });
-    const [recentlyPlayedData, setRecentlyPlayedData] = useState([
-        { id: '1', name: 'Pham Cao Hoang Anh', phone: '583573985', email: 'anhVu@gmail.com', image: require('../../assets/images/ImageUserScreen/avatar-dep-8.jpg') },
-        { id: '2', name: 'Do Thanh Chung', phone: '583573985', email: 'anhVu@gmail.com', image: require('../../assets/images/ImageUserScreen/avatar-dep-38.jpg') },
-        { id: '3', name: 'Vu Duc Khang', phone: '583573985', email: 'anhVu@gmail.com', image: require('../../assets/images/ImageUserScreen/avatar-dep-76.jpg') },
-        { id: '4', name: 'Nguyen Van Bach', phone: '583573985', email: 'anhVu@gmail.com', image: require('../../assets/images/ImageUserScreen/avatar-dep-97.jpg') },
-        { id: '5', name: 'Le Thi Hong Nhung', phone: '583573985', email: 'anhVu@gmail.com', image: require('../../assets/images/ImageUserScreen/avatar-dep-117.jpg') },
-        { id: '6', name: 'Bui Thi Mai Thao', phone: '583573985', email: 'anhVu@gmail.com', image: require('../../assets/images/ImageUserScreen/avatar-dep-149.jpg') },
-    ]);
+    const [recentlyPlayedData, setRecentlyPlayedData] = useState<Account[]>([]);
+    const [filteredData, setFilteredData] = useState<Account[]>([]);
 
-    const handleChangeID = (newID: string) => setFormData({ ...formData, id: newID });
+    useEffect(() => {
+        // Fetch data from the API
+        axios.get(`http://${hostNetwork}:3000/infoUser`)
+            .then(response => {
+                setRecentlyPlayedData(response.data);
+                setFilteredData(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }, []);
+
     const handleChangeName = (newName: string) => setFormData({ ...formData, name: newName });
-    const handleChangephone = (newphone: string) => setFormData({ ...formData, phone: newphone });
-    const handleChangeemail = (newemail: string) => setFormData({ ...formData, email: newemail });
+    const handleChangeEmail = (newEmail: string) => setFormData({ ...formData, email: newEmail });
 
     const handleChangeText = (newText: string) => {
         setText(newText);
         const filteredData = recentlyPlayedData.filter(item =>
             item.name.toLowerCase().includes(newText.toLowerCase()) ||
-            item.phone.toLowerCase().includes(newText.toLowerCase())
+            item.email.toLowerCase().includes(newText.toLowerCase())
         );
-        setRecentlyPlayedData(filteredData);
+        setFilteredData(filteredData);
     };
+
     const handleManage = () => {
         navigation.navigate('ManageScreen');
     };
@@ -57,7 +60,6 @@ const ManageUserScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ navig
     const handleCancel = () => {
         setModalVisible(false);
     };
-
 
     return (
         <Container colors={['#4c669f', 'red', '#192f6a']}>
@@ -82,25 +84,25 @@ const ManageUserScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ navig
             </Header>
 
             <Content>
-                {recentlyPlayedData.map((item) => (
+                {filteredData.map((item) => (
                     <Pressable
-                        key={item.id}
+                        key={item.name}
                         style={styles.item}
                     >
-                        <Image source={item.image} style={styles.song} />
+                        <Image source={{ uri: item.avatar }} style={styles.avatar} />
                         <View style={{ flexDirection: 'column', marginHorizontal: 18, justifyContent: 'center' }}>
                             <Text style={{ color: 'white' }}>{item.name}</Text>
-                            <Text style={{ color: 'white' }}>{item.phone}</Text>
                             <Text style={{ color: 'white', marginTop: 8 }}>{item.email}</Text>
                         </View>
                         <TouchableOpacity>
-                                <SvgXml xml={iconChuX()} style={{ marginTop: 18, marginLeft:90 }} />
-                                </TouchableOpacity>
+                            <SvgXml xml={iconChuX()} style={{ marginTop: 18, marginLeft: 90 }} />
+                        </TouchableOpacity>
                     </Pressable>
                 ))}
             </Content>
 
             <Footer>
+                
             </Footer>
         </Container>
     );
@@ -123,7 +125,7 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 10,
     },
-    
+
     item: {
         backgroundColor: '#24242E',
         height: 100,
@@ -135,10 +137,11 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         flexDirection: 'row'
     },
-    song: {
+    avatar: {
         height: 70,
         width: 70,
         borderRadius: 10,
     },
 });
+
 export default ManageUserScreen;

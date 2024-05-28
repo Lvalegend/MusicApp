@@ -1,60 +1,57 @@
-import * as React from 'react';
-import { Button, View, Text, Image, StyleSheet,TextInput, Pressable,TouchableOpacity,PermissionsAndroid, Modal  } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {
+    StyleSheet, View, Text, Image, TextInput, Pressable, Modal, TouchableOpacity, ScrollView
+} from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
 import { iconBack, iconAdd, icon3Cham } from '../../app-uikits/icon-svg';
 import { Header, Content, Footer, Container } from '../../app-layout/Layout';
-import { ReactNode, useState } from 'react';
 import { launchImageLibrary } from 'react-native-image-picker';
-
-
-interface ManageCateScreenProps {
+import { hostNetwork } from '../../host/HostNetwork';
+interface Album {
+   
+    name: string;
+    color?: string;
+    image?: string;
+    songs?: string[];
 }
 
-const ManageCateScreen:  React.FC<{ navigation: NavigationProp<any> }> = ({ navigation}) => {
-    const albumFavouriteData = [
-        { id: '1', title: '99%', image: require('../../assets/images/ImageAlbum99/ImageAlbum.jpg'), colorAlbum: ['', ''], artist: 'MCK'},
-        { id: '2', title: 'Ai', image: require('../../assets/images/ImageAlbumAi/imageAlbum.jpg'), colorAlbum: ['', ''],artist: 'MCK'},
-        { id: '3', title: 'LoiChoi', image: require('../../assets/images/ImageLoiChoi/ImageAlbum.jpg'), colorAlbum: ['', ''],artist: 'MCK'},
-    ];
-    const [text, setText] = useState('');
+const ManageCateScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ navigation }) => {
+    const [albums, setAlbums] = useState<Album[]>([]);
     const [modalVisible, setModalVisible] = useState(false);
-    const [formData, setFormData] = useState({
-        id: '',
-        name: '',
-        image: null
-    });
-    const handleChangeID = (newID: string) => setFormData({ ...formData, id: newID });
-    const handleChangeName = (newName: string) => setFormData({ ...formData, name: newName });
-    const [image, setImage] = useState('')
-    const requesCameraPermissions = async () => {
+    const [formData, setFormData] = useState({ id: '', name: '', image: '' });
+    
+    useEffect(() => {
+        fetchAlbums();
+    }, []);
+
+    const fetchAlbums = async () => {
         try {
-            const checkPermissions = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA)
-            if (checkPermissions === PermissionsAndroid.RESULTS.GRANTED) {
-
-                const result: any = await launchImageLibrary({ mediaType: 'mixed' })
-                setImage(result.assets[0].uri)
-
-                console.log(result);
-
-            }
-            else {
-                console.log('Refuse');
-
-            }
+            const response = await fetch(`http://${hostNetwork}:3000/inforAlbum`);
+            const data: Album[] = await response.json();
+            setAlbums(data);
         } catch (error) {
-            console.log(error);
-
+            console.error('Failed to fetch albums:', error);
         }
-
-    }
-
-    const handleManage = () => {
-        navigation.navigate('ManageScreen');
     };
 
-    const handleSave = () => {
-        setModalVisible(false);
+    const handleSave = async () => {
+        const response = await fetch(`http://${hostNetwork}:3000/album`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name: formData.name,
+                image: formData.image,
+                songs: [], 
+            }),
+        });
+        if (response.ok) {
+            fetchAlbums(); 
+            setModalVisible(false);
+            setFormData({ id: '', name: '', image: '' }); 
+        }
     };
 
     const handleCancel = () => {
@@ -62,75 +59,63 @@ const ManageCateScreen:  React.FC<{ navigation: NavigationProp<any> }> = ({ navi
     };
 
     return (
-        <Container colors={['#4c669f', 'red', '#192f6a']} >
+        <Container colors={['#4c669f', 'red', '#192f6a']}>
             <Header>
-            <View style={styles.containerHeader}>
-                    <Pressable onPress={handleManage}>
+                <View style={styles.containerHeader}>
+                    <Pressable onPress={() => navigation.goBack()}>
                         <SvgXml xml={iconBack()} />
                     </Pressable>
                 </View>
                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                    <Text style={{ color: 'white', fontSize: 26, marginTop: 0, marginBottom:10 }}>Album</Text>
+                    <Text style={{ color: 'white', fontSize: 26, marginTop: 0, marginBottom: 10 }}>Album</Text>
                 </View>
             </Header>
             <Content>
-                <View>
-                    <Pressable style={{ padding: 20, flexDirection: 'row', alignItems: 'center' }} onPress={() => setModalVisible(true)}>
-                        <View style={styles.add}><SvgXml xml={iconAdd('white', 20, 20)} /></View>
-                        <View >
-                            <Text style={styles.textalbum} >Add new album</Text>
+                <Pressable style={{ padding: 20, flexDirection: 'row', alignItems: 'center' }} onPress={() => setModalVisible(true)}>
+                    <View style={styles.add}><SvgXml xml={iconAdd('white', 20, 20)} /></View>
+                    <Text style={styles.textalbum}>Add new album</Text>
+                </Pressable>
+                <ScrollView>
+                    {albums.map((item) => (
+                        <Pressable key={item.name} style={styles.album}>
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <Image source={{ uri: item.image }} style={styles.image} />
+                                <Text style={{ color: 'white', fontSize: 27, marginLeft: 30 }}>{item.name}</Text>
                             </View>
-                    </Pressable>
-                </View>
-                <View>
-                    {albumFavouriteData.map((item) => (
-                        <Pressable key={item.id} style={styles.album}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <Image source={item.image} style={styles.image} />
-                            <Text style={{ color: 'white', fontSize: 27, marginTop: 7, marginLeft: 30 }}>{item.title}</Text>
-                        </View>
-                        <SvgXml xml={icon3Cham()} style={{ marginTop: 18, marginLeft: 'auto' }} />
-                    </Pressable>
+                            <SvgXml xml={icon3Cham()} style={{ marginTop: 18, marginLeft: 'auto' }} />
+                        </Pressable>
                     ))}
-                </View>
+                </ScrollView>
             </Content>
-            <Footer>  
+            <Footer>
                 <Modal
                     animationType="slide"
                     transparent={true}
                     visible={modalVisible}
-                    onRequestClose={() => {
-                        setModalVisible(!modalVisible);
-                    }}>
+                    onRequestClose={() => setModalVisible(!modalVisible)}
+                >
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
-                            <TouchableOpacity onPress={() => requesCameraPermissions()} style={{ padding: 15, borderRadius: 50, backgroundColor: '#23D6E4', marginHorizontal: 10, marginBottom: 10 }}>
-                                <Text style={{ color: 'white', fontSize: 20, fontWeight: '700', textAlign: 'center' }}>Chọn ảnh</Text>
-                            </TouchableOpacity>
                             <TextInput
-                                placeholder="ID"
-                                style={styles.inputAdd}
-                                value={formData.id}
-                                onChangeText={handleChangeID}
-                            />
-                            <TextInput
-                                placeholder="Tên album"
+                                placeholder="Album Name"
                                 style={styles.inputAdd}
                                 value={formData.name}
-                                onChangeText={handleChangeName}
+                                onChangeText={(text) => setFormData({ ...formData, name: text })}
                             />
+    
                             <View style={{ flexDirection: 'row' }}>
-                                <TouchableOpacity style={styles.buttonSave} onPress={handleSave}>
-                                    <Text style={styles.buttonText}>Lưu</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={handleCancel} style={styles.buttonClose}>
-                                    <Text style={styles.buttonText}>Hủy bỏ</Text>
-                                </TouchableOpacity>
-                            </View>
+                            <TouchableOpacity style={styles.buttonSave} onPress={handleSave}>
+                                <Text style={styles.buttonText}>Save</Text>
+                            </TouchableOpacity >
+                            <TouchableOpacity style={styles.buttonCancel} onPress={handleCancel}>
+                                <Text style={styles.buttonText}>Cancel</Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
-                </Modal></Footer>
-        </Container>
+                </View>
+            </Modal>
+        </Footer>
+        </Container >
     );
 };
 
@@ -223,7 +208,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         borderRadius: 10,
     },
-    buttonClose: {
+    buttonCancel: {
         backgroundColor: 'red',
         paddingVertical: 15,
         paddingHorizontal: 25,
@@ -237,4 +222,5 @@ const styles = StyleSheet.create({
         fontWeight: "bold"
     },
 });
+
 export default ManageCateScreen;

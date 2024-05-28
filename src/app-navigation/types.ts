@@ -2,7 +2,9 @@ import HomeScreen from '../app-views/HomeScreen/HomeScreen';
 import SplashScreen from '../app-views/SplashScreen/SplashScreen';
 import Login from '../app-views/LoginAndRegister/Login';
 import Comments from '../app-views/Comments/Comments';
+import Song from '../app-views/SongScreen/Song';
 import Register from '../app-views/LoginAndRegister/Register';
+import Favourite from '../app-views/FavouriteScreen/FavouriteScreen';
 import Popular from '../app-views/PopularScreen/PopularScreen';
 import ManageScreen from '../app-views/Manages/ManageScreen';
 import User from '../app-views/UserScreen/UserScreen';
@@ -18,15 +20,15 @@ import ManageSongScreen from '../app-views/Manages/ManageSongScreen';
 import ManageUserScreen from '../app-views/Manages/ManageUserScreen';
 import RankingScreen from '../app-views/PopularScreen/PopularScreen';
 import SearchScreen from '../app-views/Search/SearchScreen';
-import Song from '../app-views/SongScreen/Song';
 
 export {
   HomeScreen,
   SplashScreen,
   Login,
+  Comments,
   Song,
   Register,
-  Comments,
+  Favourite,
   Popular,
   PlayList,
   Downloads,

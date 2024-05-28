@@ -21,7 +21,7 @@ const ManageScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ navigatio
     };
 
     const handleInform = () => {
-        navigation.navigate('ManageInformScreen');
+        navigation.navigate('UserAfterLoginOrRegister');
     };
 
     const handlePlaylist = () => {
