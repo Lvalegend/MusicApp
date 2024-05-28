@@ -6,6 +6,7 @@ import songsData from '../../assets/data/songs.json';
 import { Container, Content, Footer, Header } from '../../app-layout/Layout';
 import BottomBar from '../GeneralComponents/BottomBar/BottomBar';
 import { icon3Cham, iconBack, iconSreach, iconChuX, iconMusic,iconPlay } from '../../app-uikits/icon-svg';
+import { deleteToken } from '../../secure-storage/DeleteToken';
 
 const images = {
     "Leluuly.jpg": require('../../assets/images/song/Leluuly.jpg'),
@@ -138,6 +139,11 @@ const Downloads: React.FC<{ navigation: NavigationProp<any> }> = ({ navigation }
                     </View>
                 </View>
             </Modal>
+
+
+            <TouchableOpacity onPress={()=> deleteToken()} style={{width:'100%', padding:10, backgroundColor:'green'}}>
+                <Text style={{color:'red'}}>Nhấn</Text>
+            </TouchableOpacity>
 
             </Footer>
 

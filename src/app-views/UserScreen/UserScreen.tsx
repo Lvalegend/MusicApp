@@ -69,13 +69,7 @@ const User: React.FC<UserProps & { navigation: NavigationProp<any> }> = ({ navig
                         </TouchableOpacity>
                     </View>
                 </View>
-                {/* <TouchableOpacity style={{ backgroundColor: 'red' }} onPress={handleUserAfterLoginOrRegister}>
-                    <Text>Go to UserAfter</Text>
-                </TouchableOpacity> */}
-               
-
-
-
+            
             </Content>
             <Footer>
                 <BottomBar />
