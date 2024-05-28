@@ -29,7 +29,7 @@ const UserAfterLoginOrRegister: React.FC<UserAfterLoginOrRegisterProps & { navig
     const [image, setImage] = useState<any>();
     const [info, setInfo] = useState<any>([]);
 
-    const [token, setToken] = useState();
+    
     const [imageData, setImageData] = useState<any>()
     const [songImages, setSongImages] = useState<any>([])
 
@@ -60,32 +60,11 @@ const UserAfterLoginOrRegister: React.FC<UserAfterLoginOrRegisterProps & { navig
     ])
 
     useEffect(() => {
-        getToken().then((data: any) => {
-            setToken(data)
-        })
-
-        // getImage()
-        // const getImage = async () => {
-        //     try {
-        //         const token = await getToken()
-        //         const response = await axios.get(`http://${hostNetwork}:3000/avatar`, {
-        //             headers: {
-        //                 Authorization: `Bearer ${token}`
-        //             }
-        //         });
-        //         if (response.data) {
-        //             console.log(typeof response.data);
-        //             setImage(URL.createObjectURL(new Blob([Buffer.from(response.data, 'binary')], { type: 'image/jpeg' })));
-        //         }
-
-        //     } catch (error) {
-        //         console.error('Error fetching image:', error);
-        //     }
-        // }
-        // getImage();
+        
+        
         const getInfo = async () => {
             try {
-                // const token = await getToken()
+                const token = await getToken()
                 const response = await axios.get(`http://${hostNetwork}:3000/infoUser`, {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -105,38 +84,7 @@ const UserAfterLoginOrRegister: React.FC<UserAfterLoginOrRegisterProps & { navig
 
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const token = await getToken();
-                const response = await fetch(`http://${hostNetwork}:3000/avatar`, {
-                    method: 'GET',
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-
-                if (!response.ok) {
-                    throw new Error('Failed to fetch image');
-                }
-
-                const contentType = response.headers.get('Content-Type');
-                if (!contentType || !contentType.startsWith('image/')) {
-                    throw new Error('Response is not an image');
-                }
-
-                const blob = await response.blob();
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                    const base64data = reader.result;
-                    setImageData(base64data);
-                };
-                reader.readAsDataURL(blob);
-            } catch (error) {
-                console.error('Error fetching image:', error);
-            }
-        };
-
-        fetchData();
+        
         const getImage = async (songId: any) => {
             try {
                 const response = await fetch(`http://${hostNetwork}:3000/songImages?id=${songId}`, {
@@ -146,6 +94,8 @@ const UserAfterLoginOrRegister: React.FC<UserAfterLoginOrRegisterProps & { navig
                 if (!response.ok) {
                     throw new Error('Failed to fetch image');
                 }
+                console.log(response);
+                
                 const contentType = response.headers.get('Content-Type');
                 if (!contentType || !contentType.startsWith('image/')) {
                     throw new Error('Response is not an image');
@@ -176,6 +126,36 @@ const UserAfterLoginOrRegister: React.FC<UserAfterLoginOrRegisterProps & { navig
         sendMultipleRequests();
 
     }, []);
+
+    useEffect(()=> {
+        const getImage = async (songId: any) => {
+            try {
+                const response = await fetch(`http://${hostNetwork}:3000/songImages?id=${songId}`, {
+                    method: 'GET',
+
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to fetch image');
+                }
+                console.log(response);
+                
+                const contentType = response.headers.get('Content-Type');
+                if (!contentType || !contentType.startsWith('image/')) {
+                    throw new Error('Response is not an image');
+                }
+
+                const blob = await response.blob();
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    const base64data: any = reader.result;
+                    setSongImages((prevImageData: any) => [...prevImageData, base64data]);
+                };
+                reader.readAsDataURL(blob);
+            } catch (error) {
+                console.error('Error fetching image:', error);
+            }
+        };
+    });
 
     return (
 
@@ -291,55 +271,12 @@ const UserAfterLoginOrRegister: React.FC<UserAfterLoginOrRegisterProps & { navig
                     </ScrollView>
                 </View>
 
-                <TouchableOpacity style={{ backgroundColor: '#797E8D', padding: 10, marginHorizontal: 20, borderRadius: 10, marginBottom: 10 }}>
-                    <Text style={{ textAlign: 'center', color: 'white', fontWeight: '600', fontSize: 15 }}>Edit Profile</Text>
-                </TouchableOpacity>
+                
                 <TouchableOpacity style={{ backgroundColor: 'red', padding: 10, marginHorizontal: 20, borderRadius: 10 }} onPress={handleLogout}>
                     <Text style={{ textAlign: 'center', color: 'white', fontWeight: '600', fontSize: 15 }}>Logout</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={{ backgroundColor: 'red', padding: 10, marginHorizontal: 20, borderRadius: 10, marginTop:10 }} onPress={() => navigation.navigate('Manager')}>
-                    <Text style={{ textAlign: 'center', color: 'white', fontWeight: '600', fontSize: 15 }}>Navigate to Manager</Text>
-                </TouchableOpacity>
 
-
-                <View style={{ width: '100%', height: 200, backgroundColor: 'transparent' }} >
-                    {imageData &&
-                        <Image source={{
-                            uri: imageData
-                        }} style={{ width: '100%', height: '100%' }} />
-                    }
-                </View>
-
-                <View style={{ marginVertical: 10 }}>
-                    {songImages.map((item: any, index: any) => (
-                        <View key={index} style={{ width: '100%', height: 200, backgroundColor: 'transparent' }}>
-                            <Image source={{
-                                uri: item
-                            }} style={{ width: '100%', height: '100%' }} />
-                        </View>
-                    ))}
-                </View>
-
-                <View>
-                    <Modal
-                        animationType='fade'
-                        visible={false}
-                        transparent={false}>
-                        <View >
-                            <AvatarPicker />
-                            <View style={{marginTop:50,marginHorizontal:20}}>
-                                <View>
-                                    <Text>Name</Text>
-                                    <TextInput placeholder='Name'></TextInput>
-                                </View>
-                            </View>
-                        </View>
-
-                    </Modal>
-                </View>
-
-
-            </Content>
+            </Content>  
 
             <Footer>
                 <BottomBar>

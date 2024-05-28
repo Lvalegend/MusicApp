@@ -1,12 +1,16 @@
 import { io } from "socket.io-client";
-import { hostNetwork } from "../host/hostNetwork";
 
-const port = 5000
+import { getToken } from "../secure-storage/GetToken";
+import { hostNetwork } from "../host/HostNetwork";
+
+const port = 3000
 
 const url_socket = `http://${hostNetwork}:${port}`;
 
+const token = getToken()
+
 const path_socket = '/socket-io'
-// const token:any = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjMyNGIwOGQ2ZmYwNjM1OTVlZmQ3ZGMiLCJpYXQiOjE3MTYzMDU3OTAsImV4cCI6MTcxNjMwOTM5MH0.ajMhUYQ1ZltQzNOqMsQo4JnMogEhgx9i6QsfvUaY_nA'
+
 
 class SocketService {
     socket: any;
@@ -17,7 +21,7 @@ class SocketService {
 
     initializeSocket = async () => {
         try {
-            this.socket = io(url_socket, { transports: ['websocket'], path: path_socket  }); // , auth: {token} , , path: path_socket
+            this.socket = io(url_socket, { transports: ['websocket'], path: path_socket, auth: {token} }); // , auth: {token} , , path: path_socket
             console.log("initializing socket");
 
             this.socket.on("connect", () => {

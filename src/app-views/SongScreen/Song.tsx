@@ -7,25 +7,24 @@ import { Footer, Content, Header, Container } from '../../app-layout/Layout';
 import Slider from '@react-native-community/slider';
 import TrackPlayer, { Capability, State, Event, usePlaybackState, useProgress } from 'react-native-track-player';
 import Swiper from 'react-native-swiper';
-import lyricsArray from './lyricsData';
 import { hostNetwork } from '../../host/HostNetwork';
+import { setupPlayer } from 'react-native-track-player/lib/src/trackPlayer';
 
 export type RootStackParamList = {
     Song: undefined;
-    Comments: undefined;
+    Chat: undefined;
     Playlist: undefined
 };
 
 interface SongProps {
     song: string;
-     handleNavigateBack: () => void; 
-     navigation: NavigationProp<any>; 
-     onPress: () => void;
-
+    navigation: NavigationProp<any>;
+    onPress: () => void;
+    handleNavigateBack: () => void
 }
 
 
-const Song: React.FunctionComponent<SongProps> = ({ handleNavigateBack }) => {
+const Song: React.FunctionComponent<SongProps> = ({handleNavigateBack}) => {
     const [isLoading, setIsLoading] = useState(true);
     const [playState, setPlayState] = useState(false);
     const [currentPosition, setCurrentPosition] = useState(0);
@@ -33,17 +32,51 @@ const Song: React.FunctionComponent<SongProps> = ({ handleNavigateBack }) => {
     const progress = useProgress();
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
+
     useEffect(() => {
-        const interval = setInterval(async () => {
+        const loadTrack = async () => {
+            await TrackPlayer.setupPlayer();
+            await TrackPlayer.updateOptions({
+                capabilities: [
+                    Capability.Play,
+                    Capability.Pause,
+                ],
+            });
+
+            const songId ='Song_9';
+            await TrackPlayer.add({
+                id: songId,
+                url: `http://${hostNetwork}:3000/audio?id=${songId}`,
+                title: 'Adiyee',
+                artist: 'Bachelor Dhibu Ninan Thomas, Kapil Kapilan',
+            });
+
+            const duration = await TrackPlayer.getDuration();
+            setTotalDuration(duration);
+            setIsLoading(false);
+        };
+
+        loadTrack();
+
+        return () => {
+            
+        };
+    }, []);
+
+    useEffect(() => {
+        const updateProgress = async () => {
             if (playState) {
                 const position = await TrackPlayer.getPosition();
-                setCurrentPosition(position);
+                progress.position = position;
             }
-        }, 1000);
-        return () => clearInterval(interval);
+        };
+
+        const intervalId = setInterval(updateProgress, 1000);
+
+        return () => clearInterval(intervalId);
     }, [playState]);
     
-
+    
     useEffect(() => {
         const trackPlayerListener = TrackPlayer.addEventListener(Event.PlaybackTrackChanged, async ({ nextTrack }) => {
             if (nextTrack) {
@@ -56,46 +89,15 @@ const Song: React.FunctionComponent<SongProps> = ({ handleNavigateBack }) => {
             trackPlayerListener.remove();
         };
     }, []);
-    useEffect(() => {
-        loadTrack();
-    }, [])
-
-
-    const loadTrack = async () => {
-        await TrackPlayer.setupPlayer();
-        await TrackPlayer.updateOptions({
-            capabilities: [
-                Capability.Play,
-                Capability.Pause,
-
-            ],
-        });
-
-    const songId = 'Song_1'
-        await TrackPlayer.add({
-            id: songId,
-            url: `http://${hostNetwork}:3000/audio?id=${songId}`,
-            title: 'Adiyee',
-            artist: 'Bachelor Dhibu Ninan Thomas, Kapil Kapilan',
-            
-        });
-        const duration = await TrackPlayer.getDuration();
-        setTotalDuration(duration);
-        setIsLoading(false);
-    };
 
     const togglePlayPause = async () => {
         if (playState) {
             TrackPlayer.pause();
         } else {
             await TrackPlayer.play();
-            const position = await TrackPlayer.getPosition();
-            setCurrentPosition(await TrackPlayer.getPosition());
         }
         setPlayState(!playState);
-        
     };
-
 
     const formatTime = (timeInSeconds: number) => {
         const minutes = Math.floor(timeInSeconds / 60);
@@ -103,10 +105,13 @@ const Song: React.FunctionComponent<SongProps> = ({ handleNavigateBack }) => {
         return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
     };
 
+   
+
     const handleCommentPress = () => {
-        navigation.navigate('Comments')
+        navigation.navigate('Chat');
     };
 
+  
     return (
         <>
 
@@ -120,6 +125,7 @@ const Song: React.FunctionComponent<SongProps> = ({ handleNavigateBack }) => {
                 </Header>
 
                 <Content>
+                
                     <View>
                         <Swiper style={styles.imageSong}
                             loop={false}
@@ -129,7 +135,7 @@ const Song: React.FunctionComponent<SongProps> = ({ handleNavigateBack }) => {
                                 <SvgXml width={400} height={400} xml={iconSong()}></SvgXml>
                             </View>
                             <View style={styles.slide}>
-                            <SvgXml width={400} height={400} xml={iconLyrics()}></SvgXml>
+                                <SvgXml width={400} height={400} xml={iconLyrics()}></SvgXml>
                             </View>
                         </Swiper>
                     </View>
@@ -146,16 +152,18 @@ const Song: React.FunctionComponent<SongProps> = ({ handleNavigateBack }) => {
                         <Slider
                             style={styles.slider}
                             minimumValue={0}
-                            maximumValue={progress.duration}
+                            maximumValue={totalDuration}
                             value={progress.position}
                             minimumTrackTintColor="#00ffff"
                             maximumTrackTintColor="white"
                             thumbTintColor="#00ffff"
                             onValueChange={async value => {
                                 await TrackPlayer.seekTo(value);
+                                setCurrentPosition(value); 
                             }}
-
+                           
                         />
+
                         <View style={styles.timeContainer}>
                             <Text style={styles.timeText}>{formatTime(progress.position)}</Text>
                             <Text style={styles.timeText}>{formatTime(totalDuration)}</Text>
@@ -188,7 +196,7 @@ const Song: React.FunctionComponent<SongProps> = ({ handleNavigateBack }) => {
 
                     </View>
 
-                
+
                 </Content>
 
                 <Footer>
