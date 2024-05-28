@@ -7,7 +7,8 @@ import BottomBar from '../GeneralComponents/BottomBar/BottomBar';
 import PlayList from './PlayList';
 import { hostNetwork } from '../../host/HostNetwork';
 import axios from 'axios';
-import { useIsFocused } from '@react-navigation/native';
+import { NavigationProp, useIsFocused } from '@react-navigation/native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 interface HomeScreenProps {}
 
@@ -32,22 +33,20 @@ interface Song {
   nameSong: string;
   imageLink: string;
   songLink: string;
+  song: string;
   diration: string;
   singerId: string;
   managerId: string;
 }
 
 
-const HomeScreen: React.FC<HomeScreenProps> = () => {
+const HomeScreen: React.FC<HomeScreenProps & { navigation: NavigationProp<any> }> = ({ navigation }) => {
   const [text, setText] = useState('');
-  const [showPlayList, setShowPlayList] = useState(true);
-  const [selectedIdP, setSelectedIdP] = useState<string>('');
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
   const [playlistImages, setPlaylistImages] = useState<any>([])
   const [albums, setAlbums] = useState<Album[]>([]);
   const [albumImages, setAlbumImages] = useState<any>([])
   const [songs, setSongs] = useState<Song[]>([]);
-  const [songImages, setSongImages] = useState<any>([])
   const isFocused = useIsFocused();
 
   const fetchData = async () => {
@@ -169,57 +168,25 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
   sendMultipleRequestsAlbum();
   }, [albums]);
 
-  const getImageSong = async (songId: any) => {
-    try {
-        const response = await fetch(`http://${hostNetwork}:3000/songImages?id=${songId}`, {
-            method: 'GET',
-        });
-        if (!response.ok) {
-            throw new Error('Failed to fetch image');
-        }
-
-        const blob = await response.blob();
-        return await new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                resolve(reader.result); // Trả về chuỗi base64
-            };
-            reader.onerror = reject; // Bắt lỗi khi đọc Blob
-            reader.readAsDataURL(blob);
-        });
-    } catch (error) {
-        console.error('Error fetching image:', error);
-        return null; // Trả về null nếu có lỗi
-    }
-  };
-  const handleGetImage = async (songId: any) => {
-    const base64Image = await getImageSong(songId);
-    if (base64Image) {
-        console.log('Base64 Image:', base64Image);
-        // Sử dụng hình ảnh base64 theo nhu cầu của bạn
-    } else {
-        console.log('Failed to fetch image');
-    }
-};
-
-
-
-  const handleNavigateToPlaylist = (ID: string) => {
-    setShowPlayList(false);
-    setSelectedIdP(ID);
-  };
-
-  const handleNavigateToBackL = () => {
-    setShowPlayList(true);
-  };
-
   const handleChangeText = (newText: string) => {
     setText(newText);
+  };
+  const imageMap: { [key: string]: any } = {
+    'Song_1': require('../../assets/images/ImageSong/avt_song.png'),
+    'Song_2': require('../../assets/images/song/SongChill2.jpg'),
+    'Song_3': require('../../assets/images/song/SongChill3.jpg'),
+    'Song_4': require('../../assets/images/song/SongChill4.jpg'),
+    'Song_5': require('../../assets/images/song/SongChill5.jpg'),
+    'Song_6': require('../../assets/images/song/SongChill6.jpg'),
+    'Song_7': require('../../assets/images/song/SongChill7.jpg'),
+    'Song_8': require('../../assets/images/song/SongChill2.jpg'),
+    'Song_9': require('../../assets/images/song/SongChill1.jpg'),
+    'Song_10': require('../../assets/images/song/SongChill3.jpg'),
+    'Song_11': require('../../assets/images/song/SongChill4.jpg'),
   };
 
   return (
     <>
-      {/* {showPlayList ? ( */}
         <Container colors={['black', 'black', 'black']}>
           <Header>
             <Text style={{ color: 'white', fontSize: 32, marginLeft: 20, marginTop: 20 }}>Home</Text>
@@ -256,7 +223,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
                   {playlists.map((item) => (
                     <Pressable
                       key={item._id}
-                      onPress={() => handleNavigateToPlaylist("1")}
+                      onPress={() => navigation.navigate('Playlist', { id: item._id })}
                       style = {{marginLeft: 90, marginRight:60, marginTop: 5}}
                     >
                         <Text style={styles.title}>{item.name}</Text>
@@ -285,7 +252,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
                   {albums.map((item) => (
                     <Pressable
                       key={item._id}
-                      onPress={() => handleNavigateToPlaylist(item._id)}
+                      onPress={() => navigation.navigate('Album', { id: item._id })}
                       style = {{marginLeft: 90, marginRight:80, marginTop: 5}}
                     >
                         <Text style={styles.title}>{item.name}</Text>
@@ -306,18 +273,19 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
             </View>
 
             {songs.map((item) => (
-              <Pressable
+              <TouchableOpacity
                 key={item._id}
                 style={styles.item}
+                onPress={() => navigation.navigate('Song', { id: item._id })}
               >
-                <Image source={require('../../assets/images/song/Leluuly.jpg')} style={styles.song} />
+                <Image source={imageMap[item._id]} style={styles.song} />
                 
                 <View style={{ flexDirection: 'column', marginHorizontal: 18, justifyContent: 'center' }}>
                   <Text style={{ color: 'white' }}>{item.nameSong}</Text>
                   <Text style={{ color: 'white' }}>{item.singerId}</Text>
                   <Text style={{ color: 'white', marginTop: 8 }}>{item.diration}</Text>
                 </View>
-              </Pressable>
+              </TouchableOpacity>
             ))}
           </Content>
 
@@ -325,9 +293,6 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
             <BottomBar />
           </Footer>
         </Container>
-      {/* // ) : (
-        // <PlayList handleNavigateBack={handleNavigateToBackL} id={selectedIdP} navigation={navigation} />
-      // )} */}
     </>
   );
 };

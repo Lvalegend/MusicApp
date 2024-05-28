@@ -18,7 +18,7 @@ const BottomBar: React.FC<BottomBarProps> = () => {
         navigation.navigate('HomeScreen')
     }
     const handlePopular = () => {
-        navigation.navigate('RankingScreen')
+        navigation.navigate('Popular')
     }
     // const handleFavourite = () => {
     //     navigation.navigate('Favourite')
@@ -92,6 +92,7 @@ const BottomBar: React.FC<BottomBarProps> = () => {
         }
     };
 
+    
 
     return (
         <View style={styles.container}>

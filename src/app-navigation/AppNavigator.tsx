@@ -4,7 +4,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Manager from '../app-views/UserScreen/Manager';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import {  PlayList, HomeScreen, Login, Register, SplashScreen, User, Downloads, UserAfterLoginOrRegister, ManageScreen, ManageCateScreen, ManageSongScreen, ManageUserScreen, ManageCountScreen, ManagePlaylistScreen, ManageInformScreen, ArtistInf, Favourite, RankingScreen, Chat, Song, Popular } from './types';
+import {  PlayList, HomeScreen, Login, Register, SplashScreen, User, Downloads, UserAfterLoginOrRegister, ManageScreen, ManageCateScreen, ManageSongScreen, ManageUserScreen, ManageCountScreen, ManagePlaylistScreen, ManageInformScreen, ArtistInf, Favourite, Song, Popular, Comments } from './types';
+import Album from '../app-views/HomeScreen/Album';
 
 
 
@@ -23,12 +24,14 @@ function AppNavigator() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="HomeScreen" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
+        <Stack.Screen name="Playlist" component={PlayList} />
+        <Stack.Screen name="Album" component={Album} />
         <Stack.Screen name="SplashScreen" component={SplashScreen} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="Popular" component={Popular} />
         {/* <Stack.Screen name="Comments" component={Comments} /> */}
-        {/* <Stack.Screen name="Song" component={Song} /> */}
+        <Stack.Screen name="Song" component={Song} />
         <Stack.Screen name="Favourite" component={Favourite} />
         <Stack.Screen name="User" component={User} />
         <Stack.Screen name="Downloads" component={Downloads} />       

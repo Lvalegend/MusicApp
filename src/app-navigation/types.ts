@@ -18,7 +18,6 @@ import ManageInformScreen from '../app-views/Manages/ManageInformScreen';
 import ManagePlaylistScreen from '../app-views/Manages/ManagePlaylistScreen';
 import ManageSongScreen from '../app-views/Manages/ManageSongScreen';
 import ManageUserScreen from '../app-views/Manages/ManageUserScreen';
-import RankingScreen from '../app-views/PopularScreen/PopularScreen';
 import SearchScreen from '../app-views/Search/SearchScreen';
 
 export {
@@ -34,7 +33,6 @@ export {
   Downloads,
   User,
   SearchScreen,
-  RankingScreen,
   ArtistInf, 
   UserAfterLoginOrRegister,
   ManageCateScreen,

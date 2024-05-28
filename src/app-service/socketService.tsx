@@ -7,8 +7,6 @@ const port = 3000
 
 const url_socket = `http://${hostNetwork}:${port}`;
 
-const token = getToken()
-
 const path_socket = '/socket-io'
 
 
@@ -20,8 +18,9 @@ class SocketService {
     }
 
     initializeSocket = async () => {
+        const token:any = await getToken()
         try {
-            this.socket = io(url_socket, { transports: ['websocket'], path: path_socket, auth: {token} }); // , auth: {token} , , path: path_socket
+            this.socket = io(url_socket, { path: path_socket, auth: {token} }); // , auth: {token} , , path: path_socket
             console.log("initializing socket");
 
             this.socket.on("connect", () => {

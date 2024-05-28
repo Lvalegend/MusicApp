@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
   StyleSheet, View, Text, Image, TextInput, Pressable, Modal, TouchableOpacity, ScrollView
 } from 'react-native';
-import { NavigationProp } from '@react-navigation/native';
+import { NavigationProp, useIsFocused } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
 import { iconBack, iconAdd, icon3Cham, iconSreach, iconChuX } from '../../app-uikits/icon-svg';
 import { Header, Content, Footer, Container } from '../../app-layout/Layout';
@@ -13,8 +13,12 @@ import axios from 'axios';
 interface Song {
   _id: string;
   nameSong: string;
+  imageLink: string;
   songLink: string;
-  image: string;
+  song: string;
+  diration: string;
+  singerId: string;
+  managerId: string;
 }
 
 const ManageSongScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ navigation }) => {
@@ -28,6 +32,33 @@ const ManageSongScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ navig
   });
   const [selectedSong, setSelectedSong] = useState<Song | null>(null);
   const [recentlyPlayedData, setRecentlyPlayedData] = useState<Song[]>([]);
+  
+  const [songs, setSongs] = useState<Song[]>([]);
+  const isFocused = useIsFocused();
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.post(`http://${hostNetwork}:3000/search`, {
+        "searchKeyword": text
+      });
+      console.log(response.data)
+      if (Array.isArray(response.data)) {
+        setSongs(response.data);
+      } else {
+        console.error('Error: No items in response data or items is not an array');
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+  useEffect(() => {
+    if (isFocused) {
+        fetchData();
+    }
+  }, [isFocused]);
+
+
+
 
   useEffect(() => {
     fetchRecentlyPlayedData();
@@ -112,6 +143,20 @@ const ManageSongScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ navig
     }
   };
 
+  const imageMap: { [key: string]: any } = {
+    'Song_1': require('../../assets/images/ImageSong/avt_song.png'),
+    'Song_2': require('../../assets/images/song/SongChill2.jpg'),
+    'Song_3': require('../../assets/images/song/SongChill3.jpg'),
+    'Song_4': require('../../assets/images/song/SongChill4.jpg'),
+    'Song_5': require('../../assets/images/song/SongChill5.jpg'),
+    'Song_6': require('../../assets/images/song/SongChill6.jpg'),
+    'Song_7': require('../../assets/images/song/SongChill7.jpg'),
+    'Song_8': require('../../assets/images/song/SongChill2.jpg'),
+    'Song_9': require('../../assets/images/song/SongChill1.jpg'),
+    'Song_10': require('../../assets/images/song/SongChill3.jpg'),
+    'Song_11': require('../../assets/images/song/SongChill4.jpg'),
+  };
+
   return (
     <Container colors={['#4c669f', 'red', '#192f6a']}>
       <Header>
@@ -124,7 +169,9 @@ const ManageSongScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ navig
           <Text style={{ color: 'white', fontSize: 26, marginTop: 0 }}>Danh sách bài hát</Text>
         </View>
         <View style={styles.searchContainer}>
-          <SvgXml xml={iconSreach()} style={{ margin: 20, marginRight: 0 }} />
+          <Pressable onPress={fetchData}>
+            <SvgXml xml={iconSreach()} style={{ margin: 20, marginRight: 0 }} />
+          </Pressable>
           <TextInput
             style={styles.input}
             value={text}
@@ -136,13 +183,13 @@ const ManageSongScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ navig
 
       <Content>
         <ScrollView>
-          {recentlyPlayedData.map((item) => (
+          {songs.map((item) => (
             <TouchableOpacity
               key={item._id}
               style={styles.item}
               onPress={() => setSelectedSong(item)}
             >
-              <Image source={{ uri: item.songLink }} style={styles.song} />
+              <Image source={imageMap[item._id]} style={styles.song} />
               <View style={styles.itemTextContainer}>
                 <Text style={styles.itemText}>{item.nameSong}</Text>
               </View>
