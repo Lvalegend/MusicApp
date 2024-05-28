@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, View, Text, Image, SafeAreaView, StyleSheet, StatusBar, TextInput, ImageBackground, TouchableOpacity, FlatList } from 'react-native';
+import { Button, View, Text, Image, SafeAreaView, StyleSheet,  TouchableOpacity, FlatList,ScrollView } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { Header, Content, Footer, Container } from '../../app-layout/Layout';
 
@@ -9,7 +9,9 @@ interface ManageScreenProps {
 }
 
 const ManageScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ navigation }) => {
-
+    const handleLogout = () => {
+        navigation.navigate('User');
+    };
     const handleCate = () => {
         navigation.navigate('ManageCateScreen');
     };
@@ -19,7 +21,7 @@ const ManageScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ navigatio
     };
 
     const handleInform = () => {
-        navigation.navigate('ManageInformScreen');
+        navigation.navigate('UserAfterLoginOrRegister');
     };
 
     const handlePlaylist = () => {
@@ -81,6 +83,9 @@ const ManageScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ navigatio
                         </TouchableOpacity>
                     </View>
                 </View>
+                <TouchableOpacity style={{ backgroundColor: 'red', padding: 10, marginHorizontal: 35, borderRadius: 10, marginVertical:40 }} onPress={handleLogout}>
+                    <Text style={{ textAlign: 'center', color: 'white', fontWeight: '600', fontSize: 15 }}>Logout</Text>
+                </TouchableOpacity>
             </Content>
             <Footer></Footer>
         </Container>
@@ -108,7 +113,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         flexWrap: 'wrap',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
         padding: 20,
         alignItems: "center",
         

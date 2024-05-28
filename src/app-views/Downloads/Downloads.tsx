@@ -1,149 +1,264 @@
+import React, { useState, useEffect } from 'react';
+import { Button, View, Text, Image, ScrollView, StyleSheet, Pressable, TouchableOpacity, Modal, TextInput } from 'react-native';
+import { NavigationProp } from '@react-navigation/native';
+import { SvgXml } from 'react-native-svg';
+import songsData from '../../assets/data/songs.json';
+import { Container, Content, Footer, Header } from '../../app-layout/Layout';
+import BottomBar from '../GeneralComponents/BottomBar/BottomBar';
+import { icon3Cham, iconBack, iconSreach, iconChuX, iconMusic,iconPlay } from '../../app-uikits/icon-svg';
+import { deleteToken } from '../../secure-storage/DeleteToken';
 
-import * as React from 'react';
-import { Button, View, Text, Image, SafeAreaView, StyleSheet, StatusBar, TextInput, ImageBackground, Pressable, VirtualizedList } from 'react-native';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { Svg, SvgXml } from 'react-native-svg';
-import { icon3Cham, iconBack, iconDownload, iconFavourite, iconSreach } from '../../app-uikits/icon-svg';
-import { Header, Content, Footer, Container } from '../../app-layout/Layout';
-import LinearGradient from 'react-native-linear-gradient';
-import Song from '../SongScreen/Song';
-import { useState } from 'react';
-
-
-interface PlaylistProps {
-}
-interface PlayListProps {
-    handleNavigateBack: () => void;
-    id: string;
-   
-}
-
-const PlayList: React.FC<PlayListProps & { navigation: NavigationProp<any>}> = ({handleNavigateBack, id, navigation}) => {
-    const [selectedSong, setSelectedSong] = React.useState<string | null>(null);;
-
-    const chillsData = [
-        { id: '1', title: 'Point the star', artist: 'Jasper, Martin Arteta, 11:11 Music Group', image: require('../../assets/images/song/SongChill1.jpg') },
-        { id: '2', title: 'I Need a Girl', artist: 'Lee', image: require('../../assets/images/song/SongChill2.jpg') },
-        { id: '3', title: 'I Like Me Better', artist: 'Peaceful Melody, soave lofi', image: require('../../assets/images/song/SongChill3.jpg') },
-        { id: '4', title: 'See You Again', artist: 'Peaceful Melody, soave lofi', image: require('../../assets/images/song/SongChill4.jpg') },
-        { id: '5', title: 'Stenven Universe', artist: 'Jasper, Martin Arteta, 11:11 Music Group', image: require('../../assets/images/song/SongChill5.jpg') },
-        { id: '6', title: 'Payphone', artist: 'Peaceful melody, soave lofi', image: require('../../assets/images/song/SongChill6.jpg') },
-        { id: '7', title: 'You re Beautiful', artist: 'Peaceful Melody, soave lofi', image: require('../../assets/images/song/SongChill7.jpg') },
-    ]
-
-    const playListData = [
-        { id: '1', title: 'Chills', image: require('../../assets/images/song/albumChill.jpg'), colorAlbum: ['#b41b1b', '#101d1d'] },
-        { id: '2', title: 'Anime', image: require('../../assets/images/ImageAnime/ImageAlbum.png'),colorAlbum: ['#5a6777', '#101221'] },
-        { id: '3', title: 'Gym', image: require('../../assets/images/ImageGym/imageAlbum.jpg'), colorAlbum: ['#e8a356', '#140000'] },
-        { id: '4', title: 'Sad', image: require('../../assets/images/ImageSad/imageAlbum.jpg'),colorAlbum: ['#142e4e', '#966d74'] },
-    ];
-
-    const findPlaylistItemById = (itemId: string) => {
-        return playListData.find(item => item.id === itemId);
-    };
-    const handleNavigateToSong = (songId: string) => {
-        setSelectedSong(songId)
-      
-    }
-    const playlistItem = findPlaylistItemById(id);
-    if (selectedSong) {
-        return <Song song={selectedSong} handleNavigateBack={() => setSelectedSong(null)} navigation={navigation} onPress={() => {}}
-        />;
-    }
-    return (
-        <>
-            {playlistItem && (
-                <Container colors={['black','black','black']}>
-                    <LinearGradient colors={playlistItem.colorAlbum} style={{ flex: 1 }}>
-                        <Header>
-                            <View style={styles.containerHeader}>
-                                <Pressable onPress={handleNavigateBack}>
-                                    <SvgXml xml={iconBack()} />
-                                </Pressable>
-    
-                                <Text style={{ color: 'white', fontSize: 18, margin: 5, marginLeft: 120 }}>PLAYLIST</Text>
-                            </View>
-                        </Header>
-                        <Content>
-                            <ImageBackground source={playlistItem.image} style={{ width: 230, height: 230, marginHorizontal: 90, borderRadius: 20, overflow: 'hidden' }}>
-                                <Text style={{ color: '#f26161', top: 165, margin: 15, fontSize: 30 }}>{playlistItem.title}</Text>
-                            </ImageBackground>
-                            <View style={styles.containerFunction}>
-                                <Pressable style={styles.icon}>
-                                    <SvgXml xml={iconDownload()} />
-                                    <Text style={styles.text}>Download</Text>
-                                </Pressable>
-                                <Pressable style={styles.button}>
-                                    <Text style={{ color: 'white', fontSize: 18 }}>RANDOM PLAY</Text>
-                                </Pressable>
-                                <Pressable style={styles.icon}>
-                                    <SvgXml xml={iconFavourite()} />
-                                    <Text style={styles.text}>Favourite</Text>
-                                </Pressable>
-                            </View>
-                    
-                            {chillsData.map((item) => (
-                            <Pressable key={item.id} style={styles.song} onPress ={() => handleNavigateToSong(item.id)}>
-                                <View style={{ flexDirection: 'row', width: 360 }}>
-                                    <Image source={item.image} style={styles.image}></Image>
-                                    <View style={{ margin: 10 }}>
-                                        <Text style={{ color: 'white', fontSize: 15, marginBottom: 7 }}>{item.title}</Text>
-                                        <Text style={{ color: 'gray' }}>{item.artist}</Text>
-                                    </View>
-                                </View>
-                                <SvgXml xml={icon3Cham()} style={{ marginTop: 20 }} />
-                            </Pressable>
-                        ))}
-                        </Content>
-                        <Footer>
-    
-                        </Footer>
-                    </LinearGradient>
-                </Container>
-                   
-            )}
-        </>
-    );
-    
+const images = {
+    "Leluuly.jpg": require('../../assets/images/song/Leluuly.jpg'),
+    "anhMatTroi.jpg": require('../../assets/images/song/anhMatTroi.jpg'),
+    "KhiAnhGanEm.jpg": require('../../assets/images/song/KhiAnhGanEm.jpg'),
 };
 
-const styles = StyleSheet.create({
-    containerHeader: {
-        margin: 20,
-        flexDirection: 'row'
-    },
-    containerFunction: {
-        margin: 20,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        marginVertical: 40,
-    },
-    button: {
-        width: 200,
-        height: 50,
-        backgroundColor:'#925bff',
-        justifyContent:'center',
-        alignItems:'center',
-        borderRadius: 20,
-        marginHorizontal: 20,
+interface Song {
+    id: number;
+    image: string;
+    name: string;
+    description: string;
+}
 
+const Downloads: React.FC<{ navigation: NavigationProp<any> }> = ({ navigation }) => {
+    const [songs, setSongs] = useState<Song[]>([]);
+    const [filteredSongs, setFilteredSongs] = useState<Song[]>([]);
+    const [selectedItemIndex, setSelectedItemIndex] = useState<number | null>(null);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [text, setText] = useState('');
+
+    useEffect(() => {
+        setSongs(songsData);
+        setFilteredSongs(songsData);
+    }, []);
+
+    useEffect(() => {
+        if (text.trim() === '') {
+            setFilteredSongs(songs);
+        } else {
+            const filtered = songs.filter(song =>
+                song.name.toLowerCase().includes(text.toLowerCase())
+            );
+            setFilteredSongs(filtered);
+        }
+    }, [text, songs]);
+    const handleHome = () => {
+        navigation.navigate('HomeScreen');
+    };
+
+
+    const handleFavourite = () => {
+        navigation.navigate('Favourite');
+    };
+
+    const handlePopular = () => {
+        navigation.navigate('Popular');
+    };
+
+    const handleUser = () => {
+        navigation.navigate('User');
+    };
+
+    const handleDelete = () => {
+        if (selectedItemIndex !== null) {
+            const songToDelete = songs[selectedItemIndex];
+            const updatedSongs = songs.filter(song => song.id !== songToDelete.id);
+            setSongs(updatedSongs);
+            setFilteredSongs(updatedSongs);
+            setSelectedItemIndex(null);
+            setModalVisible(false);
+        }
+    };
+    const handlePlay = () => {
+        navigation.navigate('ManageScreen');
+        setModalVisible(false);
+    };
+    const handleChangeText = (newText: string) => {
+        setText(newText);
+    };
+
+    return (
+        <Container colors={['#4c669f', 'red', '#192f6a']} >
+            <Header>
+                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                    <Text style={{ color: 'white', fontSize: 26, marginTop: 15 }}>Downloads</Text>
+                </View>
+            </Header>
+
+            <Content>
+                <View style={styles.searchContainer}>
+                    <SvgXml xml={iconSreach()} style={{ margin: 20, marginRight: 0 }} />
+                    <TextInput
+                        style={styles.input}
+                        value={text}
+                        onChangeText={handleChangeText}
+                        placeholder="Search"
+                    />
+                </View>
+                <ScrollView showsHorizontalScrollIndicator={false} style={{ marginTop: 25 }}>
+                    {filteredSongs.length > 0 ? (
+                        filteredSongs.map((song, index) => (
+                            <Pressable key={song.id} style={styles.item}>
+                                <Image source={images[song.image as keyof typeof images]} style={styles.song} />
+                                <View style={{ flexDirection: 'column', marginHorizontal: 18, justifyContent: 'center' }}>
+                                    <Text style={styles.name}>{song.name}</Text>
+                                    <Text style={styles.des}>{song.description}</Text>
+                                </View>
+                                <TouchableOpacity style={styles.dots} onPress={() => { setSelectedItemIndex(index); setModalVisible(true); }}>
+                                    <SvgXml xml={icon3Cham()} />
+                                </TouchableOpacity>
+                            </Pressable>
+                        ))
+                    ) : (
+                        <View style={{ justifyContent: 'center', alignItems: 'center', height: 500, marginBottom: 20 }}>
+                            <Image source={require("../../assets/images/taixuong.png")} style={{ width: 150, height: 150 }} />
+                            <Text style={{ color: 'white', fontSize: 22 }}>Chưa có bản nhạc nào tải xuống</Text>
+                        </View>
+                    )}
+                </ScrollView>
+            </Content>
+
+            <Footer>
+
+                <BottomBar></BottomBar>
+                <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => setModalVisible(false)}>
+                <View style={styles.centeredView}>
+                    <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.buttonClose}>
+                        <SvgXml xml={iconChuX()} />
+                    </TouchableOpacity>
+                    <View style={styles.modalView}>
+                        <TouchableOpacity onPress={handlePlay} style={styles.buttonPlay}>
+                        <Image source={require("../../assets/images/playms.png")} style={{width:40,height:40, alignItems:'flex-start'}} />
+                            <Text style={styles.buttonTextPlay}>Phát nhạc</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={handleDelete} style={styles.buttonDelete}>
+                            <Image source={require("../../assets/images/xoa.png")} style={{width:40,height:40, alignItems:'flex-start'}} />
+                            <Text style={styles.buttonTextDelete}>Xóa nhạc</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=> deleteToken()} style={{width:'100%', padding:10, backgroundColor:'green'}}>
+                <Text style={{color:'red'}}>Nhấn</Text>
+            </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
+
+            </Footer>
+
+            
+        </Container>
+    );
+};
+
+
+const styles = StyleSheet.create({
+    searchContainer: {
+        flexDirection: 'row',
+        alignContent: 'center',
+        borderRadius: 20,
+        backgroundColor: 'white',
+        margin: 20
     },
-    icon: {
-        alignItems: 'center'
+    input: {
+        flex: 1,
+        paddingVertical: 10,
+        paddingHorizontal: 10,
     },
-    text: {
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)'
+    },
+    modalView: {
+        margin: 20,
+        backgroundColor: "rgba(0, 0, 0,0.8)", 
+        borderRadius: 20,
+        padding: 20,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5
+    },
+    buttonPlay: {
+        flexDirection: 'row',
+        borderRadius: 20,
+        paddingVertical: 15,
+        paddingHorizontal: 60,
+        elevation: 2,
+        backgroundColor: "rgba(90, 90, 90)",
+        marginTop: 10
+    },
+    buttonDelete: {
+        flexDirection: 'row',
+        borderRadius: 20,
+        paddingVertical: 15,
+        paddingHorizontal: 75,
+        elevation: 2,
+        backgroundColor: "rgba(90, 90, 90))",
+        marginTop: 10
+    },
+    buttonClose: {
+        position: 'absolute',
+        top: 290,
+        right: 45,
+        borderRadius: 20,
+        elevation: 2,
+        backgroundColor: "gray",
+        padding: 10,
+        zIndex: 1
+    },
+    buttonTextPlay: {
+        color: "white",
+        fontWeight: "bold",
+        textAlign: "center",
+        fontSize: 25,
+        marginLeft:10
+    },
+    buttonTextDelete: {
+        marginLeft:12,
+        color: "white",
+        fontWeight: "bold",
+        textAlign: "center",
+        fontSize: 25,
+        
+    },
+    name: {
         color: 'white',
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
+    des: {
+        color: 'white',
+        fontSize: 16,
+    },
+    item: {
+        backgroundColor: '#24242E',
+        height: 90,
+        width: 370,
+        alignContent: 'center',
+        marginVertical: 8,
+        marginHorizontal: 25,
+        paddingHorizontal: 16,
+        paddingVertical: 10,
+        borderRadius: 20,
+        flexDirection: 'row',
     },
     song: {
-        flexDirection: 'row',
-        marginTop: 20,
-        marginHorizontal: 17,
-
-    },
-    image: {
-        width: 70,
         height: 70,
+        width: 70,
         borderRadius: 10,
     },
+    dots: {
+        alignItems: 'flex-end',
+        marginTop: 14,
+        marginLeft: 30,
+    },
 });
-export default PlayList;
+
+export default Downloads;

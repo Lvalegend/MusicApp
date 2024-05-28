@@ -1,160 +1,352 @@
-import * as React from 'react';
-import { View, Text, Image, SafeAreaView, StyleSheet, StatusBar, TextInput, ImageBackground, Pressable, FlatList, PermissionsAndroid, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Button, View, Text, ImageBackground, TouchableOpacity, StyleSheet, Alert, Image, ScrollView, ActivityIndicator, Modal, TextInput } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
+import { iconMusic } from '../../app-uikits/icon-svg';
+import { Container, Content, Footer, Header } from '../../app-layout/Layout';
+import BottomBar from '../GeneralComponents/BottomBar/BottomBar';
 
-import { Header, Content, Footer, Container } from '../../app-layout/Layout';
-import { ReactNode, useState } from 'react';
-import { ScrollView } from 'react-native-gesture-handler';
-import { iconSreach, iconBack,iconpencil } from '../../app-uikits/icon-svg';
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import axios from 'axios';
 import { deleteToken } from '../../secure-storage/DeleteToken';
+import { getToken } from '../../secure-storage/GetToken';
+import { hostNetwork } from '../../host/HostNetwork';
+import AvatarPicker from '../UserScreen/components/AvatarUpload';
 
- interface ManageInformScreenProps {
+interface ManageInformScreenProps {
 }
 
 const ManageInformScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ navigation }) => {
-    const userInfo = {
-        email: 'fjofjis@gmail.com',
-        phoneNumber: '454365465',
-        address: '123 Main St, City, Country',
-    };
-    const handleManage = () => {
-        navigation.navigate('ManageScreen');
-    };
-    
-    const [image, setImage] = useState('')
-    const requesCameraPermissions = async () => {
-        try {
-            const checkPermissions = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA)
-            if (checkPermissions === PermissionsAndroid.RESULTS.GRANTED) {
-
-                const result: any = await launchImageLibrary({ mediaType: 'mixed' })
-                setImage(result.assets[0].uri)
-
-                console.log(result);
-
-            }
-            else {
-                console.log('Refuse');
-
-            }
-        } catch (error) {
-            console.log(error);
-
-        }
-
-
-    }
+    const [songs, setSongs] = useState<any>([]);
+    const [loading, setLoading] = useState(true);
     const handleLogout = async () => {
         await deleteToken()
         navigation.navigate('User')
     }
+    const [image, setImage] = useState<any>();
+    const [info, setInfo] = useState<any>([]);
+
+    const [token, setToken] = useState();
+    const [imageData, setImageData] = useState<any>()
+    const [songImages, setSongImages] = useState<any>([])
+
+    const [idSongs, setIdSongs] = useState([
+        {
+            song_id_1: "Song_1"
+        }, {
+            song_id_2: "Song_2"
+        }, {
+            song_id_3: "Song_3"
+        }, {
+            song_id_4: "Song_5"
+        }, {
+            song_id_5: "Song_5"
+        }, {
+            song_id_6: "Song_6"
+        }, {
+            song_id_7: "Song_7"
+        }, {
+            song_id_8: "Song_8"
+        }, {
+            song_id_9: "Song_9"
+        }, {
+            song_id_10: "Song_10"
+        }, {
+            song_id_11: "Song_11"
+        },
+    ])
+
+    useEffect(() => {
+        getToken().then((data: any) => {
+            setToken(data)
+        })
+
+        // getImage()
+        // const getImage = async () => {
+        //     try {
+        //         const token = await getToken()
+        //         const response = await axios.get(`http://${hostNetwork}:3000/avatar`, {
+        //             headers: {
+        //                 Authorization: `Bearer ${token}`
+        //             }
+        //         });
+        //         if (response.data) {
+        //             console.log(typeof response.data);
+        //             setImage(URL.createObjectURL(new Blob([Buffer.from(response.data, 'binary')], { type: 'image/jpeg' })));
+        //         }
+
+        //     } catch (error) {
+        //         console.error('Error fetching image:', error);
+        //     }
+        // }
+        // getImage();
+        const getInfo = async () => {
+            try {
+                // const token = await getToken()
+                const response = await axios.get(`http://${hostNetwork}:3000/infoUser`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                if (response.data) {
+                    console.log(response.data);
+                    setInfo(response.data);
+                }
+
+            } catch (error) {
+                console.error('Error fetching image:', error);
+            }
+        }
+        getInfo();
+    }, []);
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const token = await getToken();
+                const response = await fetch(`http://${hostNetwork}:3000/avatar`, {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch image');
+                }
+
+                const contentType = response.headers.get('Content-Type');
+                if (!contentType || !contentType.startsWith('image/')) {
+                    throw new Error('Response is not an image');
+                }
+
+                const blob = await response.blob();
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    const base64data = reader.result;
+                    setImageData(base64data);
+                };
+                reader.readAsDataURL(blob);
+            } catch (error) {
+                console.error('Error fetching image:', error);
+            }
+        };
+
+        fetchData();
+        const getImage = async (songId: any) => {
+            try {
+                const response = await fetch(`http://${hostNetwork}:3000/songImages?id=${songId}`, {
+                    method: 'GET',
+
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to fetch image');
+                }
+                const contentType = response.headers.get('Content-Type');
+                if (!contentType || !contentType.startsWith('image/')) {
+                    throw new Error('Response is not an image');
+                }
+
+                const blob = await response.blob();
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    const base64data: any = reader.result;
+                    setSongImages((prevImageData: any) => [...prevImageData, base64data]);
+                };
+                reader.readAsDataURL(blob);
+            } catch (error) {
+                console.error('Error fetching image:', error);
+            }
+        };
+        const sendMultipleRequests = async () => {
+            try {
+                idSongs.forEach(async (idSongObj) => {
+                    const songId = Object.values(idSongObj)[0];
+                    await getImage(songId);
+                });
+            } catch (error) {
+                console.error('Error sending multiple requests:', error);
+            }
+        };
+
+        sendMultipleRequests();
+
+    }, []);
+
     return (
+
         <Container colors={['#4c669f', 'red', '#192f6a']} >
+
             <Header>
-                <View style={styles.containerHeader}>
-                    <Pressable onPress={handleManage}>
-                        <SvgXml xml={iconBack()} />
-                    </Pressable>
-                </View>
-                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                    <Text style={{ color: 'white', fontSize: 26, marginTop: 0, marginBottom:10 }}>Thông tin cá nhân</Text>
-                </View>
             </Header>
+
             <Content>
-                <ImageBackground source={require("../../assets/images/ImageManage/anh_nen.jpg")} style={{ width: '100%', height: 170, backgroundColor: '#5D9DE8', position: 'relative' }} resizeMode='cover'>
-                    <View style={{ position: 'absolute', right: 161, bottom: -40, borderWidth: 1, borderRadius: 50 }}>
-                        {image != '' ? <Image source={{ uri: image }} style={{ width: 90, height: 90, borderRadius: 50 }} /> : <Image source={require("../../assets/images/avatar_trắng.jpg")} style={{ width: 90, height: 90, borderRadius: 50 }} />}
-                    </View>
-                </ImageBackground>
+                <View>
+                    <AvatarPicker />
+                </View>
+
                 <View style={{ marginTop: 50, alignItems: 'center' }}>
-                    <View >
-                        <Text style={{ fontSize: 25, fontWeight: '600' }}>Lê Văn An</Text>
+                    <View>
+                        <Text style={{ fontSize: 20, fontWeight: '600', color: 'white' }}>{info.name}</Text>
                     </View>
-                    
-                    <View style={{ flexDirection:"row" }}>
-                        <Text style={{ fontSize: 20, fontWeight: '800', }}>Là một người hòa đồng vui vẻ</Text>
-                        <SvgXml xml={iconpencil()} style={{marginLeft:10, marginTop:5}}/>
+                    <View>
+                        <Text style={{ fontSize: 15, fontWeight: '300', color: 'white' }}>{info.description}</Text>
                     </View>
+                </View>
+                <View style={{ marginHorizontal: 15, marginVertical: 10 }}>
+                    <Text style={{ fontWeight: '500', color: 'white', fontSize: 18 }}>My PlayList</Text>
+                    <ScrollView horizontal={true}>
+                        <View style={{ flexDirection: 'row', gap: 15 }}>
+                            <View>
+                                <TouchableOpacity style={{ marginVertical: 10 }}>
+                                    <ImageBackground source={require('../../assets/images/ImageUserScreen/ảnh_nền_âm_nhạc.jpg')} style={{ width: 170, height: 150, justifyContent: 'center', alignItems: 'center' }} imageStyle={{ borderRadius: 10 }}>
+                                        <Text style={{ fontWeight: '500', color: 'white', fontSize: 15 }}>Best of 2023</Text>
+                                    </ImageBackground>
+                                </TouchableOpacity>
+                                <TouchableOpacity>
+                                    <Text style={{ fontSize: 17, color: 'white', fontWeight: '500' }}>Show Me Love</Text>
+                                </TouchableOpacity>
+                                <View style={{ marginBottom: 10 }}>
+                                    <Text style={{ fontSize: 15, color: '#D9DADC', fontWeight: '300' }}>Alan Walker</Text>
+                                </View>
+                            </View>
+                            <View>
+                                <TouchableOpacity style={{ marginVertical: 10 }}>
+                                    <ImageBackground source={require('../../assets/images/ImageUserScreen/ảnh_nền_âm_nhạc.jpg')} style={{ width: 170, height: 150, justifyContent: 'center', alignItems: 'center' }} imageStyle={{ borderRadius: 10 }}>
+                                        <Text style={{ fontWeight: '500', color: 'white', fontSize: 15 }}>Best of 2023</Text>
+                                    </ImageBackground>
+                                </TouchableOpacity>
+                                <TouchableOpacity>
+                                    <Text style={{ fontSize: 17, color: 'white', fontWeight: '500' }}>So Beautiful</Text>
+                                </TouchableOpacity>
+                                <View style={{ marginBottom: 10 }}>
+                                    <Text style={{ fontSize: 15, color: '#D9DADC', fontWeight: '300' }}>Alan Walker</Text>
+                                </View>
+                            </View>
+                            <View>
+                                <TouchableOpacity style={{ marginVertical: 10 }}>
+                                    <ImageBackground source={require('../../assets/images/ImageUserScreen/ảnh_nền_âm_nhạc.jpg')} style={{ width: 170, height: 150, justifyContent: 'center', alignItems: 'center' }} imageStyle={{ borderRadius: 10 }}>
+                                        <Text style={{ fontWeight: '500', color: 'white', fontSize: 15 }}>Best of 2023</Text>
+                                    </ImageBackground>
+                                </TouchableOpacity>
+                                <TouchableOpacity>
+                                    <Text style={{ fontSize: 17, color: 'white', fontWeight: '500' }}>Give Me Money</Text>
+                                </TouchableOpacity>
+                                <View style={{ marginBottom: 10 }}>
+                                    <Text style={{ fontSize: 15, color: '#D9DADC', fontWeight: '300' }}>Alan Walker</Text>
+                                </View>
+                            </View>
+                        </View>
+                    </ScrollView>
+                </View>
 
-                    <TouchableOpacity onPress={() => requesCameraPermissions()} style={{ padding: 10, borderRadius: 50, backgroundColor: '#23D6E4', marginTop: 10 }}>
-                        <Text style={{ color: 'white', fontSize: 15, fontWeight: '700', textAlign: 'center' }}>Change Avatar</Text>
-                    </TouchableOpacity>
-                    
+                <View style={{ marginHorizontal: 15, marginVertical: 10 }}>
+                    <Text style={{ fontWeight: '500', color: 'white', fontSize: 18 }}>Recommend For You</Text>
+                    <ScrollView horizontal={true}>
+                        <View style={{ flexDirection: 'row', gap: 15 }}>
+                            <View>
+                                <TouchableOpacity style={{ marginVertical: 10 }}>
+                                    <ImageBackground source={require('../../assets/images/ImageUserScreen/ảnh_nền_âm_nhạc.jpg')} style={{ width: 170, height: 150, justifyContent: 'center', alignItems: 'center' }} imageStyle={{ borderRadius: 10 }}>
+                                        <Text style={{ fontWeight: '500', color: 'white', fontSize: 15 }}>Best of 2023</Text>
+                                    </ImageBackground>
+                                </TouchableOpacity>
+                                <TouchableOpacity>
+                                    <Text style={{ fontSize: 17, color: 'white', fontWeight: '500' }}>Show Me Love</Text>
+                                </TouchableOpacity>
+                                <View style={{ marginBottom: 10 }}>
+                                    <Text style={{ fontSize: 15, color: '#D9DADC', fontWeight: '300' }}>Alan Walker</Text>
+                                </View>
+                            </View>
+                            <View>
+                                <TouchableOpacity style={{ marginVertical: 10 }}>
+                                    <ImageBackground source={require('../../assets/images/ImageUserScreen/ảnh_nền_âm_nhạc.jpg')} style={{ width: 170, height: 150, justifyContent: 'center', alignItems: 'center' }} imageStyle={{ borderRadius: 10 }}>
+                                        <Text style={{ fontWeight: '500', color: 'white', fontSize: 15 }}>Best of 2023</Text>
+                                    </ImageBackground>
+                                </TouchableOpacity>
+                                <TouchableOpacity>
+                                    <Text style={{ fontSize: 17, color: 'white', fontWeight: '500' }}>So Beautiful</Text>
+                                </TouchableOpacity>
+                                <View style={{ marginBottom: 10 }}>
+                                    <Text style={{ fontSize: 15, color: '#D9DADC', fontWeight: '300' }}>Alan Walker</Text>
+                                </View>
+                            </View>
+                            <View>
+                                <TouchableOpacity style={{ marginVertical: 10 }}>
+                                    <ImageBackground source={require('../../assets/images/ImageUserScreen/ảnh_nền_âm_nhạc.jpg')} style={{ width: 170, height: 150, justifyContent: 'center', alignItems: 'center' }} imageStyle={{ borderRadius: 10 }}>
+                                        <Text style={{ fontWeight: '500', color: 'white', fontSize: 15 }}>Best of 2023</Text>
+                                    </ImageBackground>
+                                </TouchableOpacity>
+                                <TouchableOpacity>
+                                    <Text style={{ fontSize: 17, color: 'white', fontWeight: '500' }}>Give Me Money</Text>
+                                </TouchableOpacity>
+                                <View style={{ marginBottom: 10 }}>
+                                    <Text style={{ fontSize: 15, color: '#D9DADC', fontWeight: '300' }}>Alan Walker</Text>
+                                </View>
+                            </View>
+                        </View>
+                    </ScrollView>
+                </View>
 
-                    <View style={styles.container}>
-                        <View style={styles.item}>
-                        <View style={styles.infoContainer}>
-                            <Text style={styles.label}>Email:</Text>
-                            <Text style={styles.text}>{userInfo.email}</Text>
+                <TouchableOpacity style={{ backgroundColor: '#797E8D', padding: 10, marginHorizontal: 20, borderRadius: 10, marginBottom: 10 }}>
+                    <Text style={{ textAlign: 'center', color: 'white', fontWeight: '600', fontSize: 15 }}>Edit Profile</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={{ backgroundColor: 'red', padding: 10, marginHorizontal: 20, borderRadius: 10 }} onPress={handleLogout}>
+                    <Text style={{ textAlign: 'center', color: 'white', fontWeight: '600', fontSize: 15 }}>Logout</Text>
+                </TouchableOpacity>
+
+
+                <View style={{ width: '100%', height: 200, backgroundColor: 'transparent' }} >
+                    {imageData &&
+                        <Image source={{
+                            uri: imageData
+                        }} style={{ width: '100%', height: '100%' }} />
+                    }
+                </View>
+
+                <View style={{ marginVertical: 10 }}>
+                    {songImages.map((item: any, index: any) => (
+                        <View key={index} style={{ width: '100%', height: 200, backgroundColor: 'transparent' }}>
+                            <Image source={{
+                                uri: item
+                            }} style={{ width: '100%', height: '100%' }} />
                         </View>
-                        <SvgXml xml={iconpencil()} style={styles.pencil}/>
+                    ))}
+                </View>
+
+                <View>
+                    <Modal
+                        animationType='fade'
+                        visible={false}
+                        transparent={false}>
+                        <View >
+                            <AvatarPicker />
+                            <View style={{marginTop:50,marginHorizontal:20}}>
+                                <View>
+                                    <Text>Name</Text>
+                                    <TextInput placeholder='Name'></TextInput>
+                                </View>
+                            </View>
                         </View>
 
-                        <View style={styles.item}>
-                        <View style={styles.infoContainer}>
-                            <Text style={styles.label}>Số Điện Thoại:</Text>
-                            <Text style={styles.text}>{userInfo.phoneNumber}</Text>
-                        </View>
-                        <SvgXml xml={iconpencil()} style={styles.pencil}/>
-                        </View>
+                    </Modal>
+                </View>
 
-                        <View style={styles.item}>
-                        <View style={styles.infoContainer}>
-                            <Text style={styles.label}>Địa Chỉ:</Text>
-                            <Text style={[styles.text, { textAlignVertical: 'top' }]}>{userInfo.address}</Text> 
-                        </View>
-                        <SvgXml xml={iconpencil()} style={styles.pencil}/>
-                        </View>
 
-                        <TouchableOpacity onPress={handleLogout} style={{ padding: 10, borderRadius: 50, backgroundColor: '#23D6E4', marginTop: 10, width: 100, marginLeft:140 }}>
-                            <Text style={{ color: 'white', fontSize: 15, fontWeight: '700', textAlign: 'center' }}>Log out</Text>
-                        </TouchableOpacity>
-                    </View>
-                    </View>
             </Content>
-            <Footer></Footer>
+
+            <Footer>
+                <BottomBar>
+                </BottomBar>
+            </Footer>
         </Container>
+
     );
 };
-
 const styles = StyleSheet.create({
-    container: {
-        padding: 20,
-    },
-    containerHeader: {
-        margin: 15,
-        
-    },
-
-    infoContainer: {
-        marginBottom: 15,
-        width:260
-    },
-    label: {
-        fontSize: 26,
-        fontWeight: 'bold',
-        marginBottom: 5,
-    },
-    text: {
-        fontSize: 22,
-        fontWeight: 'bold',
-    },
-    pencil:{
-        alignItems: 'flex-end',
-        marginTop: 45,
-        marginLeft:10
-    },
-    item:{
-        alignContent: 'center', 
-        flexDirection:"row",
-        backgroundColor:'Salmon1',
-        borderRadius: 20,
-        marginHorizontal: 25,
-        paddingHorizontal: 16,
-        paddingVertical: 8,
-    },
-});
+    textColor: {
+        color: 'white',
+        textAlign: 'center'
+    }
+})
 
 export default ManageInformScreen;

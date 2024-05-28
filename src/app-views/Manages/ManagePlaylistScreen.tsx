@@ -85,16 +85,18 @@ const ManagePlaylistScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ n
                 </View>
                 <View>
                     {playListFavouriteData.map((item) => (
-                        <Pressable key={item.id} style={styles.playlist}>
+                        <TouchableOpacity key={item.id} style={styles.playlist}>
                             <View style={{ flexDirection: 'row', width: 360 }}>
                                 <Image source={item.image} style={styles.image}></Image>
                                 <View style={{ margin: 10 }}>
                                     <Text style={{ color: 'white', fontSize: 18, marginBottom: 7 }}>{item.title}</Text>
                                     <Text style={{ color: 'gray', fontSize: 15 }}>{item.artist}</Text>
                                 </View>
+                                <TouchableOpacity>
                                 <SvgXml xml={icon3Cham()} style={{ marginTop: 18, marginLeft:90 }} />
+                                </TouchableOpacity>
                             </View>
-                        </Pressable>
+                        </TouchableOpacity>
                     ))}
                 </View>
             </Content>
@@ -185,7 +187,7 @@ const styles = StyleSheet.create({
         paddingHorizontal:16,
         backgroundColor: '#24242E',
         borderRadius:20,
-        opacity:0.8
+        opacity:0.9
     },
     song: {
         height: 70,

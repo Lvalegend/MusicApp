@@ -1,87 +1,116 @@
-import React, { useState } from 'react';
-import { View, Text, Image, TextInput, TouchableOpacity, Modal, StyleSheet, PermissionsAndroid, Pressable } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {
+  StyleSheet, View, Text, Image, TextInput, Pressable, Modal, TouchableOpacity, ScrollView
+} from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
-import { iconSreach, iconBack, iconAdd } from '../../app-uikits/icon-svg';
+import { iconBack, iconAdd, icon3Cham, iconSreach, iconChuX } from '../../app-uikits/icon-svg';
 import { Header, Content, Footer, Container } from '../../app-layout/Layout';
 import { launchImageLibrary } from 'react-native-image-picker';
+import { hostNetwork } from '../../host/HostNetwork';
+import axios from 'axios';
 
-interface ManageSongScreenProps {
-  handleNavigateBack: () => void;
-  id: string;
+interface Song {
+  _id: string;
+  nameSong: string;
+  songLink: string;
+  image: string;
 }
 
 const ManageSongScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ navigation }) => {
   const [text, setText] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
+  const [menuModalVisible, setMenuModalVisible] = useState(false);
   const [formData, setFormData] = useState({
     id: '',
-    name: '',
-    artist: '',
-    duration: '',
-    category:'',
-    image: null
+    nameSong: '',
+    image: '',
   });
+  const [selectedSong, setSelectedSong] = useState<Song | null>(null);
+  const [recentlyPlayedData, setRecentlyPlayedData] = useState<Song[]>([]);
 
-  const [recentlyPlayedData, setRecentlyPlayedData] = useState([
-    { id: '1', title: 'Le Luu Ly', artist: 'Nguyen Kim Tuyen', duration: '3:50', image: require('../../assets/images/song/Leluuly.jpg') },
-    { id: '2', title: 'Anh Mat Troi', artist: 'Nguyen Kim Tuyen', duration: '3:50', image: require('../../assets/images/song/anhMatTroi.jpg') },
-    { id: '3', title: 'Khi Anh Gan Em', artist: 'Nguyen Kim Tuyen', duration: '3:50', image: require('../../assets/images/song/KhiAnhGanEm.jpg') },
-    { id: '4', title: 'Hoa Cuoi', artist: 'Nguyen Kim Tuyen', duration: '3:50', image: require('../../assets/images/song/Hoacuoijpg.jpg') },
-    { id: '5', title: 'Tinh Yeu Sai', artist: 'Nguyen Kim Tuyen', duration: '3:50', image: require('../../assets/images/song/OIP.jpg') },
-    { id: '6', title: 'Mehaboba', artist: 'Nguyen Kim Tuyen', duration: '3:50', image: require('../../assets/images/song/Leluuly.jpg') },
-  ]);
+  useEffect(() => {
+    fetchRecentlyPlayedData();
+  }, []);
+
+  const fetchRecentlyPlayedData = async () => {
+    try {
+      const response = await axios.get(`http://${hostNetwork}:3000/songs`);
+      setRecentlyPlayedData(response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
 
   const handleChangeID = (newID: string) => setFormData({ ...formData, id: newID });
-  const handleChangeName = (newName: string) => setFormData({ ...formData, name: newName });
-  const handleChangeArtist = (newArtist: string) => setFormData({ ...formData, artist: newArtist });
-  const handleChangeDuration = (newDuration: string) => setFormData({ ...formData, duration: newDuration });
-  const handleChangeCategory = (newCategory: string) => setFormData({ ...formData, category: newCategory });
+  const handleChangeName = (newName: string) => setFormData({ ...formData, nameSong: newName });
 
   const handleChangeText = (newText: string) => {
     setText(newText);
     const filteredData = recentlyPlayedData.filter(item =>
-      item.title.toLowerCase().includes(newText.toLowerCase()) ||
-      item.artist.toLowerCase().includes(newText.toLowerCase())
+      item.nameSong.toLowerCase().includes(newText.toLowerCase())
     );
     setRecentlyPlayedData(filteredData);
   };
 
   const [image, setImage] = useState('')
-  const requesCameraPermissions = async () => {
-    try {
-      const checkPermissions = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA)
-      if (checkPermissions === PermissionsAndroid.RESULTS.GRANTED) {
-
-        const result: any = await launchImageLibrary({ mediaType: 'mixed' })
-        setImage(result.assets[0].uri)
-
-        console.log(result);
-
-      }
-      else {
-        console.log('Refuse');
-
-      }
-    } catch (error) {
-      console.log(error);
-
-    }
-
-  }
 
   const handleManage = () => {
     navigation.navigate('ManageScreen');
   };
 
-  const handleSave = () => {
-    setModalVisible(false);
+  const handleSave = async () => {
+    try {
+      const response = await axios({
+        method: formData.id ? 'PUT' : 'POST',
+        url: `http://${hostNetwork}:3000/${formData.id ? `createSong/${formData.id}` : 'createSong'}`,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        data: {
+          nameSong: formData.nameSong,
+          image: formData.image,
+          songLink: formData.image,
+        },
+      });
+
+      if (response.status === 200 || response.status === 201) {
+        fetchRecentlyPlayedData();
+        setModalVisible(false);
+        setFormData({ id: '', nameSong: '', image: '' });
+      }
+    } catch (error) {
+      console.error('Error saving song:', error);
+    }
   };
 
   const handleCancel = () => {
     setModalVisible(false);
   };
 
+  const handleEdit = () => {
+    if (selectedSong) {
+      setFormData({
+        id: selectedSong._id,
+        nameSong: selectedSong.nameSong,
+        image: selectedSong.songLink
+      });
+      setModalVisible(true);
+      setMenuModalVisible(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (selectedSong) {
+      try {
+        await axios.delete(`http://${hostNetwork}:3000/deleteSong/${selectedSong._id}`);
+        fetchRecentlyPlayedData();
+        setMenuModalVisible(false);
+      } catch (error) {
+        console.error('Error deleting song:', error);
+      }
+    }
+  };
 
   return (
     <Container colors={['#4c669f', 'red', '#192f6a']}>
@@ -106,27 +135,30 @@ const ManageSongScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ navig
       </Header>
 
       <Content>
-        {recentlyPlayedData.map((item) => (
-          <Pressable
-            key={item.id}
-            style={styles.item}
-          >
-            <Image source={item.image} style={styles.song} />
-            <View style={{ flexDirection: 'column', marginHorizontal: 18, justifyContent: 'center' }}>
-              <Text style={{ color: 'white' }}>{item.title}</Text>
-              <Text style={{ color: 'white' }}>{item.artist}</Text>
-              <Text style={{ color: 'white', marginTop: 8 }}>{item.duration}</Text>
-            </View>
-          </Pressable>
-        ))}
+        <ScrollView>
+          {recentlyPlayedData.map((item) => (
+            <TouchableOpacity
+              key={item._id}
+              style={styles.item}
+              onPress={() => setSelectedSong(item)}
+            >
+              <Image source={{ uri: item.songLink }} style={styles.song} />
+              <View style={styles.itemTextContainer}>
+                <Text style={styles.itemText}>{item.nameSong}</Text>
+              </View>
+              <TouchableOpacity style={styles.menuIconContainer} onPress={() => setMenuModalVisible(true)}>
+                <SvgXml xml={icon3Cham()} style={styles.menuIcon} />
+              </TouchableOpacity>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
       </Content>
 
       <Footer>
         <View style={styles.footer}>
           <TouchableOpacity style={styles.footerItem} onPress={() => setModalVisible(true)}>
-             <View style={styles.addImage}><SvgXml xml={iconAdd('white', 20, 20)} /></View>
+            <View style={styles.addImage}><SvgXml xml={iconAdd('white', 20, 20)} /></View>
           </TouchableOpacity>
-
         </View>
 
         <Modal
@@ -138,10 +170,7 @@ const ManageSongScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ navig
           }}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <TouchableOpacity onPress={() => requesCameraPermissions()} style={{ padding: 15, borderRadius: 50, backgroundColor: '#23D6E4', marginHorizontal: 10, marginBottom: 10 }}>
-                <Text style={{ color: 'white', fontSize: 20, fontWeight: '700', textAlign: 'center' }}>Chọn ảnh</Text>
-              </TouchableOpacity>
-               <TextInput
+              <TextInput
                 placeholder="ID"
                 style={styles.inputAdd}
                 value={formData.id}
@@ -150,35 +179,46 @@ const ManageSongScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ navig
               <TextInput
                 placeholder="Tên bài hát"
                 style={styles.inputAdd}
-                value={formData.name}
+                value={formData.nameSong}
                 onChangeText={handleChangeName}
               />
               <TextInput
-                placeholder="Ca sĩ"
+                placeholder="Linh nhạc"
                 style={styles.inputAdd}
-                value={formData.artist}
-                onChangeText={handleChangeArtist}
+                value={formData.image}
+                onChangeText={(newImage) => setFormData({ ...formData, image: newImage })}
               />
-              <TextInput
-                placeholder="Thời lượng"
-                style={styles.inputAdd}
-                value={formData.duration}
-                onChangeText={handleChangeDuration}
-              />
-              <TextInput
-                placeholder="Thể loại"
-                style={styles.inputAdd}
-                value={formData.category}
-                onChangeText={handleChangeCategory}
-              />
+
               <View style={{ flexDirection: 'row' }}>
-              <TouchableOpacity style={styles.buttonSave} onPress={handleSave}>
+                <TouchableOpacity style={styles.buttonSave} onPress={handleSave}>
                   <Text style={styles.buttonText}>Lưu</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={handleCancel} style={styles.buttonClose}>
                   <Text style={styles.buttonText}>Hủy bỏ</Text>
                 </TouchableOpacity>
               </View>
+            </View>
+          </View>
+        </Modal>
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={menuModalVisible}
+          onRequestClose={() => {
+            setMenuModalVisible(!menuModalVisible);
+          }}>
+          <View style={styles.centeredView}>
+            <TouchableOpacity onPress={() => setMenuModalVisible(false)} style={styles.close}>
+              <SvgXml xml={iconChuX()} />
+            </TouchableOpacity>
+            <View style={styles.modalView}>
+              <TouchableOpacity onPress={handleEdit} style={styles.menuEdit}>
+                <Text style={styles.menuOptionText}>Sửa thông tin</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={handleDelete} style={styles.menuDelete}>
+                <Text style={styles.menuOptionText}>Xóa bài hát</Text>
+              </TouchableOpacity>
             </View>
           </View>
         </Modal>
@@ -199,7 +239,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     margin: 20
   },
-
   input: {
     flex: 1,
     paddingVertical: 10,
@@ -211,13 +250,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    opacity:0.9
+    opacity: 0.9
   },
   footerItem: {
     margin: 5,
     borderRadius: 5,
   },
-  addImage:{
+  addImage: {
     borderRadius: 40,
     borderWidth: 1,
     borderColor: 'white',
@@ -225,13 +264,13 @@ const styles = StyleSheet.create({
     height: 40,
     alignItems: 'center',
     justifyContent: 'center',
-    padding:10
+    padding: 10
   },
   item: {
     backgroundColor: '#24242E',
     height: 100,
     width: 380,
-    alignContent: 'center',
+    alignItems: 'center',
     marginVertical: 8,
     marginHorizontal: 16,
     padding: 16,
@@ -242,6 +281,23 @@ const styles = StyleSheet.create({
     height: 70,
     width: 70,
     borderRadius: 10,
+  },
+  itemTextContainer: {
+    flexDirection: 'column',
+    marginHorizontal: 18,
+    justifyContent: 'center',
+    flex: 1,
+  },
+  itemText: {
+    color: 'white',
+    fontSize: 22,
+  },
+  menuIconContainer: {
+    marginTop: 5,
+    marginLeft: 'auto',
+  },
+  menuIcon: {
+    marginTop: 5,
   },
   centeredView: {
     flex: 1,
@@ -275,22 +331,56 @@ const styles = StyleSheet.create({
   buttonSave: {
     backgroundColor: "blue",
     paddingVertical: 15,
-    paddingHorizontal:30,
+    paddingHorizontal: 30,
     marginTop: 10,
     borderRadius: 10,
   },
   buttonClose: {
     backgroundColor: 'red',
     paddingVertical: 15,
-    paddingHorizontal:25,
+    paddingHorizontal: 25,
     borderRadius: 10,
     marginTop: 10,
-    marginLeft:5
+    marginLeft: 5
   },
   buttonText: {
     fontSize: 15,
     color: 'black',
-    fontWeight:"bold"
+    fontWeight: "bold"
+  },
+  menuEdit: {
+    flexDirection: 'row',
+    borderRadius: 20,
+    paddingVertical: 15,
+    paddingHorizontal: 60,
+    elevation: 2,
+    backgroundColor: "black",
+    marginTop: 10
+  },
+  menuDelete: {
+    flexDirection: 'row',
+    borderRadius: 20,
+    paddingVertical: 15,
+    paddingHorizontal: 70,
+    elevation: 2,
+    backgroundColor: "black",
+    marginTop: 10
+  },
+  menuOptionText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: '700',
+    textAlign: 'center',
+  },
+  close: {
+    position: 'absolute',
+    top: 290,
+    right: 45,
+    borderRadius: 20,
+    elevation: 2,
+    backgroundColor: "gray",
+    padding: 10,
+    zIndex: 1
   },
 });
 
