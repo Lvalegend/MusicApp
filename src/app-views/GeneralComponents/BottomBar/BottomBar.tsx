@@ -62,7 +62,7 @@ const BottomBar: React.FC<BottomBarProps> = () => {
             console.error('Lỗi trong handleUser:', error);
         }
     };
-
+    
 
     return (
         <View style={styles.container}>
