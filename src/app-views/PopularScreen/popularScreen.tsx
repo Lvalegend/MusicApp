@@ -7,9 +7,9 @@ import BottomBar from '../GeneralComponents/BottomBar/BottomBar';
 import { icon1, icon2 } from '../../app-uikits/icon-svg';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-interface RankingProps {}
+interface PopularProps {}
 
-const RankingScreen: React.FC<RankingProps & { navigation: NavigationProp<any> }> = () => {
+const PopularScreen: React.FC<PopularProps & { navigation: NavigationProp<any> }> = () => {
     const rankingSongs = [
         {
             id: '1',
@@ -129,4 +129,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default RankingScreen;
+export default PopularScreen;

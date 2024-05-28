@@ -19,7 +19,7 @@ import ManageUserScreen from '../app-views/Manages/ManageUserScreen';
 import RankingScreen from '../app-views/PopularScreen/PopularScreen';
 import SearchScreen from '../app-views/Search/SearchScreen';
 import Song from '../app-views/SongScreen/Song';
-
+import Favourite from '../app-views/FavouriteScreen/FavouriteScreen';
 export {
   HomeScreen,
   SplashScreen,
@@ -28,6 +28,7 @@ export {
   Register,
   Comments,
   Popular,
+  Favourite,
   PlayList,
   Downloads,
   User,

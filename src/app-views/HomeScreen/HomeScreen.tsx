@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, View, Text, Image, SafeAreaView, StyleSheet, StatusBar, TextInput, ImageBackground, Pressable, FlatList } from 'react-native';
+import { Button, View, Text, Image, SafeAreaView, StyleSheet, StatusBar, TextInput, ImageBackground, Pressable, FlatList, TouchableOpacity } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
 import { iconSreach } from '../../app-uikits/icon-svg';
@@ -10,6 +10,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import PlayList from './PlayList';
 import Album from './Album';
 import SearchScreen from '../Search/SearchScreen';
+import { deleteToken } from '../../secure-storage/DeleteToken';
 
 
 interface HomeScreenProps {
@@ -156,7 +157,9 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
                             </View>
                         </Pressable>
                     ))}
-
+        <TouchableOpacity onPress={()=> deleteToken()} style={{width:'100%', padding:10, backgroundColor:'green'}}>
+                <Text style={{color:'red'}}>Nhấn</Text>
+            </TouchableOpacity>
 
                 </Content>
 

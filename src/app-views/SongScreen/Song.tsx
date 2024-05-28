@@ -71,12 +71,13 @@ const Song: React.FunctionComponent<SongProps> = ({ handleNavigateBack }) => {
             ],
         });
 
+    const songId = 'Song_1'
         await TrackPlayer.add({
-            id: 'track1',
+            id: songId,
             url: `http://${hostNetwork}:3000/audio?id=${songId}`,
             title: 'Adiyee',
             artist: 'Bachelor Dhibu Ninan Thomas, Kapil Kapilan',
-
+            
         });
         const duration = await TrackPlayer.getDuration();
         setTotalDuration(duration);
@@ -87,10 +88,12 @@ const Song: React.FunctionComponent<SongProps> = ({ handleNavigateBack }) => {
         if (playState) {
             TrackPlayer.pause();
         } else {
-            TrackPlayer.play();
+            await TrackPlayer.play();
+            const position = await TrackPlayer.getPosition();
             setCurrentPosition(await TrackPlayer.getPosition());
         }
         setPlayState(!playState);
+        
     };
 
 
