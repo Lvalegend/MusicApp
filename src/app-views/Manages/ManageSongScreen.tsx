@@ -22,7 +22,7 @@ const ManageSongScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ navig
   const [modalVisible, setModalVisible] = useState(false);
   const [menuModalVisible, setMenuModalVisible] = useState(false);
   const [formData, setFormData] = useState({
-    id: '',
+    _id: '',
     nameSong: '',
     image: '',
   });
@@ -42,7 +42,7 @@ const ManageSongScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ navig
     }
   };
 
-  const handleChangeID = (newID: string) => setFormData({ ...formData, id: newID });
+  const handleChangeID = (newID: string) => setFormData({ ...formData, _id: newID });
   const handleChangeName = (newName: string) => setFormData({ ...formData, nameSong: newName });
 
   const handleChangeText = (newText: string) => {
@@ -61,23 +61,12 @@ const ManageSongScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ navig
 
   const handleSave = async () => {
     try {
-      const response = await axios({
-        method: formData.id ? 'PUT' : 'POST',
-        url: `http://${hostNetwork}:3000/${formData.id ? `createSong/${formData.id}` : 'createSong'}`,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        data: {
-          nameSong: formData.nameSong,
-          image: formData.image,
-          songLink: formData.image,
-        },
-      });
-
-      if (response.status === 200 || response.status === 201) {
+      if (formData.nameSong && formData.image) {
+        await axios.post(`http://${hostNetwork}:3000/createSong`, formData);
         fetchRecentlyPlayedData();
         setModalVisible(false);
-        setFormData({ id: '', nameSong: '', image: '' });
+      } else {
+        console.error('Please provide song name and image link.');
       }
     } catch (error) {
       console.error('Error saving song:', error);
@@ -91,7 +80,7 @@ const ManageSongScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ navig
   const handleEdit = () => {
     if (selectedSong) {
       setFormData({
-        id: selectedSong._id,
+        _id: selectedSong._id,
         nameSong: selectedSong.nameSong,
         image: selectedSong.songLink
       });
@@ -173,7 +162,7 @@ const ManageSongScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ navig
               <TextInput
                 placeholder="ID"
                 style={styles.inputAdd}
-                value={formData.id}
+                value={formData._id}
                 onChangeText={handleChangeID}
               />
               <TextInput
@@ -297,7 +286,7 @@ const styles = StyleSheet.create({
     marginLeft: 'auto',
   },
   menuIcon: {
-    marginTop: 5,
+  
   },
   centeredView: {
     flex: 1,

@@ -1,141 +1,130 @@
-import * as React from 'react';
-import { Button, View, Text, Image, SafeAreaView, StyleSheet, StatusBar, TextInput, TouchableOpacity, Pressable, Modal, PermissionsAndroid } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {StyleSheet, View, Text, Image, TextInput, Pressable, Modal, TouchableOpacity, ScrollView
+} from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
-import {iconBack , icon3Cham, iconAdd } from '../../app-uikits/icon-svg';
+import { iconBack, iconAdd, icon3Cham } from '../../app-uikits/icon-svg';
 import { Header, Content, Footer, Container } from '../../app-layout/Layout';
-import { ReactNode, useState } from 'react';
 import { launchImageLibrary } from 'react-native-image-picker';
+import { hostNetwork } from '../../host/HostNetwork';
 
-
-interface ManagePlaylistScreenProps {
+interface Playlist {
+    name: string;
+    color?: string;
+    image?: string;
+    songs?: string[]
 }
 
-const ManagePlaylistScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ navigation}) => {
-    const playListFavouriteData = [
-        { id: '1', title: 'Chills', image: require('../../assets/images/song/albumChill.jpg'), artist: 'tling, hz52, mck' },
-        { id: '2', title: 'Anime', image: require('../../assets/images/ImageAnime/ImageAlbum.png'), artist: 'tling, hz52, mck' },
-        { id: '3', title: 'Gym', image: require('../../assets/images/ImageGym/imageAlbum.jpg'), artist: 'tling, hz52, mck' },
-        { id: '4', title: 'Sad', image: require('../../assets/images/ImageSad/imageAlbum.jpg'), artist: 'tling, hz52, mck' },
-    ];
-    const [text, setText] = useState('');
+const ManagePlaylistScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ navigation }) => {
+    const [playlists, setPlaylists] = useState<Playlist[]>([]);
     const [modalVisible, setModalVisible] = useState(false);
-    const [formData, setFormData] = useState({
-        id: '',
-        name: '',
-        image: null
-    });
-    const handleChangeID = (newID: string) => setFormData({ ...formData, id: newID });
-    const handleChangeName = (newName: string) => setFormData({ ...formData, name: newName });
-    const [image, setImage] = useState('')
-    const requesCameraPermissions = async () => {
+    const [formData, setFormData] = useState({ song: '', name: '', image: '', color: '' });
+
+    useEffect(() => {
+        fetchPlaylists();
+    }, []);
+
+    const fetchPlaylists = async () => {
         try {
-            const checkPermissions = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA)
-            if (checkPermissions === PermissionsAndroid.RESULTS.GRANTED) {
-
-                const result: any = await launchImageLibrary({ mediaType: 'mixed' })
-                setImage(result.assets[0].uri)
-
-                console.log(result);
-
-            }
-            else {
-                console.log('Refuse');
-
-            }
+            const response = await fetch(`http://${hostNetwork}:3000/getPlaylist`);
+            const data: Playlist[] = await response.json();
+            setPlaylists(data);
         } catch (error) {
-            console.log(error);
-
+            console.error('Failed to fetch playlists:', error);
         }
-
-    }
-
-    const handleManage = () => {
-        navigation.navigate('ManageScreen');
     };
 
-    const handleSave = () => {
-        setModalVisible(false);
+    const handleSave = async () => {
+        try {
+            const response = await fetch(`http://${hostNetwork}:3000/createPlaylist`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+            if (response.ok) {
+                fetchPlaylists();
+                setModalVisible(false);
+                setFormData({ song: '', name: '', image: '', color: '' });
+            } else {
+                console.error('Failed to save playlist');
+            }
+        } catch (error) {
+            console.error('Error saving playlist:', error);
+        }
     };
 
     const handleCancel = () => {
         setModalVisible(false);
     };
 
+    
+
     return (
-        <Container colors={['#4c669f', 'red', '#192f6a']} >
+        <Container colors={['#4c669f', 'red', '#192f6a']}>
             <Header>
-            <View style={styles.containerHeader}>
-                    <Pressable onPress={handleManage}>
+                <View style={styles.containerHeader}>
+                    <Pressable onPress={() => navigation.goBack()}>
                         <SvgXml xml={iconBack()} />
                     </Pressable>
                 </View>
                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                    <Text style={{ color: 'white', fontSize: 26, marginTop: 0, marginBottom:10 }}>PlayList</Text>
+                    <Text style={{ color: 'white', fontSize: 26, marginTop: 0, marginBottom: 10 }}>PlayList</Text>
                 </View>
             </Header>
             <Content>
-                <View>
-                    <Pressable style={{ padding: 20, flexDirection: 'row', alignItems: 'center' }} onPress={() => setModalVisible(true)}>
-                        <View style={styles.add}><SvgXml xml={iconAdd('white', 20, 20)} /></View>
-                        <View >
-                            <Text style={styles.textPlaylist} >Add new playlist</Text>
-                            </View>
-                    </Pressable>
-                </View>
-                <View>
-                    {playListFavouriteData.map((item) => (
-                        <TouchableOpacity key={item.id} style={styles.playlist}>
-                            <View style={{ flexDirection: 'row', width: 360 }}>
-                                <Image source={item.image} style={styles.image}></Image>
+                <Pressable style={{ padding: 20, flexDirection: 'row', alignItems: 'center' }} onPress={() => setModalVisible(true)}>
+                    <View style={styles.add}><SvgXml xml={iconAdd('white', 20, 20)} /></View>
+                    <Text style={styles.textPlaylist}>Add new playlist</Text>
+                </Pressable>
+                <ScrollView>
+                    {playlists.map((item) => (
+                        <Pressable key={item.name} style={styles.playlist}>
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <Image source={{ uri: item.image }} style={styles.image} />
                                 <View style={{ margin: 10 }}>
-                                    <Text style={{ color: 'white', fontSize: 18, marginBottom: 7 }}>{item.title}</Text>
-                                    <Text style={{ color: 'gray', fontSize: 15 }}>{item.artist}</Text>
+                                    <Text style={{ color: 'white', fontSize: 18, marginBottom: 7 }}>{item.name}</Text>
+                                    
                                 </View>
-                                <TouchableOpacity>
-                                <SvgXml xml={icon3Cham()} style={{ marginTop: 18, marginLeft:90 }} />
-                                </TouchableOpacity>
+                                <SvgXml xml={icon3Cham()} style={{ marginTop: 18, marginLeft: 'auto' }} />
                             </View>
-                        </TouchableOpacity>
+                        </Pressable>
                     ))}
-                </View>
+                </ScrollView>
             </Content>
-            <Footer>  
+            <Footer>
                 <Modal
                     animationType="slide"
                     transparent={true}
                     visible={modalVisible}
-                    onRequestClose={() => {
-                        setModalVisible(!modalVisible);
-                    }}>
+                    onRequestClose={() => setModalVisible(!modalVisible)}
+                >
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
-                            <TouchableOpacity onPress={() => requesCameraPermissions()} style={{ padding: 15, borderRadius: 50, backgroundColor: '#23D6E4', marginHorizontal: 10, marginBottom: 10 }}>
-                                <Text style={{ color: 'white', fontSize: 20, fontWeight: '700', textAlign: 'center' }}>Chọn ảnh</Text>
-                            </TouchableOpacity>
                             <TextInput
-                                placeholder="ID"
-                                style={styles.inputAdd}
-                                value={formData.id}
-                                onChangeText={handleChangeID}
-                            />
-                            <TextInput
-                                placeholder="Tên PlayList"
+                                placeholder="Playlist name"
                                 style={styles.inputAdd}
                                 value={formData.name}
-                                onChangeText={handleChangeName}
+                                onChangeText={(text) => setFormData({ ...formData, name: text })}
                             />
+                            
+                            
+                            {formData.image ? (
+                                <Image source={{ uri: formData.image }} style={styles.previewImage} />
+                            ) : null}
                             <View style={{ flexDirection: 'row' }}>
                                 <TouchableOpacity style={styles.buttonSave} onPress={handleSave}>
-                                    <Text style={styles.buttonText}>Lưu</Text>
+                                    <Text style={styles.buttonText}>Save</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={handleCancel} style={styles.buttonClose}>
-                                    <Text style={styles.buttonText}>Hủy bỏ</Text>
+                                <TouchableOpacity style={styles.buttonCancel} onPress={handleCancel}>
+                                    <Text style={styles.buttonText}>Cancel</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
                     </View>
-                </Modal></Footer>
+                </Modal>
+            </Footer>
         </Container>
     );
 };
@@ -143,20 +132,6 @@ const ManagePlaylistScreen: React.FC<{ navigation: NavigationProp<any> }> = ({ n
 const styles = StyleSheet.create({
     containerHeader: {
         margin: 15,
-        
-    },
-    button: {
-        width: 100,
-        height: 30,
-        borderRadius: 20,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginRight: 10,
-        borderWidth: 1,
-        borderColor: 'white'
-    },
-    text: {
-        color: 'white'
     },
     add: {
         borderRadius: 40,
@@ -176,23 +151,17 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         width: 70,
         height: 70,
-        marginHorizontal:10
-
+        marginHorizontal: 10
     },
     playlist: {
         flexDirection: 'row',
         marginTop: 20,
         marginHorizontal: 17,
-        paddingVertical:14,
-        paddingHorizontal:16,
+        paddingVertical: 14,
+        paddingHorizontal: 16,
         backgroundColor: '#24242E',
-        borderRadius:20,
-        opacity:0.9
-    },
-    song: {
-        height: 70,
-        width: 70,
-        borderRadius: 10,
+        borderRadius: 20,
+        opacity: 0.9
     },
     centeredView: {
         flex: 1,
@@ -230,7 +199,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         borderRadius: 10,
     },
-    buttonClose: {
+    buttonCancel: {
         backgroundColor: 'red',
         paddingVertical: 15,
         paddingHorizontal: 25,
@@ -243,6 +212,17 @@ const styles = StyleSheet.create({
         color: 'black',
         fontWeight: "bold"
     },
+    selectImageText: {
+        color: 'blue',
+        textDecorationLine: 'underline',
+        marginBottom: 10
+    },
+    previewImage: {
+        width: 100,
+        height: 100,
+        borderRadius: 10,
+        marginBottom: 10
+    }
 });
 
 export default ManagePlaylistScreen;
