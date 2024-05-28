@@ -219,7 +219,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
 
   return (
     <>
-      {showPlayList ? (
+      {/* {showPlayList ? ( */}
         <Container colors={['black', 'black', 'black']}>
           <Header>
             <Text style={{ color: 'white', fontSize: 32, marginLeft: 20, marginTop: 20 }}>Home</Text>
@@ -325,9 +325,9 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
             <BottomBar />
           </Footer>
         </Container>
-      ) : (
-        <PlayList handleNavigateBack={handleNavigateToBackL} id={selectedIdP} />
-      )}
+      {/* // ) : (
+        // <PlayList handleNavigateBack={handleNavigateToBackL} id={selectedIdP} navigation={navigation} />
+      // )} */}
     </>
   );
 };

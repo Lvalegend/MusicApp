@@ -1,40 +1,82 @@
 import React, { useEffect, useState } from 'react';
 import { Button, View, Text, StyleSheet, Image, TextInput, TouchableOpacity, ActivityIndicator, GestureResponderEvent } from 'react-native';
-import { NavigationProp } from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
-import { iconPrevSong, iconNextSong, iconPause, iconPlay, iconLove, iconSong, iconShuffle, iconCommentsWhite, iconLyrics } from '../../app-uikits/icon-svg'
+import { iconPrevSong, iconNextSong, iconPause, iconPlay, iconLove, iconSong, iconShuffle, iconCommentsWhite, iconLyrics, iconBack } from '../../app-uikits/icon-svg'
 import { Footer, Content, Header, Container } from '../../app-layout/Layout';
 import Slider from '@react-native-community/slider';
 import TrackPlayer, { Capability, State, Event, usePlaybackState, useProgress } from 'react-native-track-player';
 import Swiper from 'react-native-swiper';
+import { hostNetwork } from '../../host/HostNetwork';
+import { setupPlayer } from 'react-native-track-player/lib/src/trackPlayer';
 
+export type RootStackParamList = {
+    Song: undefined;
+    Chat: undefined;
+    Playlist: undefined
+};
 
 interface SongProps {
-
+    song: string;
+    navigation: NavigationProp<any>;
+    onPress: () => void;
+    handleNavigateBack: () => void
 }
-const Song: React.FunctionComponent<SongProps & { navigation: NavigationProp<any> }> = ({ navigation }) => {
+
+
+const Song: React.FunctionComponent<SongProps> = ({handleNavigateBack}) => {
     const [isLoading, setIsLoading] = useState(true);
     const [playState, setPlayState] = useState(false);
     const [currentPosition, setCurrentPosition] = useState(0);
     const [totalDuration, setTotalDuration] = useState(0);
-    const progress = useProgress()
-
-    useEffect(() => {
-        const interval = setInterval(async () => {
-            if (playState) {
-                const position = await TrackPlayer.getPosition();
-                setCurrentPosition(position);
-            }
-        }, 1000);
-        return () => clearInterval(interval);
-    }, [playState]);
+    const progress = useProgress();
+    const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
 
     useEffect(() => {
+        const loadTrack = async () => {
+            await TrackPlayer.setupPlayer();
+            await TrackPlayer.updateOptions({
+                capabilities: [
+                    Capability.Play,
+                    Capability.Pause,
+                ],
+            });
+
+            const songId ='Song_9';
+            await TrackPlayer.add({
+                id: songId,
+                url: `http://${hostNetwork}:3000/audio?id=${songId}`,
+                title: 'Adiyee',
+                artist: 'Bachelor Dhibu Ninan Thomas, Kapil Kapilan',
+            });
+
+            const duration = await TrackPlayer.getDuration();
+            setTotalDuration(duration);
+            setIsLoading(false);
+        };
+
         loadTrack();
+
+        return () => {
+            
+        };
     }, []);
 
+    useEffect(() => {
+        const updateProgress = async () => {
+            if (playState) {
+                const position = await TrackPlayer.getPosition();
+                progress.position = position;
+            }
+        };
 
+        const intervalId = setInterval(updateProgress, 1000);
+
+        return () => clearInterval(intervalId);
+    }, [playState]);
+    
+    
     useEffect(() => {
         const trackPlayerListener = TrackPlayer.addEventListener(Event.PlaybackTrackChanged, async ({ nextTrack }) => {
             if (nextTrack) {
@@ -48,38 +90,14 @@ const Song: React.FunctionComponent<SongProps & { navigation: NavigationProp<any
         };
     }, []);
 
-    const loadTrack = async () => {
-        await TrackPlayer.setupPlayer();
-        await TrackPlayer.updateOptions({
-            capabilities: [
-                Capability.Play,
-                Capability.Pause,
-
-            ],
-        });
-
-        await TrackPlayer.add({
-            id: 'track1',
-            url: require('../../assets/images/song/Mot-Dieu-Ma-Anh-Rat-Ngai-Noi-Ra-Hai-Sam.mp3'),
-            title: 'Adiyee',
-            artist: 'Bachelor Dhibu Ninan Thomas, Kapil Kapilan',
-
-        });
-
-        setTotalDuration(await TrackPlayer.getDuration());
-        setIsLoading(false);
-    };
-
     const togglePlayPause = async () => {
         if (playState) {
             TrackPlayer.pause();
         } else {
-            TrackPlayer.play();
-            setCurrentPosition(await TrackPlayer.getPosition());
+            await TrackPlayer.play();
         }
         setPlayState(!playState);
     };
-
 
     const formatTime = (timeInSeconds: number) => {
         const minutes = Math.floor(timeInSeconds / 60);
@@ -87,12 +105,13 @@ const Song: React.FunctionComponent<SongProps & { navigation: NavigationProp<any
         return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
     };
 
+   
 
-    const [showComments, setShowComments] = useState(false);
     const handleCommentPress = () => {
-        navigation.navigate('Comments');
-        setShowComments(!showComments);
+        navigation.navigate('Chat');
     };
+
+  
     return (
         <>
 
@@ -100,15 +119,18 @@ const Song: React.FunctionComponent<SongProps & { navigation: NavigationProp<any
 
                 <Header style={styles.header}>
                     <Text style={styles.headerText}>Playing now</Text>
-
+                    <TouchableOpacity onPress={handleNavigateBack} style={styles.goBackButton}>
+                        <SvgXml width={30} height={30} xml={iconBack()}></SvgXml>
+                    </TouchableOpacity>
                 </Header>
 
                 <Content>
+                
                     <View>
-                        <Swiper style={styles.imageSong} 
-                        loop={false} 
-                        dotStyle={{bottom:370, backgroundColor:'gray'}}
-                        activeDotStyle={{backgroundColor:'white', bottom:370}}>
+                        <Swiper style={styles.imageSong}
+                            loop={false}
+                            dotStyle={{ bottom: 350, backgroundColor: 'gray' }}
+                            activeDotStyle={{ bottom: 350, backgroundColor: 'white' }}>
                             <View style={styles.slide}>
                                 <SvgXml width={400} height={400} xml={iconSong()}></SvgXml>
                             </View>
@@ -130,20 +152,21 @@ const Song: React.FunctionComponent<SongProps & { navigation: NavigationProp<any
                         <Slider
                             style={styles.slider}
                             minimumValue={0}
-                            maximumValue={progress.duration}
+                            maximumValue={totalDuration}
                             value={progress.position}
                             minimumTrackTintColor="#00ffff"
                             maximumTrackTintColor="white"
                             thumbTintColor="#00ffff"
                             onValueChange={async value => {
                                 await TrackPlayer.seekTo(value);
+                                setCurrentPosition(value); 
                             }}
-
+                           
                         />
-                        <View style={styles.timeContainer}>
-                            <Text style={styles.timeText}>{formatTime(currentPosition)}</Text>
-                            <Text style={styles.timeText}>{formatTime(totalDuration)}</Text>
 
+                        <View style={styles.timeContainer}>
+                            <Text style={styles.timeText}>{formatTime(progress.position)}</Text>
+                            <Text style={styles.timeText}>{formatTime(totalDuration)}</Text>
                         </View>
 
                         <View style={styles.iconCmt}>
@@ -173,6 +196,7 @@ const Song: React.FunctionComponent<SongProps & { navigation: NavigationProp<any
 
                     </View>
 
+
                 </Content>
 
                 <Footer>
@@ -197,82 +221,86 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: 'white',
         marginTop: 20,
-        marginBottom: 30,
         textAlign: 'center',
     },
     songTitle: {
         fontSize: 24,
         fontWeight: 'bold',
-        marginBottom: 10,
         color: "white",
-        marginTop: 80,
-        left: 30,
+        bottom: 350
+
     },
     artist: {
         fontSize: 15,
         color: "white",
-        left: 30,
+        bottom: 340
     },
     imageSong: {
-        alignItems: 'center',
-    },
-    titleLeft: {
-        marginRight: -50,
-        bottom:430,
-    },
-    titleRight: {
-        left: 350,
-        bottom:470
-    },
-    controls: {
-        width: '100%',
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    slider: {
-        width: '100%',
-        marginTop: -450,
 
     },
+    titleLeft: {
+        marginLeft: 20
+
+    },
+    titleRight: {
+        marginLeft: 350,
+        bottom: 400
+
+    },
+    controls: {
+
+    },
+    slider: {
+        bottom: 330
+    },
     timeContainer: {
-        width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
+        bottom: 320
     },
     timeText: {
         color: 'white',
         fontSize: 12,
         fontWeight: 'bold',
-        alignItems: 'center',
-        margin:12
+
     },
     iconCmt: {
-        right: 150,
-        bottom: -80,
-        flex:1
+        left: 30,
+        bottom: 250,
+
+
     },
     iconPrevSong: {
-        right: 80,
-        bottom: 390,
+        left: 110,
+        bottom: 320,
     },
     iconNextSong: {
-        left: 80,
-        bottom: 390,
-       
+        left: 270,
+        bottom: 350,
+
     },
     iconPlayPause: {
-        bottom:400
-       
+        alignItems: 'center',
+        bottom: 430
+
     },
     iconShuffle: {
-        bottom: 350,
-        left: 150,
+        left: 350,
+        bottom: 340
+
     },
     slide: {
-        justifyContent: 'center',
-        alignItems: 'center'
+
+    },
+    lyricText: {
+        color: 'white',
+        textAlign: 'center',
+        fontSize: 20,
+    },
+    goBackButton: {
+        color: 'white',
+        marginLeft: 30,
+        bottom: 20,
     }
 });
 export default Song;
-

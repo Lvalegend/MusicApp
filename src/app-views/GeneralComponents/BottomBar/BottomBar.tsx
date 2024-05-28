@@ -18,7 +18,7 @@ const BottomBar: React.FC<BottomBarProps> = () => {
         navigation.navigate('HomeScreen')
     }
     const handlePopular = () => {
-        navigation.navigate('Popular')
+        navigation.navigate('RankingScreen')
     }
     // const handleFavourite = () => {
     //     navigation.navigate('Favourite')
